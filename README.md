@@ -24,12 +24,12 @@ a API deve ser segura, permitindo acesso apenas com um token de autenticação v
 
 Trabalho desenvolvido por:
 
-- [@afonsohsc] (https://github.com/afonsohsc)
+- Afonso | [@afonsohsc](https://github.com/afonsohsc)
 
-- [@andre1gauna] (https://github.com/andre1gauna)
+- André | [@andre1gauna](https://github.com/andre1gauna)
 
-- [@BrunnaMaiaradaSilva] (https://github.com/BrunnaMaiaradaSilva)
+- Brunna | [@BrunnaMaiaradaSilva](https://github.com/BrunnaMaiaradaSilva)
 
-- [@brunoritter123] (https://github.com/brunoritter123)
+- Bruno | [@brunoritter123](https://github.com/brunoritter123)
 
-- [@Cadulox] (https://github.com/Cadulox)
+- Carlos | [@Cadulox](https://github.com/Cadulox)
