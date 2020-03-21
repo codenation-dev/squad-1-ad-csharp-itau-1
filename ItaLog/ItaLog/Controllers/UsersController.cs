@@ -9,7 +9,8 @@ using Microsoft.AspNetCore.Mvc;
 namespace ItaLog.Controllers
 {
     [Route("api/[Controller]")]
-    public class UsersController : Controller
+    [ApiController]
+    public class UsersController : ControllerBase
     {
         private readonly IUserRepository _userRepository;
         public UsersController(IUserRepository userRepository)

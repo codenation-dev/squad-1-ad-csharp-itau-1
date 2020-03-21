@@ -9,7 +9,8 @@ using System.Threading.Tasks;
 namespace ItaLog.Controllers
 {
     [Route("api/[Controller]")]
-    public class LogsController : Controller
+    [ApiController]
+    public class LogsController : ControllerBase
     {
         private readonly ILogRepository _logRepository;
         public LogsController(ILogRepository logRepository)
