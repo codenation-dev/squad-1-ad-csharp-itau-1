@@ -1,15 +1,15 @@
-﻿using ItaLog.Models;
-using System;
+﻿using ItaLog.Data.Context;
+using ItaLog.Domain.Interfaces.Repositories;
+using ItaLog.Domain.Models;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
-namespace ItaLog.Repository
+namespace ItaLog.Api.Repository
 {
     public class UserRepository : IUserRepository
     {
-        private readonly ErrorLogsDbContext _context;
-        public UserRepository(ErrorLogsDbContext context)
+        private readonly ItaLogContext _context;
+        public UserRepository(ItaLogContext context)
         {
             _context = context;
         }
@@ -22,10 +22,10 @@ namespace ItaLog.Repository
 
         public User FindById(int id)
         {
-            return _context.Users.FirstOrDefault(user => user.Id == id); 
+            return _context.Users.FirstOrDefault(user => user.Id == id);
         }
 
-        public IEnumerable<User> GetUsers()
+        public IEnumerable<User> GetAll()
         {
             return _context.Users.ToList();
         }

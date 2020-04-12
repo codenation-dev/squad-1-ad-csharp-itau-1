@@ -1,15 +1,15 @@
-﻿using ItaLog.Models;
-using System;
+﻿using ItaLog.Data.Context;
+using ItaLog.Domain.Interfaces.Repositories;
+using ItaLog.Domain.Models;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
-namespace ItaLog.Repository
+namespace ItaLog.Api.Repository
 {
     public class LogRepository : ILogRepository
     {
-        private readonly ErrorLogsDbContext _context;
-        public LogRepository(ErrorLogsDbContext context)
+        private readonly ItaLogContext _context;
+        public LogRepository(ItaLogContext context)
         {
             _context = context;
         }
@@ -22,10 +22,10 @@ namespace ItaLog.Repository
 
         public Log FindById(int id)
         {
-            return _context.Logs.FirstOrDefault(user => user.Id == id);
+            return _context.Logs.Find(id);
         }
 
-        public IEnumerable<Log> GetLogs()
+        public IEnumerable<Log> GetAll()
         {
             return _context.Logs.ToList();
         }
@@ -40,6 +40,13 @@ namespace ItaLog.Repository
         public void Update(Log log)
         {
             _context.Logs.Update(log);
+            _context.SaveChanges();
+        }
+
+        public void Archive(int id)
+        {
+            var log = FindById(id);
+            log.Archive = true;
             _context.SaveChanges();
         }
     }

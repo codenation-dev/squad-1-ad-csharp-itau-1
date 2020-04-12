@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using ItaLog.Models;
-using ItaLog.Repository;
+﻿using ItaLog.Domain.Interfaces.Repositories;
+using ItaLog.Domain.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 
-namespace ItaLog.Controllers
+namespace ItaLog.Api.Controllers
 {
     [Route("api/[Controller]")]
     [ApiController]
@@ -21,10 +18,10 @@ namespace ItaLog.Controllers
         [HttpGet]
         public IEnumerable<User> GetUsers()
         {
-            return _userRepository.GetUsers();
+            return _userRepository.GetAll();
         }
 
-        [HttpGet("{id}", Name= "GetUser")]
+        [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
             var user = _userRepository.FindById(id);
@@ -42,7 +39,7 @@ namespace ItaLog.Controllers
 
             _userRepository.Add(user);
 
-            return CreatedAtAction("GetUser", new { id = user.Id}, user);
+            return CreatedAtAction(nameof(GetById), new { id = user.Id }, user);
         }
 
         [HttpPut("{id}")]

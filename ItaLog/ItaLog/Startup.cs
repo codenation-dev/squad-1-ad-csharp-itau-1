@@ -1,20 +1,14 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using ItaLog.Models;
-using ItaLog.Repository;
+using ItaLog.Api.Repository;
+using ItaLog.Data.Context;
+using ItaLog.Domain.Interfaces.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 
-namespace ItaLog
+namespace ItaLog.Api
 {
     public class Startup
     {
@@ -28,10 +22,10 @@ namespace ItaLog
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ErrorLogsDbContext>(options => 
+            services.AddDbContext<ItaLogContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("Database")));
-            services.AddTransient<IUserRepository, UserRepository>();
-            services.AddTransient<ILogRepository, LogRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<ILogRepository, LogRepository>();
             services.AddControllers();
         }
 

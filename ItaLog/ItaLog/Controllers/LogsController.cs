@@ -1,12 +1,9 @@
-﻿using ItaLog.Models;
-using ItaLog.Repository;
+﻿using ItaLog.Domain.Interfaces.Repositories;
+using ItaLog.Domain.Models;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace ItaLog.Controllers
+namespace ItaLog.Api.Controllers
 {
     [Route("api/[Controller]")]
     [ApiController]
@@ -21,10 +18,10 @@ namespace ItaLog.Controllers
         [HttpGet]
         public IEnumerable<Log> GetLogs()
         {
-            return _logRepository.GetLogs();
+            return _logRepository.GetAll();
         }
 
-        [HttpGet("{id}", Name = "GetLog")]
+        [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
             var log = _logRepository.FindById(id);
@@ -42,26 +39,26 @@ namespace ItaLog.Controllers
 
             _logRepository.Add(log);
 
-            return CreatedAtAction("GetLog", new { id = log.Id }, log);
+            return CreatedAtAction(nameof(GetById), new { id = log.Id }, log);
         }
 
-        [HttpPut("{id}")]
-        public IActionResult Update(int id, [FromBody] Log log)
-        {
-            if (log is null || log.Id != id)
-                return BadRequest();
+        //[HttpPut("{id}")]
+        //public IActionResult Update(int id, [FromBody] Log log)
+        //{
+        //    if (log is null || log.Id != id)
+        //        return BadRequest();
 
-            var logFind = _logRepository.FindById(id);
+        //    var logFind = _logRepository.FindById(id);
 
-            if (logFind is null)
-                return NotFound();
+        //    if (logFind is null)
+        //        return NotFound();
 
-            logFind.Archive = log.Archive;
+        //    logFind.Archive = log.Archive;
 
-            _logRepository.Update(logFind);
+        //    _logRepository.Update(logFind);
 
-            return new NoContentResult();
-        }
+        //    return new NoContentResult();
+        //}
 
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
