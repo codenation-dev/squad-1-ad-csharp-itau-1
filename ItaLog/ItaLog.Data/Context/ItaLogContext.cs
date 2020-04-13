@@ -10,11 +10,7 @@ namespace ItaLog.Data.Context
 {
     public class ItaLogContext : DbContext
     {
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=ItaLog;Trusted_Connection=True");
-            base.OnConfiguring(optionsBuilder);
-        }
+        public ItaLogContext(DbContextOptions<ItaLogContext> options) : base(options) { }
 
         public DbSet<User> Users { get; set; }
         public DbSet<Log> Logs { get; set; }
