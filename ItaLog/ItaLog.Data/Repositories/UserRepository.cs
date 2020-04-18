@@ -14,32 +14,32 @@ namespace ItaLog.Api.Repository
             _context = context;
         }
 
-        public void Add(User user)
+        public void Add(ApiUser user)
         {
-            _context.Users.Add(user);
+            _context.ApiUser.Add(user);
             _context.SaveChanges();
         }
 
-        public User FindById(int id)
+        public ApiUser FindById(int id)
         {
-            return _context.Users.FirstOrDefault(user => user.Id == id);
+            return _context.ApiUser.FirstOrDefault(user => user.Id == id);
         }
 
-        public IEnumerable<User> GetAll()
+        public IEnumerable<ApiUser> GetAll()
         {
-            return _context.Users.ToList();
+            return _context.ApiUser.ToList();
         }
 
         public void Remove(int id)
         {
-            var user = _context.Users.First(user => user.Id == id);
-            _context.Users.Remove(user);
+            var user = _context.ApiUser.First(user => user.Id == id);
+            _context.ApiUser.Remove(user);
             _context.SaveChanges();
         }
 
-        public void Update(User user)
+        public void Update(ApiUser user)
         {
-            _context.Users.Update(user);
+            _context.ApiUser.Update(user);
             _context.SaveChanges();
         }
     }

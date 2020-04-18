@@ -3,8 +3,8 @@ using System.Collections.Generic;
 
 namespace ItaLog.Domain.Interfaces.Repositories
 {
-    public interface IUserRepository : IRepositoryBase<User>
+    public interface IUserRepository : IRepositoryBase<ApiUser>
     {
-        public void Update(User user);
+        public void Update(ApiUser user);
     }
 }

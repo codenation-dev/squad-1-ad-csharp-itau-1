@@ -24,7 +24,7 @@ namespace ItaLog.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ItaLogContext>(options =>
-            options.UseSqlServer(Configuration.GetConnectionString("Database")));
+                options.UseSqlServer(Configuration.GetConnectionString("Database")));
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<ILogRepository, LogRepository>();
             services.AddControllers();

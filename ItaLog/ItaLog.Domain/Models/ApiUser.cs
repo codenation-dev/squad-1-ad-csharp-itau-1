@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace ItaLog.Domain.Models
 {
-    public class User : IEntity
+    public class ApiUser : IEntity
     {
         public int Id { get; set; }
 
@@ -15,6 +15,7 @@ namespace ItaLog.Domain.Models
         public string Email { get; set; }
 
         public string Password { get; set; }
+        public string Role { get; set; }
 
         public IEnumerable<Log> Logs { get; set; }
     }

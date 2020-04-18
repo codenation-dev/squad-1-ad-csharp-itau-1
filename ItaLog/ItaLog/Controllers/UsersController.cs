@@ -16,7 +16,7 @@ namespace ItaLog.Api.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<User> GetUsers()
+        public IEnumerable<ApiUser> GetUsers()
         {
             return _userRepository.GetAll();
         }
@@ -32,7 +32,7 @@ namespace ItaLog.Api.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create([FromBody] User user)
+        public IActionResult Create([FromBody] ApiUser user)
         {
             if (user is null)
                 return BadRequest();
@@ -43,7 +43,7 @@ namespace ItaLog.Api.Controllers
         }
 
         [HttpPut("{id}")]
-        public IActionResult Update(int id, [FromBody] User user)
+        public IActionResult Update(int id, [FromBody] ApiUser user)
         {
             if (user is null || user.Id != id)
                 return BadRequest();

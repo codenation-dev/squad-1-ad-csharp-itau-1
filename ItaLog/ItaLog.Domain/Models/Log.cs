@@ -20,7 +20,7 @@ namespace ItaLog.Domain.Models
 
         public int UserId { get; set; }
 
-        public User User { get; set; }
+        public ApiUser User { get; set; }
 
         public string Origin { get; set; }
 
