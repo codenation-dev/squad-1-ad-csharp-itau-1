@@ -1,5 +1,6 @@
 ﻿using ItaLog.Application.App;
 using ItaLog.Application.ViewModels;
+using ItaLog.Domain.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
@@ -16,10 +17,10 @@ namespace ItaLog.Api.Controllers
     [ApiController]
     public class AccountController : ControllerBase
     {
-        private readonly SignInManager<IdentityUser> _signInManager;
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly SignInManager<ApiUser> _signInManager;
+        private readonly UserManager<ApiUser> _userManager;
         private readonly AppSettings _appSettings;
-        public AccountController(SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager,
+        public AccountController(SignInManager<ApiUser> signInManager, UserManager<ApiUser> userManager,
             IOptions<AppSettings> appSettings)
         {
             _signInManager = signInManager;
@@ -33,11 +34,10 @@ namespace ItaLog.Api.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState.Values.SelectMany(e => e.Errors));
 
-            var user = new IdentityUser
+            var user = new ApiUser
             {
-                UserName = userRegistration.Email,
-                Email = userRegistration.Email,
-                EmailConfirmed = true
+                Name = userRegistration.Email,
+                Email = userRegistration.Email
             };
 
             var result = await _userManager.CreateAsync(user, userRegistration.Password);

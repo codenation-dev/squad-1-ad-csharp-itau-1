@@ -1,11 +1,10 @@
 ﻿using ItaLog.Data.Maps;
 using ItaLog.Domain.Models;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace ItaLog.Data.Context
 {
-    public class ItaLogContext : IdentityDbContext
+    public class ItaLogContext : DbContext
     {
         public ItaLogContext(DbContextOptions<ItaLogContext> options) : base(options) { }
 

@@ -39,7 +39,7 @@ namespace ItaLog.Api
             services.AddControllers();
             
             // ASP.NET Identity Settings & JWT
-            services.AddIdentitySetup(Configuration);
+            //services.AddIdentitySetup(Configuration);
 
             // Swagger Config
             services.AddSwaggerSetup();
