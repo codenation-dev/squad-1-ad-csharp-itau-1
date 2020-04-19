@@ -1,4 +1,4 @@
-﻿namespace ItaLog.Api.Configuration
+﻿namespace ItaLog.Api.Configurations
 {
     public class AppSettings
     {

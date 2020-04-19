@@ -1,14 +1,13 @@
+using ItaLog.Api.Configurations;
 using ItaLog.Api.Repository;
 using ItaLog.Data.Context;
 using ItaLog.Domain.Interfaces.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.OpenApi.Models;
 
 namespace ItaLog.Api
 {
@@ -29,14 +28,12 @@ namespace ItaLog.Api
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<ILogRepository, LogRepository>();
             services.AddControllers();
+            
+            // ASP.NET Identity Settings & JWT
+            services.AddIdentitySetup(Configuration);
 
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "ItaLog", Version = "v1" });
-            });
-
-            services.AddIdentity<IdentityUser, IdentityRole>()
-                .AddEntityFrameworkStores<ItaLogContext>();
+            // Swagger Config
+            services.AddSwaggerSetup();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -47,15 +44,18 @@ namespace ItaLog.Api
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseSwagger();
-            app.UseSwaggerUI(c =>
-            {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "ItaLog - V1");
-            });
+            app.UseSwaggerSetup();
 
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors(c =>
+            {
+                c.AllowAnyHeader();
+                c.AllowAnyMethod();
+                c.AllowAnyOrigin();
+            });
 
             app.UseAuthentication();
             app.UseAuthorization();
