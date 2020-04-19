@@ -22,12 +22,7 @@ namespace ItaLog.Application.App
         public void Add(LogViewModel entity)
         {
             _repository.Add(_mapper.Map<Log>(entity));
-        }
-
-        public void Archive(int id)
-        {
-            _repository.Archive(id);
-        }
+        }        
 
         public LogViewModel FindById(int id)
         {

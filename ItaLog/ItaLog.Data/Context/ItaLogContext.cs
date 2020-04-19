@@ -8,10 +8,11 @@ namespace ItaLog.Data.Context
     {
         public ItaLogContext(DbContextOptions<ItaLogContext> options) : base(options) { }
 
-        public DbSet<ApiUser> ApiUser { get; set; }
+        public DbSet<ApiUser> ApiUsers { get; set; }
         public DbSet<Log> Logs { get; set; }
         public DbSet<Level> Levels { get; set; }
         public DbSet<Environment> Environments { get; set; }
+        public DbSet<Event> Events { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -19,6 +20,7 @@ namespace ItaLog.Data.Context
             modelBuilder.ApplyConfiguration(new LogMap());
             modelBuilder.ApplyConfiguration(new LevelMap());
             modelBuilder.ApplyConfiguration(new EnvironmentMap());
+            modelBuilder.ApplyConfiguration(new EventMap());
             base.OnModelCreating(modelBuilder);
         }
     }

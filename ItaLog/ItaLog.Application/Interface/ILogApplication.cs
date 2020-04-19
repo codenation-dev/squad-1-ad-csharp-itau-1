@@ -9,7 +9,6 @@ namespace ItaLog.Application.Interface
     {
         IEnumerable<LogViewModel> GetAll();
         void Add(LogViewModel entity);
-        void Archive(int id);
         LogViewModel FindById(int id);
         void Remove(int id);
     }

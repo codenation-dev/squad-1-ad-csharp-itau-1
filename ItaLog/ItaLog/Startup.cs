@@ -12,6 +12,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using AutoMapper;
+using ItaLog.Data.Repositories;
 
 namespace ItaLog.Api
 {
@@ -31,6 +32,9 @@ namespace ItaLog.Api
                 options.UseSqlServer(Configuration.GetConnectionString("Database")));
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<ILogRepository, LogRepository>();
+            services.AddScoped<ILevelRepository, LevelRepository>();
+            services.AddScoped<IEnvironmentRepository, EnvironmentRepository>();
+            services.AddScoped<IEventRepository, EventRepository>();
 
             services.AddScoped<ILogApplication, LogApplication>();
 

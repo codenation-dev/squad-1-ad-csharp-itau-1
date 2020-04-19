@@ -43,11 +43,6 @@ namespace ItaLog.Api.Repository
             _context.SaveChanges();
         }
 
-        public void Archive(int id)
-        {
-            var log = FindById(id);
-            log.Archive = true;
-            _context.SaveChanges();
-        }
+        
     }
 }

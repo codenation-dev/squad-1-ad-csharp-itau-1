@@ -12,9 +12,6 @@ namespace ItaLog.Data.Maps
 
             builder.HasKey(x => x.Id);
 
-            builder.Property(x => x.Event)
-                .IsRequired();
-
             builder.Property(x => x.Title)
                 .HasMaxLength(250)
                 .HasColumnType("varchar(250)")
@@ -25,30 +22,14 @@ namespace ItaLog.Data.Maps
                .HasColumnType("varchar(1024)")
                .IsRequired();
 
-            builder.Property(x => x.DateError)
-               .HasColumnType("datetime")
+            builder.Property(x => x.UserErrorCode)
+               .HasColumnType("int")
                .IsRequired();
 
-            builder.Property(x => x.UserId)
+            builder.Property(x => x.ApiUserId)
                .IsRequired();
 
-            builder.HasOne(x => x.User)
-                .WithMany(x => x.Logs);
-
-            builder.Property(x => x.Origin)
-               .HasMaxLength(50)
-               .HasColumnType("varchar(50)")
-               .IsRequired();
-
-            builder.Property(x => x.Origin)
-               .HasMaxLength(50)
-               .HasColumnType("varchar(50)")
-               .IsRequired();
-
-            builder.Property(x => x.EnvironmentId)
-               .IsRequired();
-
-            builder.HasOne(x => x.Environment)
+            builder.HasOne(x => x.ApiUser)
                 .WithMany(x => x.Logs);
 
             builder.Property(x => x.LevelId)
@@ -56,6 +37,9 @@ namespace ItaLog.Data.Maps
 
             builder.HasOne(x => x.Level)
                 .WithMany(x => x.Logs);
+
+            builder.HasMany(x => x.Events)
+                .WithOne(x => x.Log);
         }
     }
 }
