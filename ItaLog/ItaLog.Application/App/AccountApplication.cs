@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ItaLog.Data.Repositories
+namespace ItaLog.Application.App
 {
-    public class AuthRepository
+    public class AccountApplication
     {
     }
 }
