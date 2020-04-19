@@ -17,6 +17,7 @@
   <ItemGroup>
     <ProjectReference Include="..\ItaLog.Data\ItaLog.Data.csproj" />
     <ProjectReference Include="..\ItaLog.Domain\ItaLog.Domain.csproj" />
+    <ProjectReference Include="..\ItaLog.Service\ItaLog.Service.csproj" />
   </ItemGroup>
 
 
