@@ -1,4 +1,6 @@
-﻿using ItaLog.Domain.Interfaces.Repositories;
+﻿using ItaLog.Application.Interface;
+using ItaLog.Application.ViewModels;
+using ItaLog.Domain.Interfaces.Repositories;
 using ItaLog.Domain.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -9,22 +11,22 @@ namespace ItaLog.Api.Controllers
     [ApiController]
     public class LogsController : ControllerBase
     {
-        private readonly ILogRepository _logRepository;
-        public LogsController(ILogRepository logRepository)
+        private readonly ILogApplication _repository;
+        public LogsController(ILogApplication repository)
         {
-            _logRepository = logRepository;
+            _repository = repository;
         }
 
         [HttpGet]
-        public IEnumerable<Log> GetLogs()
+        public IEnumerable<LogViewModel> GetLogs()
         {
-            return _logRepository.GetAll();
+            return _repository.GetAll();
         }
 
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
-            var log = _logRepository.FindById(id);
+            var log = _repository.FindById(id);
             if (log is null)
                 return NotFound();
 
@@ -32,12 +34,12 @@ namespace ItaLog.Api.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create([FromBody] Log log)
+        public IActionResult Create([FromBody] LogViewModel log)
         {
             if (log is null)
                 return BadRequest();
 
-            _logRepository.Add(log);
+            _repository.Add(log);
 
             return CreatedAtAction(nameof(GetById), new { id = log.Id }, log);
         }
@@ -63,12 +65,12 @@ namespace ItaLog.Api.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            var logFind = _logRepository.FindById(id);
+            var logFind = _repository.FindById(id);
 
             if (logFind is null)
                 return NotFound();
 
-            _logRepository.Remove(id);
+            _repository.Remove(id);
 
             return new NoContentResult();
         }

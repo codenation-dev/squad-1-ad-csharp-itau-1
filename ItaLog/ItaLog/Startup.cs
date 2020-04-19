@@ -1,5 +1,8 @@
 using ItaLog.Api.Configurations;
 using ItaLog.Api.Repository;
+using ItaLog.Application.App;
+using ItaLog.Application.AutoMapper;
+using ItaLog.Application.Interface;
 using ItaLog.Data.Context;
 using ItaLog.Domain.Interfaces.Repositories;
 using Microsoft.AspNetCore.Builder;
@@ -8,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using AutoMapper;
 
 namespace ItaLog.Api
 {
@@ -27,6 +31,11 @@ namespace ItaLog.Api
                 options.UseSqlServer(Configuration.GetConnectionString("Database")));
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<ILogRepository, LogRepository>();
+
+            services.AddScoped<ILogApplication, LogApplication>();
+
+            services.AddAutoMapper(typeof(AutoMapperConfig));
+
             services.AddControllers();
             
             // ASP.NET Identity Settings & JWT

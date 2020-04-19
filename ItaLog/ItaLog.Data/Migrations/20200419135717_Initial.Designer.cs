@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ItaLog.Data.Migrations
 {
     [DbContext(typeof(ItaLogContext))]
-    [Migration("20200418233754_AddIdentity")]
-    partial class AddIdentity
+    [Migration("20200419135717_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -56,6 +56,74 @@ namespace ItaLog.Data.Migrations
                     b.ToTable("ApiUser");
                 });
 
+            modelBuilder.Entity("ItaLog.Domain.Models.Environment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("varchar(20)")
+                        .HasMaxLength(20);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Environment");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Description = "Production"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Description = "Homologation"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Description = "Development"
+                        });
+                });
+
+            modelBuilder.Entity("ItaLog.Domain.Models.Level", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("varchar(20)")
+                        .HasMaxLength(20);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Level");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Description = "Debug"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Description = "Warning"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Description = "Error"
+                        });
+                });
+
             modelBuilder.Entity("ItaLog.Domain.Models.Log", b =>
                 {
                     b.Property<int>("Id")
@@ -74,13 +142,13 @@ namespace ItaLog.Data.Migrations
                         .HasColumnType("varchar(1024)")
                         .HasMaxLength(1024);
 
-                    b.Property<int>("Environment")
+                    b.Property<int>("EnvironmentId")
                         .HasColumnType("int");
 
                     b.Property<int>("Event")
                         .HasColumnType("int");
 
-                    b.Property<int>("Level")
+                    b.Property<int>("LevelId")
                         .HasColumnType("int");
 
                     b.Property<string>("Origin")
@@ -97,6 +165,10 @@ namespace ItaLog.Data.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("EnvironmentId");
+
+                    b.HasIndex("LevelId");
 
                     b.HasIndex("UserId");
 
@@ -301,6 +373,18 @@ namespace ItaLog.Data.Migrations
 
             modelBuilder.Entity("ItaLog.Domain.Models.Log", b =>
                 {
+                    b.HasOne("ItaLog.Domain.Models.Environment", "Environment")
+                        .WithMany("Logs")
+                        .HasForeignKey("EnvironmentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ItaLog.Domain.Models.Level", "Level")
+                        .WithMany("Logs")
+                        .HasForeignKey("LevelId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("ItaLog.Domain.Models.ApiUser", "User")
                         .WithMany("Logs")
                         .HasForeignKey("UserId")

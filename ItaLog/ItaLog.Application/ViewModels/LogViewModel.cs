@@ -1,9 +1,10 @@
-﻿using ItaLog.Domain.Interfaces.Models;
-using System;
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
 
-namespace ItaLog.Domain.Models
+namespace ItaLog.Application.ViewModels
 {
-    public class Log : IEntity
+    public class LogViewModel
     {
         public int Id { get; set; }
 
@@ -19,14 +20,12 @@ namespace ItaLog.Domain.Models
 
         public int UserId { get; set; }
 
-        public ApiUser User { get; set; }
+        public ApiUserViewModel User { get; set; }
 
         public string Origin { get; set; }
 
-        public int EnvironmentId { get; set; }
-        public Environment Environment { get; set; }
+        public EnvironmentViewModel Environment { get; set; }
 
-        public int LevelId { get; set; }
-        public Level Level { get; set; }
+        public LevelViewModel Level { get; set; }
     }
 }

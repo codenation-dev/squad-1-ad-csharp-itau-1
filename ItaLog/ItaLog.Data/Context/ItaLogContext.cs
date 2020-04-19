@@ -11,11 +11,15 @@ namespace ItaLog.Data.Context
 
         public DbSet<ApiUser> ApiUser { get; set; }
         public DbSet<Log> Logs { get; set; }
+        public DbSet<Level> Levels { get; set; }
+        public DbSet<Environment> Environments { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new ApiUserMap());
             modelBuilder.ApplyConfiguration(new LogMap());
+            modelBuilder.ApplyConfiguration(new LevelMap());
+            modelBuilder.ApplyConfiguration(new EnvironmentMap());
             base.OnModelCreating(modelBuilder);
         }
     }

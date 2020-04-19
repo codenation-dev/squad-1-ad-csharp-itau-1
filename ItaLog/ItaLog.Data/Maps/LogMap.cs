@@ -45,11 +45,17 @@ namespace ItaLog.Data.Maps
                .HasColumnType("varchar(50)")
                .IsRequired();
 
-            builder.Property(x => x.Environment)
+            builder.Property(x => x.EnvironmentId)
                .IsRequired();
 
-            builder.Property(x => x.Level)
-               .IsRequired();
+            builder.HasOne(x => x.Environment)
+                .WithMany(x => x.Logs);
+
+            builder.Property(x => x.LevelId)
+              .IsRequired();
+
+            builder.HasOne(x => x.Level)
+                .WithMany(x => x.Logs);
         }
     }
 }
