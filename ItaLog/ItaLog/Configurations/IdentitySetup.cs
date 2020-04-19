@@ -1,4 +1,5 @@
-﻿using ItaLog.Data.Context;
+﻿using ItaLog.Application.App;
+using ItaLog.Data.Context;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
@@ -40,7 +41,7 @@ namespace ItaLog.Api.Configurations
                     IssuerSigningKey = new SymmetricSecurityKey(key),
                     ValidateIssuer = true,
                     ValidateAudience = true,
-                    ValidAudience = appSettings.ValidAt,
+                    ValidAudience = appSettings.Audience,
                     ValidIssuer = appSettings.Issuer
                 };
             });

@@ -1,5 +1,13 @@
-﻿using ItaLog.Application.ViewModels;
+﻿using ItaLog.Application.App;
+using ItaLog.Application.ViewModels;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
+using System;
+using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace ItaLog.Api.Controllers
@@ -8,23 +16,72 @@ namespace ItaLog.Api.Controllers
     [ApiController]
     public class AccountController : ControllerBase
     {
-        public AccountController()
+        private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly UserManager<IdentityUser> _userManager;
+        private readonly AppSettings _appSettings;
+        public AccountController(SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager,
+            IOptions<AppSettings> appSettings)
         {
-
+            _signInManager = signInManager;
+            _userManager = userManager;
+            _appSettings = appSettings.Value;
         }
 
         [HttpPost]
-        public async Task<ActionResult> Register(UserRegistrationViewModel userRegistration)
+        public async Task<IActionResult> Register(UserRegistrationViewModel userRegistration)
         {
-            // TODO
-            return NotFound();
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState.Values.SelectMany(e => e.Errors));
+
+            var user = new IdentityUser
+            {
+                UserName = userRegistration.Email,
+                Email = userRegistration.Email,
+                EmailConfirmed = true
+            };
+
+            var result = await _userManager.CreateAsync(user, userRegistration.Password);
+
+            if (!result.Succeeded)
+                return BadRequest(result.Errors);
+
+            await _signInManager.SignInAsync(user, false);
+
+            return Ok(await GenerateJwt(userRegistration.Email));
         }
 
         [HttpPost]
-        public async Task<ActionResult> Login(UserLoginViewModel userLogin)
+        public async Task<IActionResult> Login(UserLoginViewModel userLogin)
         {
-            // TODO
-            return NotFound();
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState.Values.SelectMany(e => e.Errors));
+
+            var result = await _signInManager.PasswordSignInAsync(userLogin.Email, userLogin.Password, false, true);
+
+            if (result.Succeeded)
+            {
+                return Ok(await GenerateJwt(userLogin.Email));
+            }
+
+            return BadRequest("Username or password is invalid");
+        }
+
+        private async Task<string> GenerateJwt(string email)
+        {
+            var user = await _userManager.FindByEmailAsync(email);
+
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
+
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Issuer = _appSettings.Issuer,
+                Audience = _appSettings.Audience,
+                Expires = DateTime.UtcNow.AddHours(_appSettings.Expiration),
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+            };
+
+            return tokenHandler.WriteToken(tokenHandler.CreateToken(tokenDescriptor));
         }
     }
 }
