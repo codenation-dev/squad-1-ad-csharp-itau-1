@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ItaLog.Test", "ItaLog.Test\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ItaLog.Service", "ItaLog.Service\ItaLog.Service.csproj", "{563ED2AF-262D-46CB-AA3E-E501CA4CFFD5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ItaLog.Application", "ItaLog.Application\ItaLog.Application.csproj", "{6F1A56A2-4228-4DD9-B260-89F09A7E30A8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{563ED2AF-262D-46CB-AA3E-E501CA4CFFD5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{563ED2AF-262D-46CB-AA3E-E501CA4CFFD5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{563ED2AF-262D-46CB-AA3E-E501CA4CFFD5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6F1A56A2-4228-4DD9-B260-89F09A7E30A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6F1A56A2-4228-4DD9-B260-89F09A7E30A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6F1A56A2-4228-4DD9-B260-89F09A7E30A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6F1A56A2-4228-4DD9-B260-89F09A7E30A8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
