@@ -13,6 +13,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using AutoMapper;
 using ItaLog.Data.Repositories;
+using ItaLog.Domain.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using ItaLog.Data.Store;
 
 namespace ItaLog.Api
 {
@@ -35,15 +39,23 @@ namespace ItaLog.Api
             services.AddScoped<ILevelRepository, LevelRepository>();
             services.AddScoped<IEnvironmentRepository, EnvironmentRepository>();
             services.AddScoped<IEventRepository, EventRepository>();
+            services.AddScoped<IRoleRepository, RoleRepository>();
+            services.AddScoped<IUserRoleRepository, UserRoleRepository>();
 
             services.AddScoped<ILogApplication, LogApplication>();
 
             services.AddAutoMapper(typeof(AutoMapperConfig));
 
             services.AddControllers();
-            
+
+            services.AddTransient<IUserStore<ApiUser>, ApiUserStore>();
+            services.AddTransient<IRoleStore<ApiRole>, ApiRoleStore>();
+
             // ASP.NET Identity Settings & JWT
-            //services.AddIdentitySetup(Configuration);
+            services.AddIdentitySetup(Configuration);
+
+            // JWT Config
+            //services.AddJwtSetup(Configuration);
 
             // Swagger Config
             services.AddSwaggerSetup();

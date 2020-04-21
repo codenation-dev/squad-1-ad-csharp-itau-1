@@ -1,8 +1,5 @@
 ﻿using ItaLog.Application.App;
-using ItaLog.Data.Context;
-using ItaLog.Domain.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
@@ -11,14 +8,11 @@ using System.Text;
 
 namespace ItaLog.Api.Configurations
 {
-    public static class IdentitySetup
+    public static class JwtSetup
     {
-        public static void AddIdentitySetup(this IServiceCollection services, IConfiguration configuration)
+        public static void AddJwtSetup(this IServiceCollection services, IConfiguration configuration)
         {
             if (services == null) throw new ArgumentNullException(nameof(services));
-
-            services.AddIdentity<ApiUser, ApiRole>()
-                .AddDefaultTokenProviders();
 
             var appSettingsSection = configuration.GetSection("AppSettings");
             services.Configure<AppSettings>(appSettingsSection);

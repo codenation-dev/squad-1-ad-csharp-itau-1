@@ -19,6 +19,35 @@ namespace ItaLog.Data.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("ItaLog.Domain.Models.ApiRole", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("varchar(100)")
+                        .HasMaxLength(100);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ApiRole");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "User"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Administrator"
+                        });
+                });
+
             modelBuilder.Entity("ItaLog.Domain.Models.ApiUser", b =>
                 {
                     b.Property<int>("Id")
@@ -41,12 +70,7 @@ namespace ItaLog.Data.Migrations
                         .HasColumnType("varchar(50)")
                         .HasMaxLength(50);
 
-                    b.Property<string>("Role")
-                        .IsRequired()
-                        .HasColumnType("varchar(50)")
-                        .HasMaxLength(50);
-
-                    b.Property<Guid>("Token")
+                    b.Property<Guid>("UserToken")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
@@ -195,6 +219,28 @@ namespace ItaLog.Data.Migrations
                     b.ToTable("Log");
                 });
 
+            modelBuilder.Entity("ItaLog.Domain.Models.UserRole", b =>
+                {
+                    b.Property<int>("ApiUserId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ApiRoleId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
+                        .HasAnnotation("SqlServer:IdentitySeed", 1)
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.HasKey("ApiUserId", "ApiRoleId");
+
+                    b.HasIndex("ApiRoleId");
+
+                    b.ToTable("UserRole");
+                });
+
             modelBuilder.Entity("ItaLog.Domain.Models.Event", b =>
                 {
                     b.HasOne("ItaLog.Domain.Models.Environment", "Environment")
@@ -225,6 +271,21 @@ namespace ItaLog.Data.Migrations
                     b.HasOne("ItaLog.Domain.Models.Level", "Level")
                         .WithMany("Logs")
                         .HasForeignKey("LevelId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("ItaLog.Domain.Models.UserRole", b =>
+                {
+                    b.HasOne("ItaLog.Domain.Models.ApiRole", "ApiRole")
+                        .WithMany("UserRoles")
+                        .HasForeignKey("ApiRoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ItaLog.Domain.Models.ApiUser", "ApiUser")
+                        .WithMany("UserRoles")
+                        .HasForeignKey("ApiUserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

@@ -36,7 +36,7 @@ namespace ItaLog.Api.Controllers
 
             var user = new ApiUser
             {
-                Name = userRegistration.Email,
+                Name = userRegistration.Name,
                 Email = userRegistration.Email
             };
 

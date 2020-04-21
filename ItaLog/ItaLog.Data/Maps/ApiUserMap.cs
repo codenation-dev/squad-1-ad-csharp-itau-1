@@ -12,7 +12,7 @@ namespace ItaLog.Data.Maps
 
             builder.HasKey(x => x.Id);
 
-            builder.Property(x => x.Token)
+            builder.Property(x => x.UserToken)
                 .IsRequired();
 
             builder.Property(x => x.Name)
@@ -29,11 +29,6 @@ namespace ItaLog.Data.Maps
                .HasMaxLength(50)
                .HasColumnType("varchar(50)")
                .IsRequired();
-
-            builder.Property(x => x.Role)
-                .HasMaxLength(50)
-                .HasColumnType("varchar(50)")
-                .IsRequired();
         }
     }
 }
