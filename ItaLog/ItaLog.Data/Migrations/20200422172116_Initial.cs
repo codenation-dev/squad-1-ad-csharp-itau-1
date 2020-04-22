@@ -28,8 +28,11 @@ namespace ItaLog.Data.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserToken = table.Column<Guid>(nullable: false),
                     Name = table.Column<string>(type: "varchar(250)", maxLength: 250, nullable: false),
+                    UserName = table.Column<string>(type: "varchar(250)", maxLength: 250, nullable: false),
+                    NormalizedUserName = table.Column<string>(type: "varchar(250)", maxLength: 250, nullable: true),
                     Email = table.Column<string>(type: "varchar(250)", maxLength: 250, nullable: false),
-                    Password = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false)
+                    EmailConfirmed = table.Column<bool>(nullable: false),
+                    Password = table.Column<string>(type: "varchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -63,7 +66,7 @@ namespace ItaLog.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "UserRole",
+                name: "ApiUserRole",
                 columns: table => new
                 {
                     ApiUserId = table.Column<int>(nullable: false),
@@ -73,15 +76,15 @@ namespace ItaLog.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UserRole", x => new { x.ApiUserId, x.ApiRoleId });
+                    table.PrimaryKey("PK_ApiUserRole", x => new { x.ApiUserId, x.ApiRoleId });
                     table.ForeignKey(
-                        name: "FK_UserRole_ApiRole_ApiRoleId",
+                        name: "FK_ApiUserRole_ApiRole_ApiRoleId",
                         column: x => x.ApiRoleId,
                         principalTable: "ApiRole",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_UserRole_ApiUser_ApiUserId",
+                        name: "FK_ApiUserRole_ApiUser_ApiUserId",
                         column: x => x.ApiUserId,
                         principalTable: "ApiUser",
                         principalColumn: "Id",
@@ -183,6 +186,11 @@ namespace ItaLog.Data.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_ApiUserRole_ApiRoleId",
+                table: "ApiUserRole",
+                column: "ApiRoleId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Event_EnvironmentId",
                 table: "Event",
                 column: "EnvironmentId");
@@ -206,26 +214,21 @@ namespace ItaLog.Data.Migrations
                 name: "IX_Log_LevelId",
                 table: "Log",
                 column: "LevelId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_UserRole_ApiRoleId",
-                table: "UserRole",
-                column: "ApiRoleId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "ApiUserRole");
+
+            migrationBuilder.DropTable(
                 name: "Event");
 
             migrationBuilder.DropTable(
-                name: "UserRole");
+                name: "ApiRole");
 
             migrationBuilder.DropTable(
                 name: "Log");
-
-            migrationBuilder.DropTable(
-                name: "ApiRole");
 
             migrationBuilder.DropTable(
                 name: "ApiUser");

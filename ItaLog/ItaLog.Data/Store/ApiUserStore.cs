@@ -10,7 +10,7 @@ using ItaLog.Data.Context;
 
 namespace ItaLog.Data.Store
 {
-    public class ApiUserStore : IUserStore<ApiUser>, IUserRoleStore<ApiUser>, IUserPasswordStore<ApiUser>
+    public class ApiUserStore : IUserStore<ApiUser>, IUserRoleStore<ApiUser>, IUserPasswordStore<ApiUser>, IUserEmailStore<ApiUser>
     {
         private readonly ItaLogContext _contexto;
 
@@ -50,11 +50,11 @@ namespace ItaLog.Data.Store
             return await _contexto.ApiUsers.FindAsync(Convert.ToInt32(userId));
         }
 
-        public async Task<ApiUser> FindByNameAsync(string Name, CancellationToken cancellationToken)
+        public async Task<ApiUser> FindByNameAsync(string nomalizedUserName, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
 
-            return await _contexto.ApiUsers.FirstOrDefaultAsync(r => r.Name == Name, cancellationToken);
+            return await _contexto.ApiUsers.FirstOrDefaultAsync(r => r.NormalizedUserName == nomalizedUserName, cancellationToken);
         }       
 
         public Task<string> GetUserIdAsync(ApiUser user, CancellationToken cancellationToken)
@@ -64,12 +64,12 @@ namespace ItaLog.Data.Store
 
         public Task<string> GetUserNameAsync(ApiUser user, CancellationToken cancellationToken)
         {
-            return Task.FromResult(user.Name);
+            return Task.FromResult(user.UserName);
         }        
 
         public Task SetUserNameAsync(ApiUser user, string userName, CancellationToken cancellationToken)
         {
-            user.Name = userName;
+            user.UserName = userName;
             return Task.FromResult(0);
         }
 
@@ -81,7 +81,7 @@ namespace ItaLog.Data.Store
 
             if (roleFind != null)
             {
-                roleFind.Name = user.Name;
+                roleFind.UserName = user.UserName;
                 roleFind.Email = user.Email;       
 
                 await _contexto.SaveChangesAsync(cancellationToken);
@@ -120,9 +120,9 @@ namespace ItaLog.Data.Store
                 await _contexto.ApiRoles.AddAsync(new ApiRole() { Name = roleName }, cancellationToken);
             }
 
-            if (!await _contexto.UserRoles.AnyAsync(ur => ur.ApiRoleId == role.Id && ur.ApiUserId == user.Id, cancellationToken))
+            if (!await _contexto.ApiUserRoles.AnyAsync(ur => ur.ApiRoleId == role.Id && ur.ApiUserId == user.Id, cancellationToken))
             {
-                await _contexto.UserRoles.AddAsync(new UserRole() { ApiRoleId = role.Id, ApiUserId = user.Id });
+                await _contexto.ApiUserRoles.AddAsync(new ApiUserRole() { ApiRoleId = role.Id, ApiUserId = user.Id });
                 await _contexto.SaveChangesAsync(cancellationToken);
             }
         }
@@ -131,10 +131,10 @@ namespace ItaLog.Data.Store
         {
             cancellationToken.ThrowIfCancellationRequested();
 
-            var userRole = await _contexto.UserRoles.FirstOrDefaultAsync(r => r.ApiRole.Name == roleName.ToUpper() && r.ApiUserId == user.Id, cancellationToken);
+            var userRole = await _contexto.ApiUserRoles.FirstOrDefaultAsync(r => r.ApiRole.Name == roleName.ToUpper() && r.ApiUserId == user.Id, cancellationToken);
             if (userRole != null)
             {
-                _contexto.UserRoles.Remove(userRole);
+                _contexto.ApiUserRoles.Remove(userRole);
                 await _contexto.SaveChangesAsync(cancellationToken);
             }
         }
@@ -143,7 +143,7 @@ namespace ItaLog.Data.Store
         {
             cancellationToken.ThrowIfCancellationRequested();
 
-            return await (from userRole in _contexto.UserRoles
+            return await (from userRole in _contexto.ApiUserRoles
                           join role in _contexto.ApiRoles on userRole.ApiRoleId equals role.Id
                           where userRole.ApiUserId == user.Id
                           select role.Name).Distinct().ToListAsync(cancellationToken);
@@ -153,14 +153,14 @@ namespace ItaLog.Data.Store
         {
             cancellationToken.ThrowIfCancellationRequested();
 
-            return await _contexto.UserRoles.AnyAsync(ur => ur.ApiUserId == user.Id && ur.ApiRole.Name == roleName.ToUpper(), cancellationToken);
+            return await _contexto.ApiUserRoles.AnyAsync(ur => ur.ApiUserId == user.Id && ur.ApiRole.Name == roleName.ToUpper(), cancellationToken);
         }
 
         public async Task<IList<ApiUser>> GetUsersInRoleAsync(string roleName, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
 
-            return await (from userRole in _contexto.UserRoles
+            return await (from userRole in _contexto.ApiUserRoles
                           join user in _contexto.ApiUsers on userRole.ApiUserId equals user.Id
                           join role in _contexto.ApiRoles on userRole.ApiRoleId equals role.Id
                           where role.Name == roleName.ToUpper()
@@ -174,12 +174,12 @@ namespace ItaLog.Data.Store
 
         public Task<string> GetNormalizedUserNameAsync(ApiUser user, CancellationToken cancellationToken)
         {
-            return Task.FromResult(user.Name);
+            return Task.FromResult(user.NormalizedUserName);
         }
 
         public Task SetNormalizedUserNameAsync(ApiUser user, string normalizedName, CancellationToken cancellationToken)
         {
-            user.Name = normalizedName;
+            user.NormalizedUserName = normalizedName;
             return Task.FromResult(0);
         }
 
@@ -197,6 +197,28 @@ namespace ItaLog.Data.Store
         public Task<bool> HasPasswordAsync(ApiUser user, CancellationToken cancellationToken)
         {
             return Task.FromResult(user.Password != null);
+        }
+
+        public Task<bool> GetEmailConfirmedAsync(ApiUser user, CancellationToken cancellationToken)
+        {
+            return Task.FromResult(user.EmailConfirmed);
+        }
+
+        public Task SetEmailConfirmedAsync(ApiUser user, bool confirmed, CancellationToken cancellationToken)
+        {
+            user.EmailConfirmed = confirmed;
+            return Task.FromResult(0);
+        }
+
+        public Task<string> GetNormalizedEmailAsync(ApiUser user, CancellationToken cancellationToken)
+        {
+            return Task.FromResult(user.Email);
+        }
+
+        public Task SetNormalizedEmailAsync(ApiUser user, string normalizedEmail, CancellationToken cancellationToken)
+        {
+            user.Email = normalizedEmail;
+            return Task.FromResult(0);
         }
     }
 }

@@ -1,10 +1,12 @@
 ﻿using ItaLog.Domain.Interfaces.Repositories;
 using ItaLog.Domain.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 
 namespace ItaLog.Api.Controllers
 {
+    [Authorize]
     [Route("api/[Controller]")]
     [ApiController]
     public class UsersController : ControllerBase
@@ -55,6 +57,7 @@ namespace ItaLog.Api.Controllers
 
             userFind.Name = user.Name;
             userFind.Password = user.Password;
+            userFind.UserName = user.Email;
             userFind.Email = user.Email;
 
             _userRepository.Update(userFind);

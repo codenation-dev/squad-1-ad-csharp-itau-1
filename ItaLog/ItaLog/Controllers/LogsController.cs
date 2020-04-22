@@ -1,12 +1,12 @@
 ﻿using ItaLog.Application.Interface;
 using ItaLog.Application.ViewModels;
-using ItaLog.Domain.Interfaces.Repositories;
-using ItaLog.Domain.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 
 namespace ItaLog.Api.Controllers
 {
+    [Authorize]
     [Route("api/[Controller]")]
     [ApiController]
     public class LogsController : ControllerBase

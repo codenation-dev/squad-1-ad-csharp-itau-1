@@ -20,14 +20,22 @@ namespace ItaLog.Data.Maps
                 .HasColumnType("varchar(250)")
                 .IsRequired();
 
+            builder.Property(x => x.UserName)
+                .HasMaxLength(250)
+                .HasColumnType("varchar(250)")
+                .IsRequired();
+
+            builder.Property(x => x.NormalizedUserName)
+                .HasMaxLength(250)
+                .HasColumnType("varchar(250)");
+
             builder.Property(x => x.Email)
                .HasMaxLength(250)
                .HasColumnType("varchar(250)")
                .IsRequired();
 
             builder.Property(x => x.Password)
-               .HasMaxLength(50)
-               .HasColumnType("varchar(50)")
+               .HasColumnType("varchar(max)")
                .IsRequired();
         }
     }

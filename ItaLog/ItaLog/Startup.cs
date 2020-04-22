@@ -15,7 +15,6 @@ using AutoMapper;
 using ItaLog.Data.Repositories;
 using ItaLog.Domain.Models;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using ItaLog.Data.Store;
 
 namespace ItaLog.Api
@@ -29,7 +28,6 @@ namespace ItaLog.Api
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ItaLogContext>(options =>
@@ -54,14 +52,10 @@ namespace ItaLog.Api
             // ASP.NET Identity Settings & JWT
             services.AddIdentitySetup(Configuration);
 
-            // JWT Config
-            //services.AddJwtSetup(Configuration);
-
             // Swagger Config
             services.AddSwaggerSetup();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())

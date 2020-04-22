@@ -7,17 +7,17 @@ namespace ItaLog.Data.Repositories
 {
     public class UserRoleRepository : IUserRoleRepository
     {
-        public void Add(UserRole entity)
+        public void Add(ApiUserRole entity)
         {
             throw new NotImplementedException();
         }
 
-        public UserRole FindById(int id)
+        public ApiUserRole FindById(int id)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<UserRole> GetAll()
+        public IEnumerable<ApiUserRole> GetAll()
         {
             throw new NotImplementedException();
         }
@@ -27,7 +27,7 @@ namespace ItaLog.Data.Repositories
             throw new NotImplementedException();
         }
 
-        public void Update(UserRole entity)
+        public void Update(ApiUserRole entity)
         {
             throw new NotImplementedException();
         }

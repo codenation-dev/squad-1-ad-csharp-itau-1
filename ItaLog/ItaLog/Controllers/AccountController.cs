@@ -36,8 +36,11 @@ namespace ItaLog.Api.Controllers
 
             var user = new ApiUser
             {
+                UserToken = Guid.NewGuid(),
                 Name = userRegistration.Name,
-                Email = userRegistration.Email
+                UserName = userRegistration.Email,
+                Email = userRegistration.Email,
+                EmailConfirmed = true
             };
 
             var result = await _userManager.CreateAsync(user, userRegistration.Password);

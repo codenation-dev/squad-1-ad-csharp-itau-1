@@ -8,6 +8,6 @@ namespace ItaLog.Domain.Models
         public int Id { get; set; }
         public string Name { get; set; }
 
-        public IEnumerable<UserRole> UserRoles { get; set; }
+        public IEnumerable<ApiUserRole> UserRoles { get; set; }
     }
 }

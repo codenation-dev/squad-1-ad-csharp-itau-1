@@ -14,7 +14,7 @@ namespace ItaLog.Data.Context
         public DbSet<Environment> Environments { get; set; }
         public DbSet<Event> Events { get; set; }
         public DbSet<ApiRole> ApiRoles { get; set; }
-        public DbSet<UserRole> UserRoles { get; set; }
+        public DbSet<ApiUserRole> ApiUserRoles { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -24,7 +24,7 @@ namespace ItaLog.Data.Context
             modelBuilder.ApplyConfiguration(new EnvironmentMap());
             modelBuilder.ApplyConfiguration(new EventMap());
             modelBuilder.ApplyConfiguration(new ApiRoleMap());
-            modelBuilder.ApplyConfiguration(new UserRoleMap());
+            modelBuilder.ApplyConfiguration(new ApiUserRoleMap());
             base.OnModelCreating(modelBuilder);
         }
     }

@@ -2,7 +2,7 @@
 
 namespace ItaLog.Domain.Models
 {
-    public class UserRole : IEntity
+    public class ApiUserRole : IEntity
     {
         public int Id { get; set; }
 

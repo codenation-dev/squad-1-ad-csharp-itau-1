@@ -10,6 +10,7 @@ namespace ItaLog.Application.ViewModels
 
         [Required(ErrorMessage = "The {0} field is mandatory")]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 8)]
+        [DataType(DataType.Password)]
         public string Password { get; set; }
     }
 }
