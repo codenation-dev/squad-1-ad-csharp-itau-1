@@ -1,9 +1,6 @@
 ﻿using AutoMapper;
 using ItaLog.Application.ViewModels;
 using ItaLog.Domain.Models;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace ItaLog.Application.AutoMapper
 {
@@ -18,6 +15,7 @@ namespace ItaLog.Application.AutoMapper
         {
             CreateMap<Log, LogViewModel>().ReverseMap();
             CreateMap<Level, LevelViewModel>().ReverseMap();
+            CreateMap<Environment, EnvironmentViewModel>().ReverseMap();
         }
     }
 }
