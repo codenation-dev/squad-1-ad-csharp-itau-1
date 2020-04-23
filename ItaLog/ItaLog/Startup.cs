@@ -41,6 +41,7 @@ namespace ItaLog.Api
             services.AddScoped<IUserRoleRepository, UserRoleRepository>();
 
             services.AddScoped<ILogApplication, LogApplication>();
+            services.AddScoped<ILevelApplication, LevelApplication>();
 
             services.AddAutoMapper(typeof(AutoMapperConfig));
 
