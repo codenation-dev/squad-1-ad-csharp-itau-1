@@ -42,6 +42,7 @@ namespace ItaLog.Api
 
             services.AddScoped<ILogApplication, LogApplication>();
             services.AddScoped<ILevelApplication, LevelApplication>();
+            services.AddScoped<IEnvironmentApplication, EnvironmentApplication>();
 
             services.AddAutoMapper(typeof(AutoMapperConfig));
 
