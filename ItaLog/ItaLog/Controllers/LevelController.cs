@@ -32,7 +32,7 @@ namespace ItaLog.Api.Controllers
             var user = _app.FindById(id);
 
             if (user is null)
-                return NoContent();
+                return NotFound();
 
             return Ok(user);
         }
