@@ -3,9 +3,8 @@ using ItaLog.Application.Interface;
 using ItaLog.Application.ViewModels;
 using ItaLog.Domain.Interfaces.Repositories;
 using ItaLog.Domain.Models;
-using System;
+using System.Linq;
 using System.Collections.Generic;
-using System.Text;
 
 namespace ItaLog.Application.App
 {
@@ -19,19 +18,47 @@ namespace ItaLog.Application.App
             _repository = repository;
             _mapper = mapper;
         }
-        public void Add(LogViewModel entity)
+
+        public void Add(LogEventViewModel entity)
         {
-            _repository.Add(_mapper.Map<Log>(entity));
-        }        
+            var log = _mapper.Map<Log>(entity);
+            log.Events = new List<Event>()
+            {
+                new Event()
+                {
+                    Detail = entity.Detail,
+                    ErrorDate = entity.ErrorDate
+                }
+            };
+
+            _repository.Add(log);
+        }
+
+        public void Archive(int id)
+        {
+            _repository.Archive(id);                       
+        }
 
         public LogViewModel FindById(int id)
         {
             return _mapper.Map<LogViewModel>(_repository.FindById(id));
         }
 
-        public IEnumerable<LogViewModel> GetAll()
+        public IEnumerable<LogItemPageViewModel> GetAllNotArchived()
         {
-            return _mapper.Map<IEnumerable<LogViewModel>>(_repository.GetAll());
+            var logsItensPage = new List<LogItemPageViewModel>();
+            return _repository
+                .GetAllNotArchived()
+                .Select(log => new LogItemPageViewModel()
+                {
+                    IdLog = log.Id,
+                    Title = log.Title,
+                    EventsCount = log.Events.Count(),
+                    Origin = log.Origin,
+                    Level = _mapper.Map<LevelViewModel>(log.Level),
+                    Environment = _mapper.Map<EnvironmentViewModel>(log.Environment),
+                    ErrorDate = log.Events.Last().ErrorDate
+                });
         }
 
         public void Remove(int id)

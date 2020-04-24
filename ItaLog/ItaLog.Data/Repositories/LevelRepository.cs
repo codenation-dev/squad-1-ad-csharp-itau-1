@@ -32,8 +32,8 @@ namespace ItaLog.Api.Repository
 
         public void Remove(int id)
         {
-            var user = _context.Levels.First(level => level.Id == id);
-            _context.Levels.Remove(user);
+            var level = _context.Levels.First(level => level.Id == id);
+            _context.Levels.Remove(level);
             _context.SaveChanges();
         }
 

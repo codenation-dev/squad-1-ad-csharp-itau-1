@@ -15,17 +15,16 @@ namespace ItaLog.Data.Maps
 
             builder.HasKey(x => x.Id);
 
+            builder.Property(x => x.Detail)
+               .HasMaxLength(1024)
+               .HasColumnType("varchar(1024)")
+               .IsRequired();
+
             builder.Property(x => x.ErrorDate)
                 .HasColumnType("datetime")
-                .IsRequired();
+                .IsRequired();            
 
-            builder.Property(x => x.Origin)
-                .HasMaxLength(20)
-                .HasColumnType("varchar(20)")
-                .IsRequired();
-
-            builder.Property(x => x.Archived)
-                .IsRequired();
+            
 
         }
     }

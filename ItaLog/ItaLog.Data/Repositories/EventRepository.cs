@@ -1,7 +1,7 @@
 ﻿using ItaLog.Data.Context;
 using ItaLog.Domain.Interfaces.Repositories;
 using ItaLog.Domain.Models;
-using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Text;
 
@@ -15,35 +15,32 @@ namespace ItaLog.Data.Repositories
             _context = context;
         }
 
-        public void Add(Event entity)
+        public void Add(Event eventLog)
         {
-            throw new NotImplementedException();
+            _context.Events.Add(eventLog);
+            _context.SaveChanges();
         }
-
+        
         public Event FindById(int id)
         {
-            throw new NotImplementedException();
+            return _context.Events.FirstOrDefault(eventLog => eventLog.Id == id);
         }
 
         public IEnumerable<Event> GetAll()
         {
-            throw new NotImplementedException();
+            return _context.Events.ToList();
         }
 
         public void Remove(int id)
         {
-            throw new NotImplementedException();
+            var eventLog = _context.Events.First(eventLog => eventLog.Id == id);
+            _context.Events.Remove(eventLog);
+            _context.SaveChanges();
         }
 
-        public void Update(Event entity)
+        public void Update(Event eventLog)
         {
-            throw new NotImplementedException();
-        }
-
-        public void Archive(int id)
-        {
-            var log = FindById(id);
-            log.Archived = true;
+            _context.Events.Update(eventLog);
             _context.SaveChanges();
         }
     }

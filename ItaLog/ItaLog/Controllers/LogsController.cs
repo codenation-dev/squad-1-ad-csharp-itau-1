@@ -11,22 +11,22 @@ namespace ItaLog.Api.Controllers
     [ApiController]
     public class LogsController : ControllerBase
     {
-        private readonly ILogApplication _repository;
+        private readonly ILogApplication _app;
         public LogsController(ILogApplication repository)
         {
-            _repository = repository;
+            _app = repository;
         }
 
         [HttpGet]
-        public IEnumerable<LogViewModel> GetLogs()
+        public IEnumerable<LogItemPageViewModel> GetLogs()
         {
-            return _repository.GetAll();
+            return _app.GetAllNotArchived();
         }
 
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
-            var log = _repository.FindById(id);
+            var log = _app.FindById(id);
             if (log is null)
                 return NotFound();
 
@@ -34,44 +34,37 @@ namespace ItaLog.Api.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create([FromBody] LogViewModel log)
+        public IActionResult Create([FromBody] LogEventViewModel log)
         {
             if (log is null)
                 return BadRequest();
 
-            _repository.Add(log);
+           _app.Add(log);
 
-            return CreatedAtAction(nameof(GetById), new { id = log.Id }, log);
+            return NoContent();
         }
 
-        //[HttpPut("{id}")]
-        //public IActionResult Update(int id, [FromBody] Log log)
-        //{
-        //    if (log is null || log.Id != id)
-        //        return BadRequest();
-
-        //    var logFind = _logRepository.FindById(id);
-
-        //    if (logFind is null)
-        //        return NotFound();
-
-        //    logFind.Archive = log.Archive;
-
-        //    _logRepository.Update(logFind);
-
-        //    return new NoContentResult();
-        //}
-
-        [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        [HttpPost("{id}/Archive")]
+        public IActionResult Archive(int id)
         {
-            var logFind = _repository.FindById(id);
+            var logFind = _app.FindById(id);
 
             if (logFind is null)
                 return NotFound();
 
-            _repository.Remove(id);
+            _app.Archive(id);         
+            return new NoContentResult();
+        }
 
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            var logFind = _app.FindById(id);
+
+            if (logFind is null)
+                return NotFound();
+
+            _app.Remove(id);
             return new NoContentResult();
         }
 

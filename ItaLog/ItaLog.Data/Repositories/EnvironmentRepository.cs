@@ -32,8 +32,8 @@ namespace ItaLog.Api.Repository
 
         public void Remove(int id)
         {
-            var user = _context.Environments.First(environment => environment.Id == id);
-            _context.Environments.Remove(user);
+            var environment = _context.Environments.First(environment => environment.Id == id);
+            _context.Environments.Remove(environment);
             _context.SaveChanges();
         }
 

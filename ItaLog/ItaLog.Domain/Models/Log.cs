@@ -7,11 +7,14 @@ namespace ItaLog.Domain.Models
     {
         public int Id { get; set; }
         public string Title { get; set; }
-        public string Detail { get; set; }
-        public int UserErrorCode { get; set; }
+        public string Origin { get; set; }
+        public bool Archived { get; set; }
 
         public int LevelId { get; set; }
         public Level Level { get; set; }
+
+        public int EnvironmentId { get; set; }
+        public Environment Environment { get; set; }
 
         public int ApiUserId { get; set; }
         public ApiUser ApiUser { get; set; }

@@ -14,8 +14,10 @@ namespace ItaLog.Application.AutoMapper
         public AutoMapperConfig()
         {
             CreateMap<Log, LogViewModel>().ReverseMap();
+            CreateMap<Log, LogEventViewModel>().ReverseMap();
             CreateMap<Level, LevelViewModel>().ReverseMap();
             CreateMap<Environment, EnvironmentViewModel>().ReverseMap();
+            CreateMap<Event, EventViewModel>().ReverseMap();
         }
     }
 }

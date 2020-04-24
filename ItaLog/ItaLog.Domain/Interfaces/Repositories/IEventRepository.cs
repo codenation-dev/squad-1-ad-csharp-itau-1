@@ -7,6 +7,6 @@ namespace ItaLog.Domain.Interfaces.Repositories
 {
     public interface IEventRepository : IRepositoryBase<Event>
     {
-        public void Archive(int id);
+        
     }
 }

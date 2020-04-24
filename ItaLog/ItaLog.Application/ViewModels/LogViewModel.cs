@@ -8,17 +8,19 @@ namespace ItaLog.Application.ViewModels
     {
         public int Id { get; set; }
         public string Title { get; set; }
-        public string Detail { get; set; }
-        public int UserErrorCode { get; set; }
+        public string Origin { get; set; }
+        public bool Archived { get; set; }
 
-
-        public int UserId { get; set; }
-
-        public ApiUserViewModel User { get; set; }
-
-
+        public int EnvironmentId { get; set; }
         public EnvironmentViewModel Environment { get; set; }
+        
 
+    public int ApiUserId { get; set; }
+        public ApiUserViewModel ApiUser { get; set; }
+
+        public int LevelId { get; set; }
         public LevelViewModel Level { get; set; }
+
+        public IEnumerable<EventViewModel> Events { get; set; }
     }
 }
