@@ -14,6 +14,8 @@ namespace ItaLog.Domain.Models
         public string Email { get; set; }
         public bool EmailConfirmed { get; set; }
         public string Password { get; set; }
+        public DateTime CreateDate { get; set; }
+        public DateTime LastUpdateDate { get; set; }
 
         public IEnumerable<ApiUserRole> UserRoles { get; set; }
         public IEnumerable<Log> Logs { get; set; }        

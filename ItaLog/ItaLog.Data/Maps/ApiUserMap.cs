@@ -1,4 +1,5 @@
-﻿using ItaLog.Domain.Models;
+﻿using ItaLog.Data.Seeds;
+using ItaLog.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -37,6 +38,18 @@ namespace ItaLog.Data.Maps
             builder.Property(x => x.Password)
                .HasColumnType("varchar(max)")
                .IsRequired();
+
+            builder.Property(x => x.CreateDate)
+                .HasColumnType("datetime")
+                .IsRequired();
+
+            builder.Property(x => x.LastUpdateDate)
+                .HasColumnType("datetime")
+                .IsRequired();
+
+            builder.HasData(
+                    ApiUserSeed.GetData()
+                );
         }
     }
 }
