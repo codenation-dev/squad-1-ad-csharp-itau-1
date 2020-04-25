@@ -1,4 +1,5 @@
 ﻿using ItaLog.Data.Context;
+using ItaLog.Data.Extensions;
 using ItaLog.Domain.Interfaces.Repositories;
 using ItaLog.Domain.Models;
 using Microsoft.EntityFrameworkCore;
@@ -21,17 +22,6 @@ namespace ItaLog.Api.Repository
             log.Archived = true;
             _context.Logs.Update(log);
             _context.SaveChanges();
-        }
-
-        public IEnumerable<Log> GetAllNotArchived()
-        {
-            return _context
-                    .Logs
-                    .Where(log => log.Archived == false)
-                    .Include(x => x.Level)
-                    .Include(x => x.Events)
-                    .Include(x => x.Environment)
-                    .ToList();
         }
 
         public void Add(Log log)
@@ -95,6 +85,15 @@ namespace ItaLog.Api.Repository
                     );
         }
 
-
+        public Page<Log> GetPage(int pageNumber = 1, int pageLength = 20)
+        {
+            return _context
+                    .Logs
+                    .Where(log => log.Archived == false)
+                    .Include(x => x.Level)
+                    .Include(x => x.Events)
+                    .Include(x => x.Environment)
+                    .ToPage(pageNumber, pageLength);             
+        }
     }
 }

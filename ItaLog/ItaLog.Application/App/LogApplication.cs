@@ -44,21 +44,11 @@ namespace ItaLog.Application.App
             return _mapper.Map<LogViewModel>(_repository.FindById(id));
         }
 
-        public IEnumerable<LogItemPageViewModel> GetAllNotArchived()
+        public PageViewModel<LogItemPageViewModel> GetPage(int pageNumber, int pageLength)
         {
             var logsItensPage = new List<LogItemPageViewModel>();
-            return _repository
-                .GetAllNotArchived()
-                .Select(log => new LogItemPageViewModel()
-                {
-                    IdLog = log.Id,
-                    Title = log.Title,
-                    EventsCount = log.Events.Count(),
-                    Origin = log.Origin,
-                    Level = _mapper.Map<LevelViewModel>(log.Level),
-                    Environment = _mapper.Map<EnvironmentViewModel>(log.Environment),
-                    ErrorDate = log.Events.Last().ErrorDate
-                });
+            var pageLog = _repository.GetPage(pageNumber, pageLength);
+            return _mapper.Map<PageViewModel<LogItemPageViewModel>>(pageLog);
         }
 
         public void Remove(int id)

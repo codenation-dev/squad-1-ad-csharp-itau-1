@@ -18,9 +18,11 @@ namespace ItaLog.Api.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<LogItemPageViewModel> GetLogs()
+        public PageViewModel<LogItemPageViewModel> GetLogs(
+            [FromQuery] int pageNumber = 1,
+            [FromQuery] int pageLength = 20)
         {
-            return _app.GetAllNotArchived();
+            return _app.GetPage(pageNumber, pageLength);
         }
 
         [HttpGet("{id}")]

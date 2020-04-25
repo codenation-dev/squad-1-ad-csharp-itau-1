@@ -7,7 +7,7 @@ namespace ItaLog.Application.Interface
 {
     public interface ILogApplication
     {
-        IEnumerable<LogItemPageViewModel> GetAllNotArchived();
+        PageViewModel<LogItemPageViewModel> GetPage(int pageNumber, int pageLength);
         void Add(LogEventViewModel entity);
         LogViewModel FindById(int id);
         void Archive(int id);

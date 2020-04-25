@@ -6,7 +6,7 @@ namespace ItaLog.Application.ViewModels
 {
     public class LogItemPageViewModel
     {
-        public int IdLog { get; set; }
+        public int Id { get; set; }
         public string Title { get; set; }
         public int EventsCount { get; set; }
         public DateTime ErrorDate { get; set; }
