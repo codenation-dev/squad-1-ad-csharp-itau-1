@@ -2,7 +2,7 @@
 
 namespace ItaLog.Domain.Interfaces.Repositories
 {
-    public interface IUserRoleRepository : IRepositoryBase<ApiUserRole>
+    public interface IApiUserRoleRepository : IRepositoryBase<ApiUserRole>
     {
     }
 }

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace ItaLog.Data.Repositories
 {
-    public class UserRoleRepository : IUserRoleRepository
+    public class UserRoleRepository : IApiUserRoleRepository
     {
         public void Add(ApiUserRole entity)
         {

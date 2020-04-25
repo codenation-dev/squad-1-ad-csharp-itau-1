@@ -1,4 +1,4 @@
-﻿using ItaLog.Application.App;
+﻿using ItaLog.Api.Configurations;
 using ItaLog.Application.ViewModels;
 using ItaLog.Domain.Models;
 using Microsoft.AspNetCore.Identity;
@@ -40,7 +40,9 @@ namespace ItaLog.Api.Controllers
                 Name = userRegistration.Name,
                 UserName = userRegistration.Email,
                 Email = userRegistration.Email,
-                EmailConfirmed = true
+                EmailConfirmed = true,
+                CreateDate = DateTime.Now,
+                LastUpdateDate = DateTime.Now
             };
 
             var result = await _userManager.CreateAsync(user, userRegistration.Password);

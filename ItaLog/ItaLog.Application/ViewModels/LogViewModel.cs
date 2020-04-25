@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace ItaLog.Application.ViewModels
 {
@@ -13,9 +11,9 @@ namespace ItaLog.Application.ViewModels
 
         public int EnvironmentId { get; set; }
         public EnvironmentViewModel Environment { get; set; }
-        
 
-    public int ApiUserId { get; set; }
+
+        public int ApiUserId { get; set; }
         public ApiUserViewModel ApiUser { get; set; }
 
         public int LevelId { get; set; }

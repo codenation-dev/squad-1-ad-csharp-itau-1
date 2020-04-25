@@ -32,14 +32,15 @@ namespace ItaLog.Api
         {
             services.AddDbContext<ItaLogContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("Database")));
-            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IApiUserRepository, ApiUserRepository>();
             services.AddScoped<ILogRepository, LogRepository>();
             services.AddScoped<ILevelRepository, LevelRepository>();
             services.AddScoped<IEnvironmentRepository, EnvironmentRepository>();
             services.AddScoped<IEventRepository, EventRepository>();
-            services.AddScoped<IRoleRepository, RoleRepository>();
-            services.AddScoped<IUserRoleRepository, UserRoleRepository>();
+            services.AddScoped<IApiRoleRepository, RoleRepository>();
+            services.AddScoped<IApiUserRoleRepository, UserRoleRepository>();
 
+            services.AddScoped<IApiUserApplication, ApiUserApplication>();
             services.AddScoped<ILogApplication, LogApplication>();
             services.AddScoped<ILevelApplication, LevelApplication>();
             services.AddScoped<IEnvironmentApplication, EnvironmentApplication>();
