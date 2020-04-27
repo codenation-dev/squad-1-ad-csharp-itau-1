@@ -1,31 +1,63 @@
-﻿using ItaLog.Domain.Models;
+﻿using ItaLog.Data.Context;
+using ItaLog.Domain.Models;
+using System.Linq;
 
 namespace ItaLog.Data.Seed
 {
-    public static class LevelSeed
+    public class LevelSeed
     {
-        public static Level[] GetData()
-        {
-            int idValue = 0;
+        private readonly ItaLogContext _context;
 
-            return new Level[]
-            {
-                new Level
-                {
-                    Id = ++idValue,
-                    Description = "Debug"
-                },
-                new Level
-                {
-                    Id = ++idValue,
-                    Description = "Warning"
-                },
-                new Level
-                {
-                    Id = ++idValue,
-                    Description = "Error"
-                },
-            };
+        public LevelSeed(ItaLogContext context)
+        {
+            _context = context;
         }
+
+        public void Populate()
+        {
+            if (_context.Levels.Any())
+                return;
+
+            Level lvl1 = new Level
+            {
+                //Id = 1,
+                Description = "Debug"
+            };
+            Level lvl2 = new Level
+            {
+                //Id = 2,
+                Description = "Warning"
+            };
+            Level lvl3 = new Level
+            {
+                //Id = 3,
+                Description = "Error"
+            };
+
+            _context.Levels.AddRange(lvl1, lvl2, lvl3);
+            _context.SaveChanges();
+        }
+        //public static Level[] GetData()
+        //{
+        //    int idValue = 0;
+            //return new Level[]
+            //{
+            //    new Level
+            //    {
+            //        Id = ++idValue,
+            //        Description = "Debug"
+            //    },
+            //    new Level
+            //    {
+            //        Id = ++idValue,
+            //        Description = "Warning"
+            //    },
+            //    new Level
+            //    {
+            //        Id = ++idValue,
+            //        Description = "Error"
+            //    },
+            //};
+        //}
     }
 }

@@ -47,9 +47,9 @@ namespace ItaLog.Data.Maps
                 .HasColumnType("datetime")
                 .IsRequired();
 
-            builder.HasData(
-                    UserSeed.GetData()
-                );
+            //builder.HasData(
+            //        UserSeed.GetData()
+            //    );
         }
     }
 }

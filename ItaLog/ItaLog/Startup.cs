@@ -16,6 +16,8 @@ using ItaLog.Data.Repositories;
 using ItaLog.Domain.Models;
 using Microsoft.AspNetCore.Identity;
 using ItaLog.Data.Store;
+using ItaLog.Data.Seeds;
+using ItaLog.Data.Seed;
 
 namespace ItaLog.Api
 {
@@ -40,9 +42,16 @@ namespace ItaLog.Api
             services.AddScoped<IRoleRepository, RoleRepository>();
             services.AddScoped<IUserRoleRepository, UserRoleRepository>();
 
-            services.AddScoped<ILogApplication, LogApplication>();
-            services.AddScoped<ILevelApplication, LevelApplication>();
-            services.AddScoped<IEnvironmentApplication, EnvironmentApplication>();
+            //services.AddScoped<ILogApplication, LogApplication>();
+            //services.AddScoped<ILevelApplication, LevelApplication>();
+            //services.AddScoped<IEnvironmentApplication, EnvironmentApplication>();
+
+            services.AddScoped<UserSeed>();
+            services.AddScoped<RoleSeed>();
+            services.AddScoped<LevelSeed>();
+            services.AddScoped<EnvironmentSeed>();
+            services.AddScoped<LogSeed>();
+            services.AddScoped<EventSeed>();
 
             services.AddAutoMapper(typeof(AutoMapperConfig));
 
@@ -61,11 +70,17 @@ namespace ItaLog.Api
             services.AddSwaggerSetup();
         }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, UserSeed userSeed, RoleSeed roleSeed, LevelSeed levelSeed, EnvironmentSeed environmentSeed, LogSeed logSeed, EventSeed eventSeed)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                userSeed.Populate();
+                roleSeed.Populate();
+                levelSeed.Populate();
+                environmentSeed.Populate();
+                logSeed.Populate();
+                eventSeed.Populate();
             }
 
             app.UseSwaggerSetup();

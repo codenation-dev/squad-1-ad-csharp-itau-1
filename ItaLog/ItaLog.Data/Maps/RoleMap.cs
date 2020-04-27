@@ -18,7 +18,7 @@ namespace ItaLog.Data.Maps
                 .HasColumnType("varchar(100)")
                 .IsRequired();
 
-            builder.HasData(RoleSeed.GetData());
+            //builder.HasData(RoleSeed.GetData());
         }
     }
 }
