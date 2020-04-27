@@ -10,7 +10,8 @@ using System.Collections.Generic;
 namespace ItaLog.Api.Controllers
 {
     [Authorize]
-    [Route("api/[Controller]")]
+    [ApiVersion("1.0")]
+    [Route("api/v{version:apiVersion}/[Controller]")]
     [ApiController]
     public class LogsController : ControllerBase
     {

@@ -14,7 +14,7 @@ namespace ItaLog.Application.ViewModels
 
 
         public int ApiUserId { get; set; }
-        public ApiUserViewModel ApiUser { get; set; }
+        public UserViewModel ApiUser { get; set; }
 
         public int LevelId { get; set; }
         public LevelViewModel Level { get; set; }

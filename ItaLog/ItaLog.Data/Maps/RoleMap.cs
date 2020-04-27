@@ -5,11 +5,11 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace ItaLog.Data.Maps
 {
-    public class ApiRoleMap : IEntityTypeConfiguration<ApiRole>
+    public class RoleMap : IEntityTypeConfiguration<Role>
     {
-        public void Configure(EntityTypeBuilder<ApiRole> builder)
+        public void Configure(EntityTypeBuilder<Role> builder)
         {
-            builder.ToTable(nameof(ApiRole));
+            builder.ToTable(nameof(Role));
 
             builder.HasKey(x => x.Id);
 

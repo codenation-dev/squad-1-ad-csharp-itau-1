@@ -13,14 +13,15 @@ using System.Threading.Tasks;
 
 namespace ItaLog.Api.Controllers
 {
-    [Route("api/[Controller]/[action]")]
+    [ApiVersion("1.0")]
+    [Route("api/v{version:apiVersion}/[Controller]/[action]")]
     [ApiController]
     public class AccountController : ControllerBase
     {
-        private readonly SignInManager<ApiUser> _signInManager;
-        private readonly UserManager<ApiUser> _userManager;
+        private readonly SignInManager<User> _signInManager;
+        private readonly UserManager<User> _userManager;
         private readonly AppSettings _appSettings;
-        public AccountController(SignInManager<ApiUser> signInManager, UserManager<ApiUser> userManager,
+        public AccountController(SignInManager<User> signInManager, UserManager<User> userManager,
             IOptions<AppSettings> appSettings)
         {
             _signInManager = signInManager;
@@ -34,7 +35,7 @@ namespace ItaLog.Api.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState.Values.SelectMany(e => e.Errors));
 
-            var user = new ApiUser
+            var user = new User
             {
                 UserToken = Guid.NewGuid(),
                 Name = userRegistration.Name,

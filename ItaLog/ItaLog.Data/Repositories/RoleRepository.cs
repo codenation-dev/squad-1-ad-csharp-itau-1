@@ -5,19 +5,19 @@ using System.Collections.Generic;
 
 namespace ItaLog.Data.Repositories
 {
-    public class RoleRepository : IApiRoleRepository
+    public class RoleRepository : IRoleRepository
     {
-        public void Add(ApiRole entity)
+        public void Add(Role entity)
         {
             throw new NotImplementedException();
         }
 
-        public ApiRole FindById(int id)
+        public Role FindById(int id)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<ApiRole> GetAll()
+        public IEnumerable<Role> GetAll()
         {
             throw new NotImplementedException();
         }
@@ -27,7 +27,7 @@ namespace ItaLog.Data.Repositories
             throw new NotImplementedException();
         }
 
-        public void Update(ApiRole entity)
+        public void Update(Role entity)
         {
             throw new NotImplementedException();
         }

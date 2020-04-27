@@ -17,7 +17,7 @@ namespace ItaLog.Domain.Models
         public Environment Environment { get; set; }
 
         public int ApiUserId { get; set; }
-        public ApiUser ApiUser { get; set; }
+        public User ApiUser { get; set; }
 
         public IEnumerable<Event> Events { get; set; }
     }

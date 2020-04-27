@@ -1,6 +1,4 @@
-﻿using ItaLog.Application.App;
-using ItaLog.Data.Context;
-using ItaLog.Domain.Models;
+﻿using ItaLog.Domain.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
@@ -17,7 +15,7 @@ namespace ItaLog.Api.Configurations
         {
             if (services == null) throw new ArgumentNullException(nameof(services));
 
-            services.AddIdentity<ApiUser, ApiRole>()
+            services.AddIdentity<User, Role>()
                 .AddDefaultTokenProviders();
 
             var appSettingsSection = configuration.GetSection("AppSettings");

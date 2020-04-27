@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using ItaLog.Application.Interface;
 using ItaLog.Application.ViewModels;
 using ItaLog.Domain.Interfaces.Repositories;
 using Microsoft.AspNetCore.Authorization;
@@ -10,28 +9,29 @@ using System.Collections.Generic;
 namespace ItaLog.Api.Controllers
 {
     [Authorize]
-    [Route("api/Users/[action]")]
+    [ApiVersion("1.0")]
+    [Route("api/v{version:apiVersion}/[controller]/[action]")]
     [ApiController]
-    public class ApiUserController : ControllerBase
+    public class UsersController : ControllerBase
     {
-        private readonly IApiUserRepository _repo;
+        private readonly IUserRepository _repo;
         private readonly IMapper _mapper;
-        public ApiUserController(IApiUserRepository repo, IMapper mapper)
+        public UsersController(IUserRepository repo, IMapper mapper)
         {
             _repo = repo;
             _mapper = mapper;
         }
 
         [HttpGet]
-        public IEnumerable<ApiUserViewModel> Users()
+        public IEnumerable<UserViewModel> Users()
         {
-            return _mapper.Map<List<ApiUserViewModel>>(_repo.GetAll());
+            return _mapper.Map<List<UserViewModel>>(_repo.GetAll());
         }
 
         [HttpGet]
         public IActionResult Id(int id)
         {
-            var user = _mapper.Map<ApiUserViewModel>(_repo.FindById(id));
+            var user = _mapper.Map<UserViewModel>(_repo.FindById(id));
             if (user is null)
                 return NotFound();
 
@@ -41,7 +41,7 @@ namespace ItaLog.Api.Controllers
         [HttpGet]
         public IActionResult Name(string name)
         {
-            var user = _mapper.Map<ApiUserViewModel>(_repo.FindByName(name));
+            var user = _mapper.Map<UserViewModel>(_repo.FindByName(name));
             if (user is null)
                 return NotFound();
 
@@ -51,7 +51,7 @@ namespace ItaLog.Api.Controllers
         [HttpGet]
         public IActionResult Email(string email)
         {
-            var user = _mapper.Map<ApiUserViewModel>(_repo.FindByEmail(email));
+            var user = _mapper.Map<UserViewModel>(_repo.FindByEmail(email));
             if (user is null)
                 return NotFound();
 

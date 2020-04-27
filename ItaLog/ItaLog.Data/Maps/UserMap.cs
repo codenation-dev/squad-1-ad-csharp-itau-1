@@ -5,11 +5,11 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace ItaLog.Data.Maps
 {
-    class ApiUserMap : IEntityTypeConfiguration<ApiUser>
+    class UserMap : IEntityTypeConfiguration<User>
     {
-        public void Configure(EntityTypeBuilder<ApiUser> builder)
+        public void Configure(EntityTypeBuilder<User> builder)
         {
-            builder.ToTable(nameof(ApiUser));
+            builder.ToTable(nameof(User));
 
             builder.HasKey(x => x.Id);
 
@@ -48,7 +48,7 @@ namespace ItaLog.Data.Maps
                 .IsRequired();
 
             builder.HasData(
-                    ApiUserSeed.GetData()
+                    UserSeed.GetData()
                 );
         }
     }

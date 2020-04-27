@@ -32,15 +32,14 @@ namespace ItaLog.Api
         {
             services.AddDbContext<ItaLogContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("Database")));
-            services.AddScoped<IApiUserRepository, ApiUserRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<ILogRepository, LogRepository>();
             services.AddScoped<ILevelRepository, LevelRepository>();
             services.AddScoped<IEnvironmentRepository, EnvironmentRepository>();
             services.AddScoped<IEventRepository, EventRepository>();
-            services.AddScoped<IApiRoleRepository, RoleRepository>();
-            services.AddScoped<IApiUserRoleRepository, UserRoleRepository>();
+            services.AddScoped<IRoleRepository, RoleRepository>();
+            services.AddScoped<IUserRoleRepository, UserRoleRepository>();
 
-            services.AddScoped<IApiUserApplication, ApiUserApplication>();
             services.AddScoped<ILogApplication, LogApplication>();
             services.AddScoped<ILevelApplication, LevelApplication>();
             services.AddScoped<IEnvironmentApplication, EnvironmentApplication>();
@@ -49,8 +48,11 @@ namespace ItaLog.Api
 
             services.AddControllers();
 
-            services.AddTransient<IUserStore<ApiUser>, ApiUserStore>();
-            services.AddTransient<IRoleStore<ApiRole>, ApiRoleStore>();
+            services.AddTransient<IUserStore<User>, UserStore>();
+            services.AddTransient<IRoleStore<Role>, RoleStore>();
+
+            // Api Versioning Config
+            services.AddVersioningSetup();
 
             // ASP.NET Identity Settings & JWT
             services.AddIdentitySetup(Configuration);

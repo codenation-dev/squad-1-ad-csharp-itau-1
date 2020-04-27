@@ -4,14 +4,14 @@ namespace ItaLog.Data.Seeds
 {
     public static class RoleSeed
     {
-        public static ApiRole[] GetData()
+        public static Role[] GetData()
         {
             int idValue = 0;
 
-            return new ApiRole[]
+            return new Role[]
             {
-                new ApiRole { Id = ++idValue, Name = "User" },
-                new ApiRole { Id = ++idValue, Name = "Administrator" },                
+                new Role { Id = ++idValue, Name = "User" },
+                new Role { Id = ++idValue, Name = "Administrator" },                
             };
         }
     }
