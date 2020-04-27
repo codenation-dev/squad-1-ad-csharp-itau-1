@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using ItaLog.Application.Interface;
 using ItaLog.Application.ViewModels;
 using ItaLog.Domain.Interfaces.Repositories;
+using ItaLog.Domain.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,27 +16,29 @@ namespace ItaLog.Api.Controllers
     [ApiController]
     public class LevelController : ControllerBase
     {
-        private readonly ILevelApplication _app;
-        public LevelController(ILevelApplication app)
+        private readonly ILevelRepository _repo;
+        private readonly IMapper _mapper;
+        public LevelController(ILevelRepository repository, IMapper mapper)
         {
-            _app = app;
+            _repo = repository;
+            _mapper = mapper;
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<LevelViewModel>> GetUsers()
+        public ActionResult<IEnumerable<LevelViewModel>> GetLevels()
         {
-            return Ok(_app.GetAll());
+            return Ok(_mapper.Map<IEnumerable<LevelViewModel>>(_repo.GetAll()));
         }
 
         [HttpGet("{id}")]
         public ActionResult GetById(int id)
         {
-            var user = _app.FindById(id);
+            var level = _mapper.Map<LevelViewModel>(_repo.FindById(id));
 
-            if (user is null)
+            if (level is null)
                 return NotFound();
 
-            return Ok(user);
+            return Ok(level);
         }
 
         [HttpPost]
@@ -43,7 +47,7 @@ namespace ItaLog.Api.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState.Values.SelectMany(e => e.Errors));
 
-            _app.Add(level);
+            _repo.Add(_mapper.Map<Level>(level));
 
             return CreatedAtAction(nameof(GetById), new { id = level.Id }, level);
         }
@@ -57,14 +61,14 @@ namespace ItaLog.Api.Controllers
             if (level.Id != id)
                 return BadRequest();
 
-            var levelFind = _app.FindById(id);
+            var levelFind = _repo.FindById(id);
 
             if (levelFind is null)
                 return NotFound();
 
             levelFind.Description = level.Description;
 
-            _app.Update(levelFind);
+            _repo.Update(levelFind);
 
             return Ok();
         }
@@ -73,12 +77,12 @@ namespace ItaLog.Api.Controllers
         public 
             ActionResult Delete(int id)
         {
-            var userFind = _app.FindById(id);
+            var userFind = _repo.FindById(id);
 
             if (userFind is null)
                 return NotFound();
 
-            _app.Remove(id);
+            _repo.Remove(id);
 
             return Ok();
         }

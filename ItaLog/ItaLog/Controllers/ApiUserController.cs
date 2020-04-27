@@ -1,8 +1,11 @@
-﻿using ItaLog.Application.Interface;
+﻿using AutoMapper;
+using ItaLog.Application.Interface;
 using ItaLog.Application.ViewModels;
+using ItaLog.Domain.Interfaces.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+
 
 namespace ItaLog.Api.Controllers
 {
@@ -11,22 +14,24 @@ namespace ItaLog.Api.Controllers
     [ApiController]
     public class ApiUserController : ControllerBase
     {
-        private readonly IApiUserApplication _userApplication;
-        public ApiUserController(IApiUserApplication userApplication)
+        private readonly IApiUserRepository _repo;
+        private readonly IMapper _mapper;
+        public ApiUserController(IApiUserRepository repo, IMapper mapper)
         {
-            _userApplication = userApplication;
+            _repo = repo;
+            _mapper = mapper;
         }
 
         [HttpGet]
         public IEnumerable<ApiUserViewModel> Users()
         {
-            return _userApplication.GetAll();
+            return _mapper.Map<List<ApiUserViewModel>>(_repo.GetAll());
         }
 
         [HttpGet]
         public IActionResult Id(int id)
         {
-            var user = _userApplication.FindById(id);
+            var user = _mapper.Map<ApiUserViewModel>(_repo.FindById(id));
             if (user is null)
                 return NotFound();
 
@@ -36,7 +41,7 @@ namespace ItaLog.Api.Controllers
         [HttpGet]
         public IActionResult Name(string name)
         {
-            var user = _userApplication.FindByName(name);
+            var user = _mapper.Map<ApiUserViewModel>(_repo.FindByName(name));
             if (user is null)
                 return NotFound();
 
@@ -46,7 +51,7 @@ namespace ItaLog.Api.Controllers
         [HttpGet]
         public IActionResult Email(string email)
         {
-            var user = _userApplication.FindByEmail(email);
+            var user = _mapper.Map<ApiUserViewModel>(_repo.FindByEmail(email));
             if (user is null)
                 return NotFound();
 

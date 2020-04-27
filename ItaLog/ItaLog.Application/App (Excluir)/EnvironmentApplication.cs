@@ -20,7 +20,7 @@ namespace ItaLog.Application.App
 
         public void Add(EnvironmentViewModel entity)
         {
-            _repository.Add(_mapper.Map<Environment>(entity));
+            //_repository.Add(_mapper.Map<Environment>(entity));
         }
 
         public void Update(EnvironmentViewModel entity)

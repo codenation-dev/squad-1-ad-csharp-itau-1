@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using ItaLog.Application.Interface;
 using ItaLog.Application.ViewModels;
+using ItaLog.Domain.Interfaces.Repositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,57 +15,58 @@ namespace ItaLog.Api.Controllers
     [ApiController]
     public class EnvironmentController : ControllerBase
     {
-        private readonly IEnvironmentApplication _app;
-        public EnvironmentController(IEnvironmentApplication app)
+        private readonly IEnvironmentRepository _repo;
+        private readonly IMapper _mapper;
+        public EnvironmentController(IEnvironmentRepository repo, IMapper mapper)
         {
-            _app = app;
+            _repo = repo;
+            _mapper = mapper;
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<EnvironmentViewModel>> GetUsers()
+        public ActionResult<IEnumerable<EnvironmentViewModel>> GetEnvironments()
         {
-            return Ok(_app.GetAll());
+            return Ok(_mapper.Map<IEnumerable<EnvironmentViewModel>>(_repo.GetAll()));
         }
 
         [HttpGet("{id}")]
         public ActionResult GetById(int id)
         {
-            var user = _app.FindById(id);
+            var env = _mapper.Map<EnvironmentViewModel>(_repo.FindById(id));
 
-            if (user is null)
+            if (env is null)
                 return NotFound();
 
-            return Ok(user);
+            return Ok(env);
         }
 
         [HttpPost]
-        public ActionResult Create([FromBody] EnvironmentViewModel level)
+        public ActionResult Create([FromBody] EnvironmentViewModel Env)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState.Values.SelectMany(e => e.Errors));
 
-            _app.Add(level);
+            _repo.Add(_mapper.Map<Domain.Models.Environment>(Env));
 
-            return CreatedAtAction(nameof(GetById), new { id = level.Id }, level);
+            return CreatedAtAction(nameof(GetById), new { id = Env.Id }, Env);
         }
 
         [HttpPut("{id}")]
-        public ActionResult Update(int id, [FromBody] EnvironmentViewModel level)
+        public ActionResult Update(int id, [FromBody] EnvironmentViewModel Env)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState.Values.SelectMany(e => e.Errors));
 
-            if (level.Id != id)
+            if (Env.Id != id)
                 return BadRequest();
 
-            var levelFind = _app.FindById(id);
+            var EnvFind = _repo.FindById(id);
+            EnvFind.Description = Env.Description;
 
-            if (levelFind is null)
+            if (EnvFind is null)
                 return NotFound();
 
-            levelFind.Description = level.Description;
-
-            _app.Update(levelFind);
+           _repo.Update(EnvFind);
 
             return Ok();
         }
@@ -71,12 +74,12 @@ namespace ItaLog.Api.Controllers
         [HttpDelete("{id}")]
         public ActionResult Delete(int id)
         {
-            var userFind = _app.FindById(id);
+            var envFind = _repo.FindById(id);
 
-            if (userFind is null)
+            if (envFind is null)
                 return NotFound();
 
-            _app.Remove(id);
+            _repo.Remove(id);
 
             return Ok();
         }

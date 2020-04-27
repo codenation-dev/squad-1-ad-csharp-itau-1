@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ItaLog.Data.Migrations
 {
     [DbContext(typeof(ItaLogContext))]
-    [Migration("20200425212611_Initial")]
-    partial class Initial
+    [Migration("20200427030919_mig")]
+    partial class mig
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -100,93 +100,93 @@ namespace ItaLog.Data.Migrations
                         new
                         {
                             Id = 1,
-                            CreateDate = new DateTime(2020, 4, 25, 18, 26, 11, 68, DateTimeKind.Local).AddTicks(8403),
+                            CreateDate = new DateTime(2020, 4, 27, 0, 9, 18, 961, DateTimeKind.Local).AddTicks(566),
                             Email = "admin@contato.com",
                             EmailConfirmed = true,
-                            LastUpdateDate = new DateTime(2020, 4, 25, 18, 26, 11, 69, DateTimeKind.Local).AddTicks(1965),
+                            LastUpdateDate = new DateTime(2020, 4, 27, 0, 9, 18, 962, DateTimeKind.Local).AddTicks(2053),
                             Name = "Admin",
                             NormalizedUserName = "ADMIN@CONTATO.COM",
                             Password = "AQAAAAEAACcQAAAAENiU++GjfU7q1nAIgwulJmL319Hj8DHBCiiag198T1yUIOSQusFnjpQDjdYZuxjCPw==",
                             UserName = "admin@contato.com",
-                            UserToken = new Guid("63c7a51a-06d6-4819-b690-d0ca40a90103")
+                            UserToken = new Guid("8a74affc-f625-451f-9ea7-651980e87fdc")
                         },
                         new
                         {
                             Id = 2,
-                            CreateDate = new DateTime(2020, 4, 25, 18, 26, 11, 69, DateTimeKind.Local).AddTicks(2603),
+                            CreateDate = new DateTime(2020, 4, 27, 0, 9, 18, 962, DateTimeKind.Local).AddTicks(2868),
                             Email = "itau@contato.com",
                             EmailConfirmed = true,
-                            LastUpdateDate = new DateTime(2020, 4, 25, 18, 26, 11, 69, DateTimeKind.Local).AddTicks(2615),
+                            LastUpdateDate = new DateTime(2020, 4, 27, 0, 9, 18, 962, DateTimeKind.Local).AddTicks(2886),
                             Name = "Itau",
                             NormalizedUserName = "ITAU@CONTATO.COM",
                             Password = "AQAAAAEAACcQAAAAENiU++GjfU7q1nAIgwulJmL319Hj8DHBCiiag198T1yUIOSQusFnjpQDjdYZuxjCPw==",
                             UserName = "itau@contato.com",
-                            UserToken = new Guid("ca32612a-ab36-4acf-8610-001cfd9f4cc4")
+                            UserToken = new Guid("a677d9b6-37df-4863-9759-2730e3c45023")
                         },
                         new
                         {
                             Id = 3,
-                            CreateDate = new DateTime(2020, 4, 25, 18, 26, 11, 69, DateTimeKind.Local).AddTicks(2637),
+                            CreateDate = new DateTime(2020, 4, 27, 0, 9, 18, 962, DateTimeKind.Local).AddTicks(2899),
                             Email = "afonso@contato.com",
                             EmailConfirmed = true,
-                            LastUpdateDate = new DateTime(2020, 4, 25, 18, 26, 11, 69, DateTimeKind.Local).AddTicks(2639),
+                            LastUpdateDate = new DateTime(2020, 4, 27, 0, 9, 18, 962, DateTimeKind.Local).AddTicks(2900),
                             Name = "Afonso",
                             NormalizedUserName = "AFONSO@CONTATO.COM",
                             Password = "AQAAAAEAACcQAAAAENiU++GjfU7q1nAIgwulJmL319Hj8DHBCiiag198T1yUIOSQusFnjpQDjdYZuxjCPw==",
                             UserName = "afonso@contato.com",
-                            UserToken = new Guid("2fb55a27-23f0-4d4f-aecb-a280010e8d57")
+                            UserToken = new Guid("719a5a86-51a4-4680-b3b0-36bb6043d0bf")
                         },
                         new
                         {
                             Id = 4,
-                            CreateDate = new DateTime(2020, 4, 25, 18, 26, 11, 69, DateTimeKind.Local).AddTicks(2641),
+                            CreateDate = new DateTime(2020, 4, 27, 0, 9, 18, 962, DateTimeKind.Local).AddTicks(2903),
                             Email = "andre@contato.com",
                             EmailConfirmed = true,
-                            LastUpdateDate = new DateTime(2020, 4, 25, 18, 26, 11, 69, DateTimeKind.Local).AddTicks(2642),
+                            LastUpdateDate = new DateTime(2020, 4, 27, 0, 9, 18, 962, DateTimeKind.Local).AddTicks(2905),
                             Name = "André",
                             NormalizedUserName = "ANDRE@CONTATO.COM",
                             Password = "AQAAAAEAACcQAAAAENiU++GjfU7q1nAIgwulJmL319Hj8DHBCiiag198T1yUIOSQusFnjpQDjdYZuxjCPw==",
                             UserName = "andre@contato.com",
-                            UserToken = new Guid("56e9e440-0bfe-4105-aa9d-a50084aae2e3")
+                            UserToken = new Guid("15fad97a-54fc-4f93-94c3-5761570a9a53")
                         },
                         new
                         {
                             Id = 5,
-                            CreateDate = new DateTime(2020, 4, 25, 18, 26, 11, 69, DateTimeKind.Local).AddTicks(2645),
+                            CreateDate = new DateTime(2020, 4, 27, 0, 9, 18, 962, DateTimeKind.Local).AddTicks(2908),
                             Email = "brunna@contato.com",
                             EmailConfirmed = true,
-                            LastUpdateDate = new DateTime(2020, 4, 25, 18, 26, 11, 69, DateTimeKind.Local).AddTicks(2646),
+                            LastUpdateDate = new DateTime(2020, 4, 27, 0, 9, 18, 962, DateTimeKind.Local).AddTicks(2909),
                             Name = "Brunna",
                             NormalizedUserName = "BRUNNA@CONTATO.COM",
                             Password = "AQAAAAEAACcQAAAAENiU++GjfU7q1nAIgwulJmL319Hj8DHBCiiag198T1yUIOSQusFnjpQDjdYZuxjCPw==",
                             UserName = "brunna@contato.com",
-                            UserToken = new Guid("56f88cc2-acc1-4a14-821f-f7b7058d1c06")
+                            UserToken = new Guid("2dc18d4a-4c26-4e25-ab3e-12b3e2cee373")
                         },
                         new
                         {
                             Id = 6,
-                            CreateDate = new DateTime(2020, 4, 25, 18, 26, 11, 69, DateTimeKind.Local).AddTicks(2648),
+                            CreateDate = new DateTime(2020, 4, 27, 0, 9, 18, 962, DateTimeKind.Local).AddTicks(2913),
                             Email = "bruno@contato.com",
                             EmailConfirmed = true,
-                            LastUpdateDate = new DateTime(2020, 4, 25, 18, 26, 11, 69, DateTimeKind.Local).AddTicks(2649),
+                            LastUpdateDate = new DateTime(2020, 4, 27, 0, 9, 18, 962, DateTimeKind.Local).AddTicks(2914),
                             Name = "Bruno",
                             NormalizedUserName = "BRUNO@CONTATO.COM",
                             Password = "AQAAAAEAACcQAAAAENiU++GjfU7q1nAIgwulJmL319Hj8DHBCiiag198T1yUIOSQusFnjpQDjdYZuxjCPw==",
                             UserName = "bruno@contato.com",
-                            UserToken = new Guid("19137a30-888e-49ba-a60d-2dd5c03c8227")
+                            UserToken = new Guid("50b97946-a456-4d85-990f-57504def02d9")
                         },
                         new
                         {
                             Id = 7,
-                            CreateDate = new DateTime(2020, 4, 25, 18, 26, 11, 69, DateTimeKind.Local).AddTicks(2652),
+                            CreateDate = new DateTime(2020, 4, 27, 0, 9, 18, 962, DateTimeKind.Local).AddTicks(2918),
                             Email = "carlos@contato.com",
                             EmailConfirmed = true,
-                            LastUpdateDate = new DateTime(2020, 4, 25, 18, 26, 11, 69, DateTimeKind.Local).AddTicks(2652),
+                            LastUpdateDate = new DateTime(2020, 4, 27, 0, 9, 18, 962, DateTimeKind.Local).AddTicks(2919),
                             Name = "Carlos",
                             NormalizedUserName = "CARLOS@CONTATO.COM",
                             Password = "AQAAAAEAACcQAAAAENiU++GjfU7q1nAIgwulJmL319Hj8DHBCiiag198T1yUIOSQusFnjpQDjdYZuxjCPw==",
                             UserName = "carlos@contato.com",
-                            UserToken = new Guid("7eb7c1bd-9e17-4b62-bfa1-3485054e04d9")
+                            UserToken = new Guid("70cfe502-06b1-41f6-8b82-c9b1a0aaa580")
                         });
                 });
 
