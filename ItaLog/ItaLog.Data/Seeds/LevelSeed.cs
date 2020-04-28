@@ -20,17 +20,14 @@ namespace ItaLog.Data.Seed
 
             Level lvl1 = new Level
             {
-                //Id = 1,
                 Description = "Debug"
             };
             Level lvl2 = new Level
             {
-                //Id = 2,
                 Description = "Warning"
             };
             Level lvl3 = new Level
             {
-                //Id = 3,
                 Description = "Error"
             };
 

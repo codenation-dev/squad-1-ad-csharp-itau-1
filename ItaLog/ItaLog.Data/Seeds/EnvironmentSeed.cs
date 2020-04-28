@@ -20,17 +20,14 @@ namespace ItaLog.Data.Seed
 
             Environment env1 = new Environment
             {
-               // Id = 1,
                 Description = "Production"
             };
             Environment env2 = new Environment
-            {
-                //Id = 2,
+            {                
                 Description = "Homologation"
             };
             Environment env3 = new Environment
-            {
-               // Id = 3,
+            {               
                 Description = "Development"
             };
 

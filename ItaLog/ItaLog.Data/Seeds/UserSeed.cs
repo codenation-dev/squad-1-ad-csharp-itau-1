@@ -15,12 +15,12 @@ namespace ItaLog.Data.Seeds
 
         public void Populate()
         {
-            if(_context.Users.Any())            
+            if(_context.Users.Any())   
                 return;
            
             User u1 = new User
             {
-                Id = 1,
+               
                 UserToken = Guid.NewGuid(),
                 Name = "Admin",
                 UserName = "admin@contato.com",
@@ -33,7 +33,7 @@ namespace ItaLog.Data.Seeds
             };
             User u2 = new User
             {
-                Id = 2,
+               
                 UserToken = Guid.NewGuid(),
                 Name = "Itau",
                 UserName = "itau@contato.com",
@@ -46,7 +46,7 @@ namespace ItaLog.Data.Seeds
             };
             User u3 = new User
             {
-                Id = 3,
+               
                 UserToken = Guid.NewGuid(),
                 Name = "Afonso",
                 UserName = "afonso@contato.com",
@@ -59,7 +59,7 @@ namespace ItaLog.Data.Seeds
             };
             User u4 = new User
             {
-                Id = 4,
+                
                 UserToken = Guid.NewGuid(),
                 Name = "André",
                 UserName = "andre@contato.com",
@@ -72,7 +72,7 @@ namespace ItaLog.Data.Seeds
             };
             User u5 = new User
             {
-                Id = 5,
+                
                 UserToken = Guid.NewGuid(),
                 Name = "Brunna",
                 UserName = "brunna@contato.com",
@@ -85,7 +85,7 @@ namespace ItaLog.Data.Seeds
             };
             User u6 = new User
             {
-                Id = 6,
+               
                 UserToken = Guid.NewGuid(),
                 Name = "Bruno",
                 UserName = "bruno@contato.com",
@@ -98,7 +98,7 @@ namespace ItaLog.Data.Seeds
             };
             User u7 = new User
             {
-                Id = 7,
+                
                 UserToken = Guid.NewGuid(),
                 Name = "Carlos",
                 UserName = "carlos@contato.com",

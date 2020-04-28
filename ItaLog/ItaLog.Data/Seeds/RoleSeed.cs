@@ -22,7 +22,7 @@ namespace ItaLog.Data.Seeds
             Role r2 = new Role { Name = "Administrator" };
 
             _context.Roles.AddRange(r1, r2);
-            //_context.SaveChanges();
+            _context.SaveChanges();
         }
 
         //public static Role[] GetData()
