@@ -1,4 +1,5 @@
 ﻿using ItaLog.Data.Context;
+using ItaLog.Domain.Exceptions;
 using ItaLog.Data.Extensions;
 using ItaLog.Domain.Interfaces.Repositories;
 using ItaLog.Domain.Models;
@@ -24,12 +25,16 @@ namespace ItaLog.Api.Repository
             _context.SaveChanges();
         }
 
-        public void Add(Log log)
+        public int Add(Log log)
         {
+            ExistsForeignKey(log);
             var logBd = FiendByGrouping(log);
 
             if (logBd == null)
-                _context.Logs.Add(log);
+            {
+                logBd = log;
+                _context.Logs.Add(logBd);
+            }
             else
             {
                 foreach (var newEvent in log.Events)
@@ -39,6 +44,8 @@ namespace ItaLog.Api.Repository
                 }
             }
             _context.SaveChanges();
+
+            return logBd.Id;
         }
 
         public Log FindById(int id)
@@ -85,15 +92,41 @@ namespace ItaLog.Api.Repository
                     );
         }
 
-        public Page<Log> GetPage(int pageNumber = 1, int pageLength = 20)
+        public Page<Log> GetPage(LogFilter logFilter, PageFilter pageFilter)
         {
+            int? levelId = logFilter == null ? null : logFilter.LevelId;
+            string origin = logFilter == null ? null : logFilter.Origin;
+            string title = logFilter == null ? null : logFilter.Title;
+
             return _context
                     .Logs
-                    .Where(log => log.Archived == false)
+                    .Where(log => log.Archived == false
+                        && (!levelId.HasValue || log.LevelId == levelId)
+                        && (string.IsNullOrWhiteSpace(origin) || log.Origin.ToLower().Contains(origin))
+                        && (string.IsNullOrWhiteSpace(title) || log.Title.ToLower().Contains(title.ToLower()))
+                    )
                     .Include(x => x.Level)
                     .Include(x => x.Events)
                     .Include(x => x.Environment)
-                    .ToPage(pageNumber, pageLength);             
+                    .ToPage(pageFilter);             
+        }
+
+        private void ExistsForeignKey(Log log)
+        {
+            if (!(_context.Levels.Any(x => x.Id == log.LevelId)))
+            {
+                throw new ForeignKeyNotFoundException(nameof(log.LevelId), log.LevelId.ToString());
+            }
+
+            if (!(_context.Environments.Any(x => x.Id == log.EnvironmentId)))
+            {
+                throw new ForeignKeyNotFoundException(nameof(log.EnvironmentId), log.EnvironmentId.ToString());
+            }
+
+            if (!(_context.Users.Any(x => x.Id == log.ApiUserId)))
+            {
+                throw new ForeignKeyNotFoundException(nameof(log.ApiUserId), log.ApiUserId.ToString());
+            }
         }
     }
 }

@@ -1,11 +1,10 @@
 ﻿using AutoMapper;
-using ItaLog.Application.Interface;
 using ItaLog.Application.ViewModels;
+using ItaLog.Domain.Exceptions;
 using ItaLog.Domain.Interfaces.Repositories;
 using ItaLog.Domain.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
 
 namespace ItaLog.Api.Controllers
 {
@@ -25,62 +24,59 @@ namespace ItaLog.Api.Controllers
         }
 
         [HttpGet]
-        public PageViewModel<LogItemPageViewModel> GetLogs(
-            [FromQuery] int pageNumber = 1,
-            [FromQuery] int pageLength = 20)
+        public ActionResult<PageViewModel<LogItemPageViewModel>> GetLogs(
+            [FromQuery] LogFilter logFilter,
+            [FromQuery] PageFilter pageFilter)
         {
-            var pageLog = _repo.GetPage(pageNumber, pageLength);
-            return _mapper.Map<PageViewModel<LogItemPageViewModel>>(pageLog);
+            var logs = _repo.GetPage(logFilter, pageFilter);
+
+            return Ok(_mapper.Map<PageViewModel<LogItemPageViewModel>>(logs));
         }
 
-       
-
         [HttpGet("{id}")]
-        public IActionResult GetById(int id)
+        public ActionResult<LogViewModel> GetById(int id)
         {
             var log = _mapper.Map<LogViewModel>(_repo.FindById(id));
             if (log is null)
                 return NotFound();
 
-            return new ObjectResult(log);
+            return Ok(_mapper.Map<LogViewModel>(log));
         }
 
         [HttpPost]
-        public IActionResult Create([FromBody] LogEventViewModel log)
+        public ActionResult Create([FromBody] LogEventViewModel logEvent)
         {
-            if (log is null)
-                return BadRequest();
+            int newId = 0;
 
-            var Log = _mapper.Map<Log>(log);
+            var log = _mapper.Map<Log>(logEvent);
 
-            Log.Events = new List<Event>()
+            try
             {
-                new Event()
-                {
-                    Detail = log.Detail,
-                    ErrorDate = log.ErrorDate
-                }
-            };
+                newId = _repo.Add(log);
+            }
+            catch (ForeignKeyNotFoundException ex)
+            {
+                ModelState.AddModelError(ex.NameFieldForeignKey, ex.Message);
+                return BadRequest(new ValidationProblemDetails(ModelState));
+            }
 
-            _repo.Add(Log);
-
-            return NoContent();
+            return Created(nameof(GetById), new { id = newId });
         }
 
-        [HttpPost("{id}/Archive")]
-        public IActionResult Archive(int id)
+        [HttpPut("{id}/Archive")]
+        public ActionResult Archive(int id)
         {
             var logFind = _repo.FindById(id);
 
             if (logFind is null)
                 return NotFound();
 
-            _repo.Archive(id);         
-            return new NoContentResult();
+            _repo.Archive(id);
+            return NoContent();
         }
 
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        public ActionResult Delete(int id)
         {
             var logFind = _repo.FindById(id);
 
@@ -88,7 +84,7 @@ namespace ItaLog.Api.Controllers
                 return NotFound();
 
             _repo.Remove(id);
-            return new NoContentResult();
+            return NoContent();
         }
 
     }

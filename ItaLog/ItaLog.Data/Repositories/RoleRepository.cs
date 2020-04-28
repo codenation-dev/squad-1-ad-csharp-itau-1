@@ -7,7 +7,7 @@ namespace ItaLog.Data.Repositories
 {
     public class RoleRepository : IRoleRepository
     {
-        public void Add(Role entity)
+        public int Add(Role entity)
         {
             throw new NotImplementedException();
         }

@@ -5,7 +5,7 @@ namespace ItaLog.Domain.Interfaces.Repositories
 {
     public interface IRepositoryBase<T> where T : class , IEntity
     {
-        public void Add(T entity);
+        public int Add(T entity);
         public void Update(T entity);
 
         public T FindById(int id);

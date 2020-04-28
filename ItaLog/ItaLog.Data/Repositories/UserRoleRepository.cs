@@ -7,7 +7,7 @@ namespace ItaLog.Data.Repositories
 {
     public class UserRoleRepository : IUserRoleRepository
     {
-        public void Add(UserRole entity)
+        public int Add(UserRole entity)
         {
             throw new NotImplementedException();
         }

@@ -15,10 +15,12 @@ namespace ItaLog.Data.Repositories
             _context = context;
         }
 
-        public void Add(Event eventLog)
+        public int Add(Event eventLog)
         {
             _context.Events.Add(eventLog);
             _context.SaveChanges();
+
+            return eventLog.Id;
         }
         
         public Event FindById(int id)
