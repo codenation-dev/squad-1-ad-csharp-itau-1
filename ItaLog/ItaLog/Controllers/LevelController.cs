@@ -1,17 +1,18 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using AutoMapper;
+using ItaLog.Application.Interface;
 using ItaLog.Application.ViewModels;
 using ItaLog.Domain.Interfaces.Repositories;
 using ItaLog.Domain.Models;
-using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ItaLog.Api.Controllers
 {
-    [Authorize]
-    [ApiVersion("1.0")]
-    [Route("api/v{version:apiVersion}/[controller]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class LevelController : ControllerBase
     {

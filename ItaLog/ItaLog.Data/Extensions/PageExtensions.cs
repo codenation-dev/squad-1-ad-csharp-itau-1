@@ -6,20 +6,20 @@ namespace ItaLog.Data.Extensions
 {
     public static class PageExtensions
     {
-        public static Page<T> ToPage<T>(this IQueryable<T> query, int pageNumber = 1, int pageLength = 20)
+        public static Page<T> ToPage<T>(this IQueryable<T> query, PageFilter pageFilter)
         {
             int totalItens = query.Count();
-            int totalPages = (int)Math.Ceiling(totalItens / (double)pageLength);
+            int totalPages = (int)Math.Ceiling(totalItens / (double)pageFilter.PageLength);
 
             return new Page<T>()
             {
                 Total = totalItens,
                 TotalPages = totalPages,
-                PageNumber = pageNumber,
-                PageLength = pageLength,
-                Result = query
-                    .Skip(pageLength * (pageNumber - 1))
-                    .Take(pageLength)
+                PageNumber = pageFilter.PageNumber,
+                PageLength = pageFilter.PageLength,
+                Results = query
+                    .Skip(pageFilter.PageLength * (pageFilter.PageNumber - 1))
+                    .Take(pageFilter.PageLength)
                     .ToList()
             };
         }

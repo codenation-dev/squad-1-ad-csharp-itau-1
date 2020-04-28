@@ -14,10 +14,12 @@ namespace ItaLog.Api.Repository
             _context = context;
         }
 
-        public void Add(Level level)
+        public int Add(Level level)
         {
             _context.Levels.Add(level);
             _context.SaveChanges();
+
+            return level.Id;
         }
 
         public Level FindById(int id)

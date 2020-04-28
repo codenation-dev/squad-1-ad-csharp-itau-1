@@ -14,10 +14,11 @@ namespace ItaLog.Api.Repository
             _context = context;
         }
 
-        public void Add(Environment environment)
+        public int Add(Environment environment)
         {
             _context.Environments.Add(environment);
             _context.SaveChanges();
+            return environment.Id;
         }
 
         public Environment FindById(int id)
