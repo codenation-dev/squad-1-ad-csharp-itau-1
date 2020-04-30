@@ -24,15 +24,5 @@ namespace ItaLog.Data.Seeds
             _context.Roles.AddRange(r1, r2);
             _context.SaveChanges();
         }
-
-        //public static Role[] GetData()
-        //{
-        //    int idValue = 0;
-        //    return new Role[]
-        //    {
-        //        new Role { Id = ++idValue, Name = "User" },
-        //        new Role { Id = ++idValue, Name = "Administrator" },                
-        //    };
-        ////}
     }
 }

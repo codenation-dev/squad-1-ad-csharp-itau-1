@@ -77,7 +77,7 @@ namespace ItaLog.Data.Store
         {
             cancellationToken.ThrowIfCancellationRequested();
 
-            var roleFind = await _contexto.Users.FindAsync(user.Id, cancellationToken);
+            var roleFind = await _contexto.Users.FindAsync(user.Id);
 
             if (roleFind != null)
             {

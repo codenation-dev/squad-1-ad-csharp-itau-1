@@ -1,9 +1,6 @@
 ﻿using ItaLog.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace ItaLog.Data.Maps
 {
@@ -22,10 +19,7 @@ namespace ItaLog.Data.Maps
 
             builder.Property(x => x.ErrorDate)
                 .HasColumnType("datetime")
-                .IsRequired();            
-
-            
-
+                .IsRequired();
         }
     }
 }

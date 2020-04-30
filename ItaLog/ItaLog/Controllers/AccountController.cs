@@ -1,6 +1,7 @@
 ﻿using ItaLog.Api.Configurations;
-using ItaLog.Application.ViewModels;
+using ItaLog.Application.ViewModels.Account;
 using ItaLog.Domain.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
@@ -13,6 +14,7 @@ using System.Threading.Tasks;
 
 namespace ItaLog.Api.Controllers
 {
+    [Authorize]
     [ApiVersion("1.0")]
     [Route("api/v{version:apiVersion}/[Controller]/[action]")]
     [ApiController]
@@ -21,6 +23,7 @@ namespace ItaLog.Api.Controllers
         private readonly SignInManager<User> _signInManager;
         private readonly UserManager<User> _userManager;
         private readonly AppSettings _appSettings;
+
         public AccountController(SignInManager<User> signInManager, UserManager<User> userManager,
             IOptions<AppSettings> appSettings)
         {
@@ -30,6 +33,7 @@ namespace ItaLog.Api.Controllers
         }
 
         [HttpPost]
+        [AllowAnonymous]
         public async Task<IActionResult> Register(UserRegistrationViewModel userRegistration)
         {
             if (!ModelState.IsValid)
@@ -57,6 +61,7 @@ namespace ItaLog.Api.Controllers
         }
 
         [HttpPost]
+        [AllowAnonymous]
         public async Task<IActionResult> Login(UserLoginViewModel userLogin)
         {
             if (!ModelState.IsValid)
@@ -70,6 +75,47 @@ namespace ItaLog.Api.Controllers
             }
 
             return BadRequest("Username or password is invalid");
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        public async Task<IActionResult> ForgotPassword(ForgotPasswordViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await _userManager.FindByEmailAsync(model.Email);
+                if (user == null || !(await _userManager.IsEmailConfirmedAsync(user)))
+                {
+                    return NotFound("Please check if you wrote something wrong and try again!");
+                }
+
+                var code = await _userManager.GeneratePasswordResetTokenAsync(user);
+                return Ok(code);
+            }
+
+            return BadRequest();
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        public async Task<IActionResult> ResetPassword(ResetPasswordViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState.Values.SelectMany(e => e.Errors));
+            }
+            var user = await _userManager.FindByEmailAsync(model.Email);
+            if (user == null)
+            {
+                return NotFound();
+            }
+            var result = await _userManager.ResetPasswordAsync(user, model.Code, model.Password);
+            if (result.Succeeded)
+            {
+                return Ok("Your password has been reset.");
+            }
+
+            return BadRequest();
         }
 
         private async Task<string> GenerateJwt(string email)

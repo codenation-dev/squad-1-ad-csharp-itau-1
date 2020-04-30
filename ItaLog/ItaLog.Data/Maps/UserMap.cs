@@ -1,5 +1,4 @@
-﻿using ItaLog.Data.Seeds;
-using ItaLog.Domain.Models;
+﻿using ItaLog.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -46,10 +45,6 @@ namespace ItaLog.Data.Maps
             builder.Property(x => x.LastUpdateDate)
                 .HasColumnType("datetime")
                 .IsRequired();
-
-            //builder.HasData(
-            //        UserSeed.GetData()
-            //    );
         }
     }
 }

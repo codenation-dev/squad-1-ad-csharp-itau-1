@@ -2,7 +2,7 @@
 using ItaLog.Domain.Models;
 using System.Linq;
 
-namespace ItaLog.Data.Seed
+namespace ItaLog.Data.Seeds
 {
     public class LevelSeed
     {
@@ -34,27 +34,5 @@ namespace ItaLog.Data.Seed
             _context.Levels.AddRange(lvl1, lvl2, lvl3);
             _context.SaveChanges();
         }
-        //public static Level[] GetData()
-        //{
-        //    int idValue = 0;
-            //return new Level[]
-            //{
-            //    new Level
-            //    {
-            //        Id = ++idValue,
-            //        Description = "Debug"
-            //    },
-            //    new Level
-            //    {
-            //        Id = ++idValue,
-            //        Description = "Warning"
-            //    },
-            //    new Level
-            //    {
-            //        Id = ++idValue,
-            //        Description = "Error"
-            //    },
-            //};
-        //}
     }
 }

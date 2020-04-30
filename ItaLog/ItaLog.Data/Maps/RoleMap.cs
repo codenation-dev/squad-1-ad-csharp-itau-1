@@ -1,5 +1,4 @@
-﻿using ItaLog.Data.Seeds;
-using ItaLog.Domain.Models;
+﻿using ItaLog.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -17,8 +16,6 @@ namespace ItaLog.Data.Maps
                 .HasMaxLength(100)
                 .HasColumnType("varchar(100)")
                 .IsRequired();
-
-            //builder.HasData(RoleSeed.GetData());
         }
     }
 }

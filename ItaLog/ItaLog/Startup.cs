@@ -1,8 +1,6 @@
 using ItaLog.Api.Configurations;
 using ItaLog.Api.Repository;
-using ItaLog.Application.App;
 using ItaLog.Application.AutoMapper;
-using ItaLog.Application.Interface;
 using ItaLog.Data.Context;
 using ItaLog.Domain.Interfaces.Repositories;
 using Microsoft.AspNetCore.Builder;
@@ -17,7 +15,6 @@ using ItaLog.Domain.Models;
 using Microsoft.AspNetCore.Identity;
 using ItaLog.Data.Store;
 using ItaLog.Data.Seeds;
-using ItaLog.Data.Seed;
 
 namespace ItaLog.Api
 {
@@ -32,8 +29,11 @@ namespace ItaLog.Api
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddControllers();
+
             services.AddDbContext<ItaLogContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("Database")));
+
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<ILogRepository, LogRepository>();
             services.AddScoped<ILevelRepository, LevelRepository>();
@@ -42,23 +42,13 @@ namespace ItaLog.Api
             services.AddScoped<IRoleRepository, RoleRepository>();
             services.AddScoped<IUserRoleRepository, UserRoleRepository>();
 
-            //services.AddScoped<ILogApplication, LogApplication>();
-            //services.AddScoped<ILevelApplication, LevelApplication>();
-            //services.AddScoped<IEnvironmentApplication, EnvironmentApplication>();
-
-            services.AddScoped<UserSeed>();
-            services.AddScoped<RoleSeed>();
-            services.AddScoped<LevelSeed>();
-            services.AddScoped<EnvironmentSeed>();
-            services.AddScoped<LogSeed>();
-            services.AddScoped<EventSeed>();
+            services.AddTransient<IUserStore<User>, UserStore>();
+            services.AddTransient<IRoleStore<Role>, RoleStore>();            
 
             services.AddAutoMapper(typeof(AutoMapperConfig));
 
-            services.AddControllers();
-
-            services.AddTransient<IUserStore<User>, UserStore>();
-            services.AddTransient<IRoleStore<Role>, RoleStore>();
+            // Seeds
+            services.AddSeedSetup();
 
             // Api Versioning Config
             services.AddVersioningSetup();

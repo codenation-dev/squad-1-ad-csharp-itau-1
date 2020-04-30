@@ -2,7 +2,7 @@
 using ItaLog.Domain.Models;
 using System.Linq;
 
-namespace ItaLog.Data.Seed
+namespace ItaLog.Data.Seeds
 {
     public class EnvironmentSeed
     {
@@ -34,27 +34,5 @@ namespace ItaLog.Data.Seed
             _context.Environments.AddRange(env1, env2, env3);
             _context.SaveChanges();
         }
-        //public static Environment[] GetData()
-        //{
-        //int idValue = 0;
-        //    return new Environment[]
-        //    {
-        //        new Environment
-        //        {
-        //            Id = ++idValue,
-        //            Description = "Production"
-        //        },
-        //        new Environment
-        //        {
-        //            Id = ++idValue,
-        //            Description = "Homologation"
-        //        },
-        //        new Environment
-        //        {
-        //            Id = ++idValue,
-        //            Description = "Development"
-        //        },
-        //    };
-        //}
     }
 }
