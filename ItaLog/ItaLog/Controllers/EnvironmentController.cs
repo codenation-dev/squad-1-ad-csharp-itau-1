@@ -1,10 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using AutoMapper;
+﻿using AutoMapper;
 using ItaLog.Application.ViewModels;
 using ItaLog.Domain.Interfaces.Repositories;
+using ItaLog.Domain.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
 
 namespace ItaLog.Api.Controllers
 {
@@ -23,9 +23,12 @@ namespace ItaLog.Api.Controllers
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<EnvironmentViewModel>> GetEnvironments()
+        public ActionResult<PageViewModel<EnvironmentViewModel>> GetEnvironments(
+        [FromQuery] PageFilter pageFilter)
         {
-            return Ok(_mapper.Map<IEnumerable<EnvironmentViewModel>>(_repo.GetAll()));
+            var enviromnments = _repo.GetPage(pageFilter);
+
+            return Ok(_mapper.Map<PageViewModel<EnvironmentViewModel>>(enviromnments));
         }
 
         [HttpGet("{id}")]
@@ -65,7 +68,7 @@ namespace ItaLog.Api.Controllers
             if (EnvFind is null)
                 return NotFound();
 
-           _repo.Update(EnvFind);
+            _repo.Update(EnvFind);
 
             return Ok();
         }

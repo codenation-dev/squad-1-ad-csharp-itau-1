@@ -1,18 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AutoMapper;
-using ItaLog.Application.Interface;
+﻿using AutoMapper;
 using ItaLog.Application.ViewModels;
 using ItaLog.Domain.Interfaces.Repositories;
 using ItaLog.Domain.Models;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
 
 namespace ItaLog.Api.Controllers
 {
-    [Route("api/[controller]")]
+    [Authorize]
+    [ApiVersion("1.0")]
+    [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
     public class LevelController : ControllerBase
     {
@@ -25,9 +23,12 @@ namespace ItaLog.Api.Controllers
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<LevelViewModel>> GetLevels()
+        public ActionResult<PageViewModel<LevelViewModel>> GetLevels(
+           [FromQuery] PageFilter pageFilter)
         {
-            return Ok(_mapper.Map<IEnumerable<LevelViewModel>>(_repo.GetAll()));
+            var levels = _repo.GetPage(pageFilter);
+
+            return Ok(_mapper.Map<PageViewModel<LevelViewModel>>(levels));
         }
 
         [HttpGet("{id}")]
@@ -74,7 +75,7 @@ namespace ItaLog.Api.Controllers
         }
 
         [HttpDelete("{id}")]
-        public 
+        public
             ActionResult Delete(int id)
         {
             var userFind = _repo.FindById(id);

@@ -18,7 +18,7 @@ namespace ItaLog.Data.Context
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server = INSPIRON\SQLEXPRESS;Database=ItaLog; Integrated Security = True; Connect Timeout = 30; Encrypt = False; TrustServerCertificate = False; ApplicationIntent = ReadWrite; MultiSubnetFailover = False;");
+            optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=ItaLog;Trusted_Connection=True;");
             base.OnConfiguring(optionsBuilder);
         }
 

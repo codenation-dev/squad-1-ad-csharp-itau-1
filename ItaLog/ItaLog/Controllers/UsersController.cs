@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using ItaLog.Application.ViewModels;
 using ItaLog.Domain.Interfaces.Repositories;
+using ItaLog.Domain.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -23,9 +24,12 @@ namespace ItaLog.Api.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<UserViewModel> Users()
+        public ActionResult<PageViewModel<UserViewModel>> Users(
+        [FromQuery] PageFilter pageFilter)
         {
-            return _mapper.Map<List<UserViewModel>>(_repo.GetAll());
+            var users = _repo.GetPage(pageFilter);
+
+            return Ok(_mapper.Map<PageViewModel<UserViewModel>>(users));
         }
 
         [HttpGet]

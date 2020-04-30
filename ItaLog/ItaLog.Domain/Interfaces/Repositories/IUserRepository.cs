@@ -11,5 +11,6 @@ namespace ItaLog.Domain.Interfaces.Repositories
         User FindByName(string name);
         User FindByEmail(string email);
         IEnumerable<User> GetAll();
+        Page<User> GetPage(PageFilter pageFilter);
     }
 }

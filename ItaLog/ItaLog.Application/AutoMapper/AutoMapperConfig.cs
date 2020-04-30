@@ -20,6 +20,9 @@ namespace ItaLog.Application.AutoMapper
             CreateMap<Level, LevelViewModel>().ReverseMap();
             CreateMap<Environment, EnvironmentViewModel>().ReverseMap();
             CreateMap<Event, EventViewModel>().ReverseMap();
+            CreateMap<Page<User>, PageViewModel<UserViewModel>>();
+            CreateMap<Page<Level>, PageViewModel<LevelViewModel>>();
+            CreateMap<Page<Environment>, PageViewModel<EnvironmentViewModel>>();
             CreateMap<Page<Log>, PageViewModel<LogItemPageViewModel>>();
             CreateMap<Log, LogItemPageViewModel>()
                 .ForMember(dest => dest.EventsCount, opt => opt.MapFrom(src => src.Events.Count()))

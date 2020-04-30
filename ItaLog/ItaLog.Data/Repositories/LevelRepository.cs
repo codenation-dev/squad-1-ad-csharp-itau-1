@@ -1,4 +1,5 @@
 ﻿using ItaLog.Data.Context;
+using ItaLog.Data.Extensions;
 using ItaLog.Domain.Interfaces.Repositories;
 using ItaLog.Domain.Models;
 using System.Collections.Generic;
@@ -43,6 +44,14 @@ namespace ItaLog.Api.Repository
         {
             _context.Levels.Update(level);
             _context.SaveChanges();
+        }
+
+        public Page<Level> GetPage(PageFilter pageFilter)
+        {
+
+            return _context
+                    .Levels
+                    .ToPage(pageFilter);
         }
     }
 }

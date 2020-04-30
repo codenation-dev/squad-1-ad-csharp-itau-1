@@ -1,12 +1,14 @@
 ﻿using ItaLog.Data.Context;
+using ItaLog.Data.Extensions;
 using ItaLog.Domain.Interfaces.Repositories;
 using ItaLog.Domain.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace ItaLog.Api.Repository
 {
-    public class UserRepository : IUserRepository
+    public class UserRepository : IUserRepository, IDisposable
     {
         private readonly ItaLogContext _context;
         public UserRepository(ItaLogContext context)
@@ -32,7 +34,15 @@ namespace ItaLog.Api.Repository
         public IEnumerable<User> GetAll()
         {
             return _context.Users.ToList();
-        }            
+        }
+
+        public Page<User> GetPage(PageFilter pageFilter)
+        {
+
+            return _context
+                    .Users
+                    .ToPage(pageFilter);
+        }
 
         public void Dispose()
         {
