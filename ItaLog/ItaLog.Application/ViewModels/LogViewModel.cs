@@ -1,11 +1,14 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace ItaLog.Application.ViewModels
 {
     public class LogViewModel
     {
         public int Id { get; set; }
+        [Required]
         public string Title { get; set; }
+        [Required]
         public string Origin { get; set; }
         public bool Archived { get; set; }
 
