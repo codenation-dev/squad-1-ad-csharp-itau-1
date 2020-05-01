@@ -3,6 +3,7 @@ using ItaLog.Application.ViewModels.Account;
 using ItaLog.Domain.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
@@ -23,13 +24,15 @@ namespace ItaLog.Api.Controllers
         private readonly SignInManager<User> _signInManager;
         private readonly UserManager<User> _userManager;
         private readonly AppSettings _appSettings;
+        private readonly IEmailSender _emailSender;
 
         public AccountController(SignInManager<User> signInManager, UserManager<User> userManager,
-            IOptions<AppSettings> appSettings)
+            IOptions<AppSettings> appSettings, IEmailSender emailSender)
         {
             _signInManager = signInManager;
             _userManager = userManager;
             _appSettings = appSettings.Value;
+            _emailSender = emailSender;
         }
 
         [HttpPost]
@@ -71,6 +74,7 @@ namespace ItaLog.Api.Controllers
 
             if (result.Succeeded)
             {
+                await _emailSender.SendEmailAsync(userLogin.Email, "New Login", $"<h2>Hey, new login to your account noticed!</h2><br><p>New login to your account at {DateTime.Now}</p>");
                 return Ok(await GenerateJwt(userLogin.Email));
             }
 
@@ -89,8 +93,9 @@ namespace ItaLog.Api.Controllers
                     return NotFound("Please check if you wrote something wrong and try again!");
                 }
 
-                var code = await _userManager.GeneratePasswordResetTokenAsync(user);
-                return Ok(code);
+                var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+                await _emailSender.SendEmailAsync(model.Email, "Reset Password", $"<strong>Please reset your password using the code below:</strong><br><br><strong>CODE:</strong> {token}");
+                return Ok("Please check your email to reset your password.");
             }
 
             return BadRequest();

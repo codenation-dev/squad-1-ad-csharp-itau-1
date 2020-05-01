@@ -5,7 +5,7 @@ using ItaLog.Domain.Models;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace ItaLog.Api.Repository
+namespace ItaLog.Data.Repositories
 {
     public class LevelRepository : ILevelRepository
     {

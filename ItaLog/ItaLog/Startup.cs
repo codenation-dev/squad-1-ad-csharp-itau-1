@@ -1,8 +1,6 @@
 using ItaLog.Api.Configurations;
-using ItaLog.Api.Repository;
 using ItaLog.Application.AutoMapper;
 using ItaLog.Data.Context;
-using ItaLog.Domain.Interfaces.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -10,11 +8,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using AutoMapper;
-using ItaLog.Data.Repositories;
-using ItaLog.Domain.Models;
-using Microsoft.AspNetCore.Identity;
-using ItaLog.Data.Store;
 using ItaLog.Data.Seeds;
+using ItaLog.Application.Services;
 
 namespace ItaLog.Api
 {
@@ -32,20 +27,14 @@ namespace ItaLog.Api
             services.AddControllers();
 
             services.AddDbContext<ItaLogContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("Database")));
+                options.UseSqlServer(Configuration.GetConnectionString("Database")));            
 
-            services.AddScoped<IUserRepository, UserRepository>();
-            services.AddScoped<ILogRepository, LogRepository>();
-            services.AddScoped<ILevelRepository, LevelRepository>();
-            services.AddScoped<IEnvironmentRepository, EnvironmentRepository>();
-            services.AddScoped<IEventRepository, EventRepository>();
-            services.AddScoped<IRoleRepository, RoleRepository>();
-            services.AddScoped<IUserRoleRepository, UserRoleRepository>();
-
-            services.AddTransient<IUserStore<User>, UserStore>();
-            services.AddTransient<IRoleStore<Role>, RoleStore>();            
+            services.Configure<EmailSettings>(Configuration.GetSection("EmailSettings"));
 
             services.AddAutoMapper(typeof(AutoMapperConfig));
+
+            // Dependency Injection Abstraction
+            services.AddDependencyInjectionSetup();
 
             // Seeds
             services.AddSeedSetup();
