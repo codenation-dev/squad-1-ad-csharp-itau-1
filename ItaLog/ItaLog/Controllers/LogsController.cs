@@ -27,52 +27,18 @@ namespace ItaLog.Api.Controllers
         [HttpGet]
         public ActionResult<PageViewModel<LogItemPageViewModel>> GetLogs(
              [FromQuery] PageFilter pageFilter,
+             [FromQuery] LogFilter logFilter,
              [FromQuery] string sortingProperty)
 
         {
-            var logs = _repo.GetPage(pageFilter);
-
-            if(!string.IsNullOrEmpty(sortingProperty))
-                sortingProperty.ToLower();
-
-            IOrderedEnumerable<LogItemPageViewModel> result;
-
-           switch (sortingProperty)
-            {
-                case "level":
-                    result = _mapper.Map<PageViewModel<LogItemPageViewModel>>(logs)
-                        .Results
-                        .OrderBy(x => x.Level);
-                    break;
-                case "environment":
-                    result = _mapper.Map<PageViewModel<LogItemPageViewModel>>(logs)
-                        .Results
-                        .OrderBy(x => x.Environment);
-                    break;
-                case "frequency":
-                    result = _mapper.Map<PageViewModel<LogItemPageViewModel>>(logs)
-                       .Results
-                       .OrderBy(x => x.EventsCount);
-                    break;
-                case "date":
-                    result = _mapper.Map<PageViewModel<LogItemPageViewModel>>(logs)
-                       .Results
-                       .OrderBy(x => x.ErrorDate);
-                    break;
-                case "origin":
-                    result = _mapper.Map<PageViewModel<LogItemPageViewModel>>(logs)
-                       .Results
-                       .OrderBy(x => x.Origin);
-                    break;
-
-                default:
-                    result = _mapper.Map<PageViewModel<LogItemPageViewModel>>(logs)
-                       .Results
-                       .OrderBy(x => x.ErrorDate);
-                    break;
-            }
             
-            return Ok(result);
+
+            if (string.IsNullOrWhiteSpace(sortingProperty))
+                sortingProperty = "EventsCount";      
+            
+            var logs = _repo.GetPage(logFilter, pageFilter, sortingProperty);
+
+            return Ok(_mapper.Map<PageViewModel<LogItemPageViewModel>>(logs));
 
         }
 

@@ -6,6 +6,7 @@ using ItaLog.Domain.Interfaces.Repositories;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Dynamic.Core;
 
 namespace ItaLog.Api.Repository
 {
@@ -92,34 +93,51 @@ namespace ItaLog.Api.Repository
                     );
         }
 
-        //public Page<Log> GetPage(LogFilter logFilter, PageFilter pageFilter)
-        //{
-        //    int? levelId = logFilter == null ? null : logFilter.LevelId;
-        //    string origin = logFilter == null ? null : logFilter.Origin;
-        //    string title = logFilter == null ? null : logFilter.Title;
-
-        //    return _context
-        //            .Logs
-        //            .Where(log => log.Archived == false
-        //                && (!levelId.HasValue || log.LevelId == levelId)
-        //                && (string.IsNullOrWhiteSpace(origin) || log.Origin.ToLower().Contains(origin))
-        //                && (string.IsNullOrWhiteSpace(title) || log.Title.ToLower().Contains(title.ToLower()))
-        //            )
-        //            .Include(x => x.Level)
-        //            .Include(x => x.Events)
-        //            .Include(x => x.Environment)                    
-        //            .ToPage(pageFilter);             
-        //}
-
-        public Page<Log> GetPage(PageFilter pageFilter)
+        public Page<Log> GetPage(LogFilter logFilter, PageFilter pageFilter, string sortingProperty)
         {
+            int? levelId = logFilter == null ? null : logFilter.LevelId;
+            string origin = logFilter == null ? null : logFilter.Origin;
+            string title = logFilter == null ? null : logFilter.Title;
+
             return _context
                     .Logs
+                    .Where(log => log.Archived == false
+                        && (!levelId.HasValue || log.LevelId == levelId)
+                        && (string.IsNullOrWhiteSpace(origin) || log.Origin.ToLower().Contains(origin))
+                        && (string.IsNullOrWhiteSpace(title) || log.Title.ToLower().Contains(title.ToLower()))
+                    )
                     .Include(x => x.Level)
                     .Include(x => x.Events)
                     .Include(x => x.Environment)
+                    .Select(log => new Log
+                    {
+                        Id= log.Id,
+                        EventsCount = log.Events.Count(),                        
+                        Title = log.Title,
+                        Origin = log.Origin,
+                        Archived = log.Archived,
+                        EnvironmentId = log.EnvironmentId,
+                        Environment = log.Environment,
+                        ApiUserId = log.ApiUserId,
+                        ApiUser = log.ApiUser,
+                        LevelId = log.LevelId,
+                        Level = log.Level,
+                        Events = log.Events
+                    })
+                    .OrderBy(sortingProperty)
                     .ToPage(pageFilter);
+
+            //return (from log in _context.Logs
+            //        join level in _context.Levels
+            //        on log.LevelId equals level.Id
+            //        where log.Archived == false
+            //        select new Log
+            //        {
+            //            EventsCount = (log.Events.Count())
+            //        }).ToPage(pageFilter);
+
         }
+
 
         private void ExistsForeignKey(Log log)
         {

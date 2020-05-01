@@ -34,6 +34,8 @@ namespace ItaLog.Data.Maps
             builder.Property(x => x.EnvironmentId)
               .IsRequired();
 
+            builder.Ignore(x => x.EventsCount);                
+
 
             builder.HasOne(x => x.ApiUser)
                 .WithMany(x => x.Logs)
