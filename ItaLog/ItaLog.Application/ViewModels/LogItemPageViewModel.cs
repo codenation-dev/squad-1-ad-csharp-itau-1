@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
 
 namespace ItaLog.Application.ViewModels
 {
-    public class LogItemPageViewModel
+    public class LogItemPageViewModel 
     {
         public int Id { get; set; }
         public string Title { get; set; }
@@ -14,6 +15,7 @@ namespace ItaLog.Application.ViewModels
 
 
         public LevelViewModel Level { get; set; }
-        public EnvironmentViewModel Environment { get; set; }
+        public EnvironmentViewModel Environment { get; set; }        
+        
     }
 }

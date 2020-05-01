@@ -5,7 +5,8 @@ using ItaLog.Domain.Interfaces.Repositories;
 using ItaLog.Domain.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-
+using System.Linq;
+using System.Collections.Generic;
 namespace ItaLog.Api.Controllers
 {
     [Authorize]
@@ -25,12 +26,54 @@ namespace ItaLog.Api.Controllers
 
         [HttpGet]
         public ActionResult<PageViewModel<LogItemPageViewModel>> GetLogs(
-            [FromQuery] LogFilter logFilter,
-            [FromQuery] PageFilter pageFilter)
-        {
-            var logs = _repo.GetPage(logFilter, pageFilter);
+             [FromQuery] PageFilter pageFilter,
+             [FromQuery] string sortingProperty)
 
-            return Ok(_mapper.Map<PageViewModel<LogItemPageViewModel>>(logs));
+        {
+            var logs = _repo.GetPage(pageFilter);
+
+            if(!string.IsNullOrEmpty(sortingProperty))
+                sortingProperty.ToLower();
+
+            IOrderedEnumerable<LogItemPageViewModel> result;
+
+           switch (sortingProperty)
+            {
+                case "level":
+                    result = _mapper.Map<PageViewModel<LogItemPageViewModel>>(logs)
+                        .Results
+                        .OrderBy(x => x.Level);
+                    break;
+                case "environment":
+                    result = _mapper.Map<PageViewModel<LogItemPageViewModel>>(logs)
+                        .Results
+                        .OrderBy(x => x.Environment);
+                    break;
+                case "frequency":
+                    result = _mapper.Map<PageViewModel<LogItemPageViewModel>>(logs)
+                       .Results
+                       .OrderBy(x => x.EventsCount);
+                    break;
+                case "date":
+                    result = _mapper.Map<PageViewModel<LogItemPageViewModel>>(logs)
+                       .Results
+                       .OrderBy(x => x.ErrorDate);
+                    break;
+                case "origin":
+                    result = _mapper.Map<PageViewModel<LogItemPageViewModel>>(logs)
+                       .Results
+                       .OrderBy(x => x.Origin);
+                    break;
+
+                default:
+                    result = _mapper.Map<PageViewModel<LogItemPageViewModel>>(logs)
+                       .Results
+                       .OrderBy(x => x.ErrorDate);
+                    break;
+            }
+            
+            return Ok(result);
+
         }
 
         [HttpGet("{id}")]
@@ -59,7 +102,7 @@ namespace ItaLog.Api.Controllers
                 ModelState.AddModelError(ex.NameFieldForeignKey, ex.Message);
                 return BadRequest(new ValidationProblemDetails(ModelState));
             }
-
+            
             return Created(nameof(GetById), new { id = newId });
         }
 

@@ -1,8 +1,8 @@
 ﻿using ItaLog.Data.Context;
 using ItaLog.Domain.Exceptions;
+using ItaLog.Domain.Models;
 using ItaLog.Data.Extensions;
 using ItaLog.Domain.Interfaces.Repositories;
-using ItaLog.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
@@ -92,23 +92,33 @@ namespace ItaLog.Api.Repository
                     );
         }
 
-        public Page<Log> GetPage(LogFilter logFilter, PageFilter pageFilter)
-        {
-            int? levelId = logFilter == null ? null : logFilter.LevelId;
-            string origin = logFilter == null ? null : logFilter.Origin;
-            string title = logFilter == null ? null : logFilter.Title;
+        //public Page<Log> GetPage(LogFilter logFilter, PageFilter pageFilter)
+        //{
+        //    int? levelId = logFilter == null ? null : logFilter.LevelId;
+        //    string origin = logFilter == null ? null : logFilter.Origin;
+        //    string title = logFilter == null ? null : logFilter.Title;
 
+        //    return _context
+        //            .Logs
+        //            .Where(log => log.Archived == false
+        //                && (!levelId.HasValue || log.LevelId == levelId)
+        //                && (string.IsNullOrWhiteSpace(origin) || log.Origin.ToLower().Contains(origin))
+        //                && (string.IsNullOrWhiteSpace(title) || log.Title.ToLower().Contains(title.ToLower()))
+        //            )
+        //            .Include(x => x.Level)
+        //            .Include(x => x.Events)
+        //            .Include(x => x.Environment)                    
+        //            .ToPage(pageFilter);             
+        //}
+
+        public Page<Log> GetPage(PageFilter pageFilter)
+        {
             return _context
                     .Logs
-                    .Where(log => log.Archived == false
-                        && (!levelId.HasValue || log.LevelId == levelId)
-                        && (string.IsNullOrWhiteSpace(origin) || log.Origin.ToLower().Contains(origin))
-                        && (string.IsNullOrWhiteSpace(title) || log.Title.ToLower().Contains(title.ToLower()))
-                    )
                     .Include(x => x.Level)
                     .Include(x => x.Events)
                     .Include(x => x.Environment)
-                    .ToPage(pageFilter);             
+                    .ToPage(pageFilter);
         }
 
         private void ExistsForeignKey(Log log)
