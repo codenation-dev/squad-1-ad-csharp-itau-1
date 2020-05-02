@@ -9,7 +9,6 @@ namespace ItaLog.Domain.Models
         public string Title { get; set; }
         public string Origin { get; set; }
         public bool Archived { get; set; }
-        public int EventsCount { get; set; }
 
         public int LevelId { get; set; }
         public Level Level { get; set; }

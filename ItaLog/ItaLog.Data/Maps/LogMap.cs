@@ -32,9 +32,7 @@ namespace ItaLog.Data.Maps
               .IsRequired();
 
             builder.Property(x => x.EnvironmentId)
-              .IsRequired();
-
-            builder.Ignore(x => x.EventsCount);                
+              .IsRequired();        
 
 
             builder.HasOne(x => x.ApiUser)

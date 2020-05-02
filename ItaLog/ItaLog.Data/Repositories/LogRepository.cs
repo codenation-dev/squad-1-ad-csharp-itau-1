@@ -6,7 +6,6 @@ using ItaLog.Domain.Interfaces.Repositories;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Dynamic.Core;
 
 namespace ItaLog.Data.Repositories
 {
@@ -99,7 +98,7 @@ namespace ItaLog.Data.Repositories
             string origin = logFilter == null ? null : logFilter.Origin;
             string title = logFilter == null ? null : logFilter.Title;
 
-            return _context
+            IQueryable<Log> query = _context
                     .Logs
                     .Where(log => log.Archived == false
                         && (!levelId.HasValue || log.LevelId == levelId)
@@ -108,34 +107,30 @@ namespace ItaLog.Data.Repositories
                     )
                     .Include(x => x.Level)
                     .Include(x => x.Events)
-                    .Include(x => x.Environment)
-                    .Select(log => new Log
-                    {
-                        Id= log.Id,
-                        EventsCount = log.Events.Count(),                        
-                        Title = log.Title,
-                        Origin = log.Origin,
-                        Archived = log.Archived,
-                        EnvironmentId = log.EnvironmentId,
-                        Environment = log.Environment,
-                        ApiUserId = log.ApiUserId,
-                        ApiUser = log.ApiUser,
-                        LevelId = log.LevelId,
-                        Level = log.Level,
-                        Events = log.Events
-                    })
-                    .OrderBy(sortingProperty)
-                    .ToPage(pageFilter);
+                    .Include(x => x.Environment);
 
-            //return (from log in _context.Logs
-            //        join level in _context.Levels
-            //        on log.LevelId equals level.Id
-            //        where log.Archived == false
-            //        select new Log
-            //        {
-            //            EventsCount = (log.Events.Count())
-            //        }).ToPage(pageFilter);
+            return OrderLog(query, sortingProperty).ToPage(pageFilter);
+        }
 
+        private IQueryable<Log> OrderLog(IQueryable<Log> query, string sortingProperty)
+        {
+            switch (sortingProperty.ToLower().Trim())
+            {
+                case "eventscount":
+                    return query.OrderBy(log => log.Events.Count());
+
+                case "eventscount desc":
+                    return query.OrderByDescending(log => log.Events.Count());
+
+                case "level":
+                    return query.OrderBy(log => log.Level.Description);
+
+                case "level desc":
+                    return query.OrderByDescending(log => log.Level.Description);
+
+                default:
+                    return query;
+            }
         }
 
 

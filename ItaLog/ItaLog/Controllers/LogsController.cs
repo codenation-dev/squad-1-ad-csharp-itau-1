@@ -28,18 +28,11 @@ namespace ItaLog.Api.Controllers
         public ActionResult<PageViewModel<LogItemPageViewModel>> GetLogs(
              [FromQuery] PageFilter pageFilter,
              [FromQuery] LogFilter logFilter,
-             [FromQuery] string sortingProperty)
+             [FromQuery] string orderBy = "")
 
-        {
-            
-
-            if (string.IsNullOrWhiteSpace(sortingProperty))
-                sortingProperty = "EventsCount";      
-            
-            var logs = _repo.GetPage(logFilter, pageFilter, sortingProperty);
-
+        {            
+            var logs = _repo.GetPage(logFilter, pageFilter, orderBy);
             return Ok(_mapper.Map<PageViewModel<LogItemPageViewModel>>(logs));
-
         }
 
         [HttpGet("{id}")]
