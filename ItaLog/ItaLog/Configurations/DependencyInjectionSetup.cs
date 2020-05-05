@@ -1,6 +1,5 @@
 ﻿using ItaLog.Application.Services;
 using ItaLog.Data.Repositories;
-using ItaLog.Data.Store;
 using ItaLog.Domain.Interfaces.Repositories;
 using ItaLog.Domain.Models;
 using Microsoft.AspNetCore.Identity;
@@ -16,16 +15,15 @@ namespace ItaLog.Api.Configurations
         {
             if (services == null) throw new ArgumentNullException(nameof(services));
 
-            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddTransient<IUserRepository, UserRepository>();
             services.AddScoped<ILogRepository, LogRepository>();
             services.AddScoped<ILevelRepository, LevelRepository>();
             services.AddScoped<IEnvironmentRepository, EnvironmentRepository>();
             services.AddScoped<IEventRepository, EventRepository>();
-            services.AddScoped<IRoleRepository, RoleRepository>();
             services.AddScoped<IUserRoleRepository, UserRoleRepository>();
-
-            services.AddTransient<IUserStore<User>, UserStore>();
-            services.AddTransient<IRoleStore<Role>, RoleStore>();
+            
+            services.AddTransient<IUserStore<User>, UserRepository>();
+            services.AddTransient<IRoleStore<Role>, RoleRepository>();
 
             services.AddTransient<IEmailSender, EmailSender>();
         }

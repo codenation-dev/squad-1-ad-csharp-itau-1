@@ -5,8 +5,7 @@ using ItaLog.Domain.Interfaces.Repositories;
 using ItaLog.Domain.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Linq;
-using System.Collections.Generic;
+
 namespace ItaLog.Api.Controllers
 {
     [Authorize]
