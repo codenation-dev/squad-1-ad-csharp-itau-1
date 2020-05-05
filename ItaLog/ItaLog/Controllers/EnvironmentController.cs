@@ -3,6 +3,7 @@ using ItaLog.Application.ViewModels;
 using ItaLog.Domain.Interfaces.Repositories;
 using ItaLog.Domain.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 
@@ -22,6 +23,18 @@ namespace ItaLog.Api.Controllers
             _mapper = mapper;
         }
 
+        /// <summary>
+        /// Get filtered environment 
+        /// </summary>
+        /// <param name="pageFilter">Page filtering object</param>
+        /// <response code="204">Returned if the request is successful</response>
+        /// <response code="400">Server cannot or will not process the request due to something that was perceived as a client error</response>      
+        /// <response code="401">Returned if the authentication credentials are incorrect or missing.</response>      
+        /// <response code="404">Returned if the log is not found</response>      
+        [ProducesResponseType(statusCode: StatusCodes.Status204NoContent)]
+        [ProducesResponseType(statusCode: StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(statusCode: StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(statusCode: StatusCodes.Status404NotFound)]
         [HttpGet]
         public ActionResult<PageViewModel<EnvironmentViewModel>> GetEnvironments(
         [FromQuery] PageFilter pageFilter)
@@ -31,6 +44,18 @@ namespace ItaLog.Api.Controllers
             return Ok(_mapper.Map<PageViewModel<EnvironmentViewModel>>(enviromnments));
         }
 
+        /// <summary>
+        /// Get environment by Id
+        /// </summary>
+        /// <param name="id">Environment identifier</param>
+        /// <response code="204">Returned if the request is successful</response>
+        /// <response code="400">Server cannot or will not process the request due to something that was perceived as a client error</response>      
+        /// <response code="401">Returned if the authentication credentials are incorrect or missing.</response>      
+        /// <response code="404">Returned if the log is not found</response>      
+        [ProducesResponseType(statusCode: StatusCodes.Status204NoContent)]
+        [ProducesResponseType(statusCode: StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(statusCode: StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(statusCode: StatusCodes.Status404NotFound)]
         [HttpGet("{id}")]
         public ActionResult GetById(int id)
         {
@@ -42,6 +67,18 @@ namespace ItaLog.Api.Controllers
             return Ok(env);
         }
 
+        /// <summary>
+        /// Creates an environment
+        /// </summary>
+        /// <param name="Env">Environment object</param>
+        /// <response code="204">Returned if the request is successful</response>
+        /// <response code="400">Server cannot or will not process the request due to something that was perceived as a client error</response>      
+        /// <response code="401">Returned if the authentication credentials are incorrect or missing.</response>      
+        /// <response code="404">Returned if the log is not found</response>      
+        [ProducesResponseType(statusCode: StatusCodes.Status204NoContent)]
+        [ProducesResponseType(statusCode: StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(statusCode: StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(statusCode: StatusCodes.Status404NotFound)]
         [HttpPost]
         public ActionResult Create([FromBody] EnvironmentViewModel Env)
         {
@@ -53,6 +90,19 @@ namespace ItaLog.Api.Controllers
             return CreatedAtAction(nameof(GetById), new { id = Env.Id }, Env);
         }
 
+        /// <summary>
+        /// Update an environment
+        /// </summary>
+        /// <param name="id"> Environment Id</param>
+        /// <param name="Env"> Environment object</param>
+        /// <response code="204">Returned if the request is successful</response>
+        /// <response code="400">Server cannot or will not process the request due to something that was perceived as a client error</response>      
+        /// <response code="401">Returned if the authentication credentials are incorrect or missing.</response>      
+        /// <response code="404">Returned if the log is not found</response>      
+        [ProducesResponseType(statusCode: StatusCodes.Status204NoContent)]
+        [ProducesResponseType(statusCode: StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(statusCode: StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(statusCode: StatusCodes.Status404NotFound)]
         [HttpPut("{id}")]
         public ActionResult Update(int id, [FromBody] EnvironmentViewModel Env)
         {
@@ -73,6 +123,18 @@ namespace ItaLog.Api.Controllers
             return Ok();
         }
 
+        /// <summary>
+        /// Deletes an environment by Id
+        /// </summary>
+        /// <param name="id"> Environment Id</param>
+        /// <response code="204">Returned if the request is successful</response>
+        /// <response code="400">Server cannot or will not process the request due to something that was perceived as a client error</response>      
+        /// <response code="401">Returned if the authentication credentials are incorrect or missing.</response>      
+        /// <response code="404">Returned if the log is not found</response>      
+        [ProducesResponseType(statusCode: StatusCodes.Status204NoContent)]
+        [ProducesResponseType(statusCode: StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(statusCode: StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(statusCode: StatusCodes.Status404NotFound)]
         [HttpDelete("{id}")]
         public ActionResult Delete(int id)
         {
