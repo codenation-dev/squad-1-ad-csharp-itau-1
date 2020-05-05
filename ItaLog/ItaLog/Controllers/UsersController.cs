@@ -5,6 +5,7 @@ using ItaLog.Application.ViewModels.Account;
 using ItaLog.Domain.Interfaces.Repositories;
 using ItaLog.Domain.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -42,7 +43,20 @@ namespace ItaLog.Api.Controllers
             _emailSender = emailSender;
         }
 
+        
+        /// <summary>
+        /// Get all users
+        /// </summary>
+        /// <param name="pageFilter">Page filtering data</param>
+        /// <response code="204">Returned if the request is successful</response>
+        /// <response code="400">Server cannot or will not process the request due to something that was perceived as a client error</response>      
+        /// <response code="401">Returned if the authentication credentials are incorrect or missing.</response>      
+        /// <response code="404">Returned if the log is not found</response>      
         [HttpGet]
+        [ProducesResponseType(statusCode: StatusCodes.Status204NoContent)]
+        [ProducesResponseType(statusCode: StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(statusCode: StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(statusCode: StatusCodes.Status404NotFound)]
         public ActionResult<PageViewModel<UserViewModel>> Users(
         [FromQuery] PageFilter pageFilter)
         {
@@ -51,7 +65,19 @@ namespace ItaLog.Api.Controllers
             return Ok(_mapper.Map<PageViewModel<UserViewModel>>(users));
         }
 
+        /// <summary>
+        /// Get user by Id
+        /// </summary>
+        /// <param name="id">User Identifier</param>
+        /// <response code="204">Returned if the request is successful</response>
+        /// <response code="400">Server cannot or will not process the request due to something that was perceived as a client error</response>      
+        /// <response code="401">Returned if the authentication credentials are incorrect or missing.</response>      
+        /// <response code="404">Returned if the log is not found</response>      
         [HttpGet]
+        [ProducesResponseType(statusCode: StatusCodes.Status204NoContent)]
+        [ProducesResponseType(statusCode: StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(statusCode: StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(statusCode: StatusCodes.Status404NotFound)]
         public IActionResult Id(int id)
         {
             var user = _mapper.Map<UserViewModel>(_userRepository.FindById(id));
@@ -59,9 +85,21 @@ namespace ItaLog.Api.Controllers
                 return NotFound();
 
             return new ObjectResult(user);
-        }        
+        }
 
+        /// <summary>
+        /// Get user by e-mail
+        /// </summary>
+        /// <param name="email">User email</param>
+        /// <response code="204">Returned if the request is successful</response>
+        /// <response code="400">Server cannot or will not process the request due to something that was perceived as a client error</response>      
+        /// <response code="401">Returned if the authentication credentials are incorrect or missing.</response>      
+        /// <response code="404">Returned if the log is not found</response>      
         [HttpGet]
+        [ProducesResponseType(statusCode: StatusCodes.Status204NoContent)]
+        [ProducesResponseType(statusCode: StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(statusCode: StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(statusCode: StatusCodes.Status404NotFound)]
         public IActionResult Email(string email)
         {
             var user = _mapper.Map<UserViewModel>(_userRepository.FindByEmail(email));
@@ -71,8 +109,20 @@ namespace ItaLog.Api.Controllers
             return new ObjectResult(user);
         }
 
+        /// <summary>
+        /// User register
+        /// </summary>
+        /// <param name="userRegistration">User object</param>
+        /// <response code="204">Returned if the request is successful</response>
+        /// <response code="400">Server cannot or will not process the request due to something that was perceived as a client error</response>      
+        /// <response code="401">Returned if the authentication credentials are incorrect or missing.</response>      
+        /// <response code="404">Returned if the log is not found</response>              
         [HttpPost]
         [AllowAnonymous]
+        [ProducesResponseType(statusCode: StatusCodes.Status204NoContent)]
+        [ProducesResponseType(statusCode: StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(statusCode: StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(statusCode: StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Register(UserRegistrationViewModel userRegistration)
         {
             if (!ModelState.IsValid)
@@ -99,6 +149,18 @@ namespace ItaLog.Api.Controllers
             return Ok(await GenerateJwt(userRegistration.Email));
         }
 
+        /// <summary>
+        /// User Login (returns a token)
+        /// </summary>
+        /// <param name="userLogin">User data</param>
+        /// <response code="204">Returned if the request is successful</response>
+        /// <response code="400">Server cannot or will not process the request due to something that was perceived as a client error</response>      
+        /// <response code="401">Returned if the authentication credentials are incorrect or missing.</response>      
+        /// <response code="404">Returned if the log is not found</response>      
+        [ProducesResponseType(statusCode: StatusCodes.Status204NoContent)]
+        [ProducesResponseType(statusCode: StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(statusCode: StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(statusCode: StatusCodes.Status404NotFound)]
         [HttpPost]
         [AllowAnonymous]
         public async Task<IActionResult> Login(UserLoginViewModel userLogin)
@@ -117,8 +179,20 @@ namespace ItaLog.Api.Controllers
             return BadRequest("Username or password is invalid");
         }
 
+        /// <summary>
+        /// Forgot password
+        /// </summary>
+        /// <param name="model">User data</param>
+        /// <response code="204">Returned if the request is successful</response>
+        /// <response code="400">Server cannot or will not process the request due to something that was perceived as a client error</response>      
+        /// <response code="401">Returned if the authentication credentials are incorrect or missing.</response>      
+        /// <response code="404">Returned if the log is not found</response>      
         [HttpPost]
         [AllowAnonymous]
+        [ProducesResponseType(statusCode: StatusCodes.Status204NoContent)]
+        [ProducesResponseType(statusCode: StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(statusCode: StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(statusCode: StatusCodes.Status404NotFound)]
         public async Task<IActionResult> ForgotPassword(ForgotPasswordViewModel model)
         {
             if (ModelState.IsValid)
@@ -137,6 +211,18 @@ namespace ItaLog.Api.Controllers
             return BadRequest();
         }
 
+        /// <summary>
+        /// Password reset
+        /// </summary>
+        /// <param name="model">User data</param>
+        /// <response code="204">Returned if the request is successful</response>
+        /// <response code="400">Server cannot or will not process the request due to something that was perceived as a client error</response>      
+        /// <response code="401">Returned if the authentication credentials are incorrect or missing.</response>      
+        /// <response code="404">Returned if the log is not found</response>      
+        [ProducesResponseType(statusCode: StatusCodes.Status204NoContent)]
+        [ProducesResponseType(statusCode: StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(statusCode: StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(statusCode: StatusCodes.Status404NotFound)]
         [HttpPost]
         [AllowAnonymous]
         public async Task<IActionResult> ResetPassword(ResetPasswordViewModel model)

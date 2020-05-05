@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ItaLog.Data.Migrations
 {
     [DbContext(typeof(ItaLogContext))]
-    [Migration("20200501021441_mig")]
-    partial class mig
+    [Migration("20200503211106_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
