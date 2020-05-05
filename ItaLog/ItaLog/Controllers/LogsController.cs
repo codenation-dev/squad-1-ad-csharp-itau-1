@@ -66,7 +66,7 @@ namespace ItaLog.Api.Controllers
         {
             var log = _mapper.Map<LogViewModel>(_repo.FindById(id));
             if (log is null)
-                return NotFound();
+                return NoContent();
 
             return Ok(_mapper.Map<LogViewModel>(log));
         }
@@ -90,6 +90,9 @@ namespace ItaLog.Api.Controllers
             int newId = 0;
 
             var log = _mapper.Map<Log>(logEvent);
+
+            if (log is null)
+                return NoContent();
 
             try
             {

@@ -37,7 +37,7 @@ namespace ItaLog.Api.Controllers
             var env = _mapper.Map<EnvironmentViewModel>(_repo.FindById(id));
 
             if (env is null)
-                return NotFound();
+                return NoContent();
 
             return Ok(env);
         }
@@ -66,7 +66,7 @@ namespace ItaLog.Api.Controllers
             EnvFind.Description = Env.Description;
 
             if (EnvFind is null)
-                return NotFound();
+                return NoContent();
 
             _repo.Update(EnvFind);
 
@@ -79,7 +79,7 @@ namespace ItaLog.Api.Controllers
             var envFind = _repo.FindById(id);
 
             if (envFind is null)
-                return NotFound();
+                return NoContent();
 
             _repo.Remove(id);
 

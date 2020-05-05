@@ -56,7 +56,7 @@ namespace ItaLog.Api.Controllers
         {
             var user = _mapper.Map<UserViewModel>(_userRepository.FindById(id));
             if (user is null)
-                return NotFound();
+                return NoContent();
 
             return new ObjectResult(user);
         }        
