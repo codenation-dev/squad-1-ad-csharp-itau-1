@@ -2,6 +2,8 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using System;
+using System.IO;
+using System.Reflection;
 
 namespace ItaLog.Api.Configurations
 {
@@ -17,7 +19,19 @@ namespace ItaLog.Api.Configurations
                 {
                     Title = "ItaLog",
                     Version = "v1",
-                    Description = "ItaLog API Swagger surface"
+                    Description = "ItaLog API Swagger surface",
+                    TermsOfService = new Uri("https://github.com/codenation-dev/squad-1-ad-csharp-itau-1/wiki/Terms-Of-Service"),
+                    Contact = new OpenApiContact
+                    {
+                        Name = "ItaLog",
+                        Email = "italogregister@gmail.com",
+                        Url = new Uri("https://github.com/codenation-dev/squad-1-ad-csharp-itau-1"),
+                    },
+                    License = new OpenApiLicense
+                    {
+                        Name = "Use MIT License",
+                        Url = new Uri("https://github.com/codenation-dev/squad-1-ad-csharp-itau-1/blob/master/LICENSE"),
+                    }
                 });
 
                 c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
@@ -40,9 +54,12 @@ namespace ItaLog.Api.Configurations
                                 Id = "Bearer"
                             }
                         },
-                        new string[] {}
+                        new string[] { "" }
                     }
                 });
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                c.IncludeXmlComments(xmlPath);
             });
         }
 
