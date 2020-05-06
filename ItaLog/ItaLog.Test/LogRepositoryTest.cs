@@ -1,19 +1,16 @@
 using ItaLog.Data.Context;
 using ItaLog.Data.Repositories;
 using ItaLog.Domain.Models;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Moq;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web.Http.Results;
 using Xunit;
 
 namespace ItaLog.Test
 {
     public class LogRepositoryTest
-    {        
+    {
         [Fact]
         public void GetAllMethod_ShouldWork()
         {
@@ -79,11 +76,11 @@ namespace ItaLog.Test
             LogRepository LogRepotest = new LogRepository(_context.Object);
 
             var logToAddUpdated = new Log { Id = 1, Title = "UPDATE -- 599 Network connect timeout error", Origin = "216.3.128.12", Archived = false, LevelId = 3, EnvironmentId = 1, ApiUserId = 3 };
-            LogRepotest.Update(logToAddUpdated);          
+            LogRepotest.Update(logToAddUpdated);
 
             //Assert          
-            Assert.Equal("UPDATE -- 599 Network connect timeout error", logToAddUpdated.Title); 
-         }
+            Assert.Equal("UPDATE -- 599 Network connect timeout error", logToAddUpdated.Title);
+        }
 
         [Fact]
         public void RemoveMethod_ShouldWork()
