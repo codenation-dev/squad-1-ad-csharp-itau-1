@@ -1,16 +1,12 @@
-﻿using ItaLog.Domain.Interfaces.Models;
-using ItaLog.Domain.Models;
+﻿using ItaLog.Domain.Models;
+using Microsoft.AspNetCore.Identity;
 using System;
-using System.Collections.Generic;
 
 namespace ItaLog.Domain.Interfaces.Repositories
 {
-    public interface IUserRepository : IDisposable
+    public interface IUserRepository : IRepositoryBase<User>, IUserStore<User>, IUserRoleStore<User>, IUserPasswordStore<User>, IUserEmailStore<User>, IDisposable
     {
-        User FindById(int id);
-        User FindByName(string name);
         User FindByEmail(string email);
-        IEnumerable<User> GetAll();
         Page<User> GetPage(PageFilter pageFilter);
     }
 }
