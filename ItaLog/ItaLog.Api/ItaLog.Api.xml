@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ItaLog.Api</name>
+    </assembly>
+    <members>
+        <member name="M:ItaLog.Api.Controllers.LogsController.GetLogs(ItaLog.Domain.Models.PageFilter,ItaLog.Domain.Models.LogFilter,System.String)">
+            <summary>
+            Returns a page of logs
+            </summary>
+            <param name="orderBy">Options: </param>
+            <param name="pageFilter.PageLength.PageLength">Number of items on a page</param>
+            <response code="200">Returned if the request is successful</response>
+            <response code="400">Server cannot or will not process the request due to something that was perceived as a client error</response>      
+            <response code="401">Returned if the authentication credentials are incorrect or missing.</response>      
+            <response code="404">Returned if the log is not found</response>
+        </member>
+        <member name="M:ItaLog.Api.Controllers.LogsController.GetById(System.Int32)">
+            <summary>
+            Returns the details for an log
+            </summary>
+            <param name="id">Log identifier</param>
+            <response code="200">Returned if the request is successful</response>
+            <response code="400">Server cannot or will not process the request due to something that was perceived as a client error</response>      
+            <response code="401">Returned if the authentication credentials are incorrect or missing.</response>      
+            <response code="404">Returned if the log is not found</response>
+        </member>
+        <member name="M:ItaLog.Api.Controllers.LogsController.Create(ItaLog.CrossCutting.ViewModels.LogEventViewModel)">
+            <summary>
+            Creates a log or a log event if it already exists
+            </summary>
+            <param name="logEvent">Objet of log</param>
+            <response code="201">Returned if the request is successful</response>
+            <response code="400">Server cannot or will not process the request due to something that was perceived as a client error</response>      
+            <response code="401">Returned if the authentication credentials are incorrect or missing.</response>      
+            <response code="404">Returned if the log is not found</response>
+        </member>
+        <member name="M:ItaLog.Api.Controllers.LogsController.Archive(System.Int32)">
+            <summary>
+            Archive a log
+            </summary>
+            <param name="id">Log identifier</param>
+            <response code="204">Returned if the request is successful</response>
+            <response code="400">Server cannot or will not process the request due to something that was perceived as a client error</response>      
+            <response code="401">Returned if the authentication credentials are incorrect or missing.</response>      
+            <response code="404">Returned if the log is not found</response>      
+        </member>
+        <member name="M:ItaLog.Api.Controllers.LogsController.Delete(System.Int32)">
+            <summary>
+            Delete a log
+            </summary>
+            <param name="id">Log identifier</param>
+            <response code="204">Returned if the request is successful</response>
+            <response code="400">Server cannot or will not process the request due to something that was perceived as a client error</response>      
+            <response code="401">Returned if the authentication credentials are incorrect or missing.</response>      
+            <response code="404">Returned if the log is not found</response>      
+        </member>
+    </members>
+</doc>
