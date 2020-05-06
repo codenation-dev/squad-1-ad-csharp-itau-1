@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text;
 
-namespace ItaLog.Application.ViewModels.Level
+namespace ItaLog.Api.ViewModels.Level
 {
     public class LevelViewModel : IComparable<LevelViewModel>
     {

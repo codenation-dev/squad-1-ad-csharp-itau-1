@@ -1,4 +1,4 @@
-﻿namespace ItaLog.Application.ViewModels.Level
+﻿namespace ItaLog.Api.ViewModels.Level
 {
     public class LevelCreateViewModel
     {

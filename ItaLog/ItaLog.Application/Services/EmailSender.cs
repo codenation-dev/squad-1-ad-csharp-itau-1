@@ -4,7 +4,7 @@ using Microsoft.Extensions.Options;
 using MimeKit;
 using System.Threading.Tasks;
 
-namespace ItaLog.Application.Services
+namespace ItaLog.CrossCutting.Services
 {
     public class EmailSender : IEmailSender
     {

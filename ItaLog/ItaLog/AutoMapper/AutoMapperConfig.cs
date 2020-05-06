@@ -1,13 +1,13 @@
 ﻿using AutoMapper;
-using ItaLog.Application.ViewModels;
-using ItaLog.Application.ViewModels.Environment;
-using ItaLog.Application.ViewModels.Level;
-using ItaLog.Application.ViewModels.Log;
+using ItaLog.Api.ViewModels;
+using ItaLog.Api.ViewModels.Environment;
+using ItaLog.Api.ViewModels.Level;
+using ItaLog.Api.ViewModels.Log;
 using ItaLog.Domain.Models;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace ItaLog.Application.AutoMapper
+namespace ItaLog.Api.AutoMapper
 {
     public class AutoMapperConfig : Profile
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ItaLog.Application.ViewModels.Log
+namespace ItaLog.Api.ViewModels.Log
 {
     public class EventViewModel
     {

@@ -1,5 +1,5 @@
 using ItaLog.Api.Configurations;
-using ItaLog.Application.AutoMapper;
+using ItaLog.Api.AutoMapper;
 using ItaLog.Data.Context;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -9,7 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using AutoMapper;
 using ItaLog.Data.Seeds;
-using ItaLog.Application.Services;
+using ItaLog.CrossCutting.Services;
 
 namespace ItaLog.Api
 {

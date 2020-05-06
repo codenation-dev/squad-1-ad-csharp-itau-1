@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
 
-namespace ItaLog.Application.ViewModels.Environment
+namespace ItaLog.Api.ViewModels.Environment
 {
     public class EnvironmentViewModel : IComparable<EnvironmentViewModel>
     {

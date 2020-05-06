@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace ItaLog.Application.ViewModels
+namespace ItaLog.Api.ViewModels
 {
     public class PageViewModel<T>
     {

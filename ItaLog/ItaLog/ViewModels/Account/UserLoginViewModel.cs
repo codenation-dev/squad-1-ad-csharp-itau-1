@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace ItaLog.Application.ViewModels.Account
+namespace ItaLog.Api.ViewModels.Account
 {
     public class UserLoginViewModel
     {

@@ -1,4 +1,4 @@
-﻿namespace ItaLog.Application.ViewModels.Environment
+﻿namespace ItaLog.Api.ViewModels.Environment
 {
     public class EnvironmentCreateViewModel
     {

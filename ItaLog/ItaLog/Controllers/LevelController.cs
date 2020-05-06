@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using ItaLog.Application.ViewModels;
-using ItaLog.Application.ViewModels.Level;
+using ItaLog.Api.ViewModels;
+using ItaLog.Api.ViewModels.Level;
 using ItaLog.Domain.Interfaces.Models;
 using ItaLog.Domain.Interfaces.Repositories;
 using ItaLog.Domain.Models;

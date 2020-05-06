@@ -1,4 +1,4 @@
-﻿using ItaLog.Application.Services;
+﻿using ItaLog.CrossCutting.Services;
 using ItaLog.Data.Repositories;
 using ItaLog.Domain.Interfaces.Repositories;
 using ItaLog.Domain.Models;

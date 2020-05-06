@@ -1,8 +1,8 @@
-﻿using ItaLog.Application.ViewModels.Environment;
-using ItaLog.Application.ViewModels.Level;
+﻿using ItaLog.Api.ViewModels.Environment;
+using ItaLog.Api.ViewModels.Level;
 using System.Collections.Generic;
 
-namespace ItaLog.Application.ViewModels.Log
+namespace ItaLog.Api.ViewModels.Log
 {
     public class LogViewModel
     {

@@ -1,4 +1,4 @@
-﻿namespace ItaLog.Application.Services
+﻿namespace ItaLog.CrossCutting.Services
 {
     public class EmailSettings
     {

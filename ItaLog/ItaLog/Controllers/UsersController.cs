@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using ItaLog.Api.Configurations;
-using ItaLog.Application.ViewModels;
-using ItaLog.Application.ViewModels.Account;
+using ItaLog.Api.ViewModels;
+using ItaLog.Api.ViewModels.Account;
 using ItaLog.Domain.Interfaces.Repositories;
 using ItaLog.Domain.Models;
 using Microsoft.AspNetCore.Authorization;
