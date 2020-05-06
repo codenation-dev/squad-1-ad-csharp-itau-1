@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using ItaLog.Application.ViewModels;
+using ItaLog.Application.ViewModels.Log;
 using ItaLog.Domain.Exceptions;
 using ItaLog.Domain.Interfaces.Models;
 using ItaLog.Domain.Interfaces.Repositories;
@@ -32,12 +33,10 @@ namespace ItaLog.Api.Controllers
         /// <response code="200">Returned if the request is successful</response>
         /// <response code="400">Server cannot or will not process the request due to something that was perceived as a client error</response>      
         /// <response code="401">Returned if the authentication credentials are incorrect or missing.</response>      
-        /// <response code="404">Returned if the log is not found</response>
         [HttpGet]
         [ProducesResponseType(statusCode: StatusCodes.Status200OK)]
         [ProducesResponseType(statusCode: StatusCodes.Status400BadRequest)]
         [ProducesResponseType(statusCode: StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(statusCode: StatusCodes.Status404NotFound)]
         public ActionResult<PageViewModel<LogItemPageViewModel>> GetLogs(
              [FromQuery] PageFilter pageFilter,
              [FromQuery] LogFilter logFilter,
@@ -61,7 +60,6 @@ namespace ItaLog.Api.Controllers
         [ProducesResponseType(statusCode: StatusCodes.Status400BadRequest)]
         [ProducesResponseType(statusCode: StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(statusCode: StatusCodes.Status404NotFound)]
-        [ProducesResponseType(statusCode: StatusCodes.Status404NotFound)]
         public ActionResult<LogViewModel> GetById(int id)
         {
             var log = _mapper.Map<LogViewModel>(_repo.FindById(id));
@@ -78,13 +76,10 @@ namespace ItaLog.Api.Controllers
         /// <response code="201">Returned if the request is successful</response>
         /// <response code="400">Server cannot or will not process the request due to something that was perceived as a client error</response>      
         /// <response code="401">Returned if the authentication credentials are incorrect or missing.</response>      
-        /// <response code="404">Returned if the log is not found</response>
         [HttpPost]
         [ProducesResponseType(statusCode: StatusCodes.Status201Created, type: typeof(IEntity))]
         [ProducesResponseType(statusCode: StatusCodes.Status400BadRequest)]
         [ProducesResponseType(statusCode: StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(statusCode: StatusCodes.Status404NotFound)]
-        [ProducesResponseType(statusCode: StatusCodes.Status404NotFound)]
         public ActionResult Create([FromBody] LogEventViewModel logEvent)
         {
             int newId = 0;

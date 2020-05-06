@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using ItaLog.Application.ViewModels;
+using ItaLog.Application.ViewModels.Level;
+using ItaLog.Domain.Interfaces.Models;
 using ItaLog.Domain.Interfaces.Repositories;
 using ItaLog.Domain.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -24,16 +26,14 @@ namespace ItaLog.Api.Controllers
         }
 
         /// <summary>
-        /// Get all levels
+        /// Returns a page of levels
         /// </summary>
-        /// <response code="204">Returned if the request is successful</response>
+        /// <response code="200">Returned if the request is successful</response>
         /// <response code="400">Server cannot or will not process the request due to something that was perceived as a client error</response>      
-        /// <response code="401">Returned if the authentication credentials are incorrect or missing.</response>      
-        /// <response code="404">Returned if the log is not found</response>      
-        [ProducesResponseType(statusCode: StatusCodes.Status204NoContent)]
+        /// <response code="401">Returned if the authentication credentials are incorrect or missing.</response>          
+        [ProducesResponseType(statusCode: StatusCodes.Status200OK)]
         [ProducesResponseType(statusCode: StatusCodes.Status400BadRequest)]
         [ProducesResponseType(statusCode: StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(statusCode: StatusCodes.Status404NotFound)]
         [HttpGet]
         public ActionResult<PageViewModel<LevelViewModel>> GetLevels(
            [FromQuery] PageFilter pageFilter)
@@ -47,16 +47,16 @@ namespace ItaLog.Api.Controllers
         /// Get level by id
         /// </summary>
         /// <param name="id">level identifier</param>
-        /// <response code="204">Returned if the request is successful</response>
+        /// <response code="200">Returned if the request is successful</response>
         /// <response code="400">Server cannot or will not process the request due to something that was perceived as a client error</response>      
         /// <response code="401">Returned if the authentication credentials are incorrect or missing.</response>      
-        /// <response code="404">Returned if the log is not found</response>      
-        [ProducesResponseType(statusCode: StatusCodes.Status204NoContent)]
+        /// <response code="404">Returned if the level is not found</response>      
+        [ProducesResponseType(statusCode: StatusCodes.Status200OK)]
         [ProducesResponseType(statusCode: StatusCodes.Status400BadRequest)]
         [ProducesResponseType(statusCode: StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(statusCode: StatusCodes.Status404NotFound)]
         [HttpGet("{id}")]
-        public ActionResult GetById(int id)
+        public ActionResult<LevelViewModel> GetById(int id)
         {
             var level = _mapper.Map<LevelViewModel>(_repo.FindById(id));
 
@@ -70,23 +70,17 @@ namespace ItaLog.Api.Controllers
         /// Creates a level
         /// </summary>
         /// <param name="level">level object</param>
-        /// <response code="204">Returned if the request is successful</response>
+        /// <response code="201">Returned if the request is successful</response>
         /// <response code="400">Server cannot or will not process the request due to something that was perceived as a client error</response>      
-        /// <response code="401">Returned if the authentication credentials are incorrect or missing.</response>      
-        /// <response code="404">Returned if the log is not found</response>      
-        [ProducesResponseType(statusCode: StatusCodes.Status204NoContent)]
+        /// <response code="401">Returned if the authentication credentials are incorrect or missing.</response>           
+        [ProducesResponseType(statusCode: StatusCodes.Status201Created, type: typeof(IEntity))]
         [ProducesResponseType(statusCode: StatusCodes.Status400BadRequest)]
         [ProducesResponseType(statusCode: StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(statusCode: StatusCodes.Status404NotFound)]
         [HttpPost]
-        public ActionResult Create([FromBody] LevelViewModel level)
+        public ActionResult Create([FromBody] LevelCreateViewModel level)
         {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState.Values.SelectMany(e => e.Errors));
-
-            _repo.Add(_mapper.Map<Level>(level));
-
-            return CreatedAtAction(nameof(GetById), new { id = level.Id }, level);
+            var newId = _repo.Add(_mapper.Map<Level>(level));
+            return CreatedAtAction(nameof(GetById), new { id = newId }, level);
         }
 
         /// <summary>
@@ -96,7 +90,7 @@ namespace ItaLog.Api.Controllers
         /// <response code="204">Returned if the request is successful</response>
         /// <response code="400">Server cannot or will not process the request due to something that was perceived as a client error</response>      
         /// <response code="401">Returned if the authentication credentials are incorrect or missing.</response>      
-        /// <response code="404">Returned if the log is not found</response>      
+        /// <response code="404">Returned if the level is not found</response>      
         [ProducesResponseType(statusCode: StatusCodes.Status204NoContent)]
         [ProducesResponseType(statusCode: StatusCodes.Status400BadRequest)]
         [ProducesResponseType(statusCode: StatusCodes.Status401Unauthorized)]
@@ -119,7 +113,7 @@ namespace ItaLog.Api.Controllers
 
             _repo.Update(levelFind);
 
-            return Ok();
+            return NoContent();
         }
 
         /// <summary>
@@ -129,7 +123,7 @@ namespace ItaLog.Api.Controllers
         /// <response code="204">Returned if the request is successful</response>
         /// <response code="400">Server cannot or will not process the request due to something that was perceived as a client error</response>      
         /// <response code="401">Returned if the authentication credentials are incorrect or missing.</response>      
-        /// <response code="404">Returned if the log is not found</response>      
+        /// <response code="404">Returned if the level is not found</response>      
         [ProducesResponseType(statusCode: StatusCodes.Status204NoContent)]
         [ProducesResponseType(statusCode: StatusCodes.Status400BadRequest)]
         [ProducesResponseType(statusCode: StatusCodes.Status401Unauthorized)]
@@ -145,7 +139,7 @@ namespace ItaLog.Api.Controllers
 
             _repo.Remove(id);
 
-            return Ok();
+            return NoContent();
         }
     }
 }

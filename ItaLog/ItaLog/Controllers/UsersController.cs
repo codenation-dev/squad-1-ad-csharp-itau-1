@@ -43,20 +43,18 @@ namespace ItaLog.Api.Controllers
             _emailSender = emailSender;
         }
 
-        
+
         /// <summary>
-        /// Get all users
+        /// Returns a page of users
         /// </summary>
         /// <param name="pageFilter">Page filtering data</param>
         /// <response code="204">Returned if the request is successful</response>
         /// <response code="400">Server cannot or will not process the request due to something that was perceived as a client error</response>      
         /// <response code="401">Returned if the authentication credentials are incorrect or missing.</response>      
-        /// <response code="404">Returned if the log is not found</response>      
         [HttpGet]
         [ProducesResponseType(statusCode: StatusCodes.Status204NoContent)]
         [ProducesResponseType(statusCode: StatusCodes.Status400BadRequest)]
         [ProducesResponseType(statusCode: StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(statusCode: StatusCodes.Status404NotFound)]
         public ActionResult<PageViewModel<UserViewModel>> Users(
         [FromQuery] PageFilter pageFilter)
         {
@@ -72,7 +70,7 @@ namespace ItaLog.Api.Controllers
         /// <response code="204">Returned if the request is successful</response>
         /// <response code="400">Server cannot or will not process the request due to something that was perceived as a client error</response>      
         /// <response code="401">Returned if the authentication credentials are incorrect or missing.</response>      
-        /// <response code="404">Returned if the log is not found</response>      
+        /// <response code="404">Returned if the user is not found</response>      
         [HttpGet]
         [ProducesResponseType(statusCode: StatusCodes.Status204NoContent)]
         [ProducesResponseType(statusCode: StatusCodes.Status400BadRequest)]
@@ -94,7 +92,7 @@ namespace ItaLog.Api.Controllers
         /// <response code="204">Returned if the request is successful</response>
         /// <response code="400">Server cannot or will not process the request due to something that was perceived as a client error</response>      
         /// <response code="401">Returned if the authentication credentials are incorrect or missing.</response>      
-        /// <response code="404">Returned if the log is not found</response>      
+        /// <response code="404">Returned if the e-mail for user is not found</response>      
         [HttpGet]
         [ProducesResponseType(statusCode: StatusCodes.Status204NoContent)]
         [ProducesResponseType(statusCode: StatusCodes.Status400BadRequest)]
@@ -115,14 +113,12 @@ namespace ItaLog.Api.Controllers
         /// <param name="userRegistration">User object</param>
         /// <response code="204">Returned if the request is successful</response>
         /// <response code="400">Server cannot or will not process the request due to something that was perceived as a client error</response>      
-        /// <response code="401">Returned if the authentication credentials are incorrect or missing.</response>      
-        /// <response code="404">Returned if the log is not found</response>              
+        /// <response code="401">Returned if the authentication credentials are incorrect or missing.</response>              
         [HttpPost]
         [AllowAnonymous]
         [ProducesResponseType(statusCode: StatusCodes.Status204NoContent)]
         [ProducesResponseType(statusCode: StatusCodes.Status400BadRequest)]
         [ProducesResponseType(statusCode: StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(statusCode: StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Register(UserRegistrationViewModel userRegistration)
         {
             if (!ModelState.IsValid)
@@ -155,12 +151,10 @@ namespace ItaLog.Api.Controllers
         /// <param name="userLogin">User data</param>
         /// <response code="204">Returned if the request is successful</response>
         /// <response code="400">Server cannot or will not process the request due to something that was perceived as a client error</response>      
-        /// <response code="401">Returned if the authentication credentials are incorrect or missing.</response>      
-        /// <response code="404">Returned if the log is not found</response>      
+        /// <response code="401">Returned if the authentication credentials are incorrect or missing.</response>         
         [ProducesResponseType(statusCode: StatusCodes.Status204NoContent)]
         [ProducesResponseType(statusCode: StatusCodes.Status400BadRequest)]
         [ProducesResponseType(statusCode: StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(statusCode: StatusCodes.Status404NotFound)]
         [HttpPost]
         [AllowAnonymous]
         public async Task<IActionResult> Login(UserLoginViewModel userLogin)
@@ -186,7 +180,7 @@ namespace ItaLog.Api.Controllers
         /// <response code="204">Returned if the request is successful</response>
         /// <response code="400">Server cannot or will not process the request due to something that was perceived as a client error</response>      
         /// <response code="401">Returned if the authentication credentials are incorrect or missing.</response>      
-        /// <response code="404">Returned if the log is not found</response>      
+        /// <response code="404">Returned if the e-mail for user is not found</response>      
         [HttpPost]
         [AllowAnonymous]
         [ProducesResponseType(statusCode: StatusCodes.Status204NoContent)]
@@ -218,7 +212,7 @@ namespace ItaLog.Api.Controllers
         /// <response code="204">Returned if the request is successful</response>
         /// <response code="400">Server cannot or will not process the request due to something that was perceived as a client error</response>      
         /// <response code="401">Returned if the authentication credentials are incorrect or missing.</response>      
-        /// <response code="404">Returned if the log is not found</response>      
+        /// <response code="404">Returned if the e-mail for user is not found</response>      
         [ProducesResponseType(statusCode: StatusCodes.Status204NoContent)]
         [ProducesResponseType(statusCode: StatusCodes.Status400BadRequest)]
         [ProducesResponseType(statusCode: StatusCodes.Status401Unauthorized)]

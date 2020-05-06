@@ -1,5 +1,8 @@
 ﻿using AutoMapper;
 using ItaLog.Application.ViewModels;
+using ItaLog.Application.ViewModels.Environment;
+using ItaLog.Application.ViewModels.Level;
+using ItaLog.Application.ViewModels.Log;
 using ItaLog.Domain.Models;
 using System.Collections.Generic;
 using System.Linq;
