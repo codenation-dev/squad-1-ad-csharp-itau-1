@@ -28,7 +28,7 @@ namespace ItaLog.Data.Repositories
         public int Add(Log log)
         {
             ExistsForeignKey(log);
-            var logBd = FiendByGrouping(log);
+            var logBd = FindByGrouping(log);
 
             if (logBd == null)
             {
@@ -78,7 +78,7 @@ namespace ItaLog.Data.Repositories
         }
 
 
-        private Log FiendByGrouping(Log log)
+        private Log FindByGrouping(Log log)
         {
             return _context
                     .Logs

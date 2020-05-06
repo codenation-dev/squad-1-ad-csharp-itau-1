@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ItaLog.Data", "ItaLog.Data\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ItaLog.Test", "ItaLog.Test\ItaLog.Test.csproj", "{E807CEDA-AF4B-4A23-A70A-1C592A804E52}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ItaLog.Application", "ItaLog.Application\ItaLog.Application.csproj", "{6F1A56A2-4228-4DD9-B260-89F09A7E30A8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ItaLog.Crosscutting", "ItaLog.Application\ItaLog.Crosscutting.csproj", "{6F1A56A2-4228-4DD9-B260-89F09A7E30A8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,6 +1,6 @@
 ﻿namespace ItaLog.Api.Configurations
 {
-    public class AppSettings
+    public class TokenSettings
     {
         public string Secret { get; set; }
         public int Expiration { get; set; }

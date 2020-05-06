@@ -29,11 +29,11 @@ namespace ItaLog.Api.Controllers
         private readonly IMapper _mapper;
         private readonly SignInManager<User> _signInManager;
         private readonly UserManager<User> _userManager;
-        private readonly AppSettings _appSettings;
+        private readonly TokenSettings _appSettings;
         private readonly IEmailSender _emailSender;
 
         public UsersController(IUserRepository userRepository, IMapper mapper, SignInManager<User> signInManager, UserManager<User> userManager,
-            IOptions<AppSettings> appSettings, IEmailSender emailSender)
+            IOptions<TokenSettings> appSettings, IEmailSender emailSender)
         {
             _userRepository = userRepository;
             _mapper = mapper;

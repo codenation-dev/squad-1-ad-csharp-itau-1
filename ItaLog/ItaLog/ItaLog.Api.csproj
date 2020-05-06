@@ -28,7 +28,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ItaLog.Application\ItaLog.Application.csproj" />
+    <ProjectReference Include="..\ItaLog.Application\ItaLog.Crosscutting.csproj" />
     <ProjectReference Include="..\ItaLog.Data\ItaLog.Data.csproj" />
     <ProjectReference Include="..\ItaLog.Domain\ItaLog.Domain.csproj" />
     <ProjectReference Include="..\ItaLog.Test\ItaLog.Test.csproj" />
