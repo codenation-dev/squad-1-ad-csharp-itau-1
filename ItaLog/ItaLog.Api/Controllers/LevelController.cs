@@ -73,14 +73,14 @@ namespace ItaLog.Api.Controllers
         /// <response code="201">Returned if the request is successful</response>
         /// <response code="400">Server cannot or will not process the request due to something that was perceived as a client error</response>      
         /// <response code="401">Returned if the authentication credentials are incorrect or missing.</response>           
-        [ProducesResponseType(statusCode: StatusCodes.Status201Created, type: typeof(IEntity))]
+        [ProducesResponseType(statusCode: StatusCodes.Status201Created)]
         [ProducesResponseType(statusCode: StatusCodes.Status400BadRequest)]
         [ProducesResponseType(statusCode: StatusCodes.Status401Unauthorized)]
         [HttpPost]
-        public ActionResult Create([FromBody] LevelCreateViewModel level)
+        public ActionResult<EntityBase> Create([FromBody] LevelCreateViewModel level)
         {
             var newId = _repo.Add(_mapper.Map<Level>(level));
-            return CreatedAtAction(nameof(GetById), new { id = newId }, level);
+            return CreatedAtAction(nameof(GetById), new EntityBase { Id = newId });
         }
 
         /// <summary>
@@ -98,9 +98,6 @@ namespace ItaLog.Api.Controllers
         [HttpPut("{id}")]
         public ActionResult Update(int id, [FromBody] LevelViewModel level)
         {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState.Values.SelectMany(e => e.Errors));
-
             if (level.Id != id)
                 return BadRequest();
 
@@ -129,8 +126,7 @@ namespace ItaLog.Api.Controllers
         [ProducesResponseType(statusCode: StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(statusCode: StatusCodes.Status404NotFound)]
         [HttpDelete("{id}")]
-        public
-            ActionResult Delete(int id)
+        public ActionResult Delete(int id)
         {
             var userFind = _repo.FindById(id);
 

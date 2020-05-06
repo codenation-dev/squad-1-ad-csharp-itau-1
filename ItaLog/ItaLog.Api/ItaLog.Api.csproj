@@ -31,7 +31,6 @@
     <ProjectReference Include="..\ItaLog.CrossCutting\ItaLog.CrossCutting.csproj" />
     <ProjectReference Include="..\ItaLog.Data\ItaLog.Data.csproj" />
     <ProjectReference Include="..\ItaLog.Domain\ItaLog.Domain.csproj" />
-    <ProjectReference Include="..\ItaLog.Test\ItaLog.Test.csproj" />
   </ItemGroup>
 
 
