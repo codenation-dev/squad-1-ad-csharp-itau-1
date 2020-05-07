@@ -250,9 +250,10 @@ namespace ItaLog.Data.Repositories
             throw new NotImplementedException();
         }
 
-        public void Update(User entity)
+        public void Update(User user)
         {
-            throw new NotImplementedException();
+            _contexto.Users.Update(user);
+            _contexto.SaveChanges();
         }
 
         public void Remove(int id)

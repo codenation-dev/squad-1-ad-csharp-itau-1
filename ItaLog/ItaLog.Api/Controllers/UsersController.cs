@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using ItaLog.Api.Configurations;
 using ItaLog.Api.ViewModels;
-using ItaLog.Api.ViewModels.Account;
+using ItaLog.Api.ViewModels.Users;
 using ItaLog.Domain.Interfaces.Repositories;
 using ItaLog.Domain.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -237,8 +237,48 @@ namespace ItaLog.Api.Controllers
             }
 
             return BadRequest();
-        }        
+        }
 
+        /// <summary>
+        /// Edit a user
+        /// </summary>
+        /// <param name="model">user object</param>
+        /// <response code="204">Returned if the request is successful</response>
+        /// <response code="400">Server cannot or will not process the request due to something that was perceived as a client error</response>      
+        /// <response code="401">Returned if the authentication credentials are incorrect or missing.</response>
+        /// <response code="404">Returned if the e-mail for user is not found</response>
+        [ProducesResponseType(statusCode: StatusCodes.Status204NoContent)]
+        [ProducesResponseType(statusCode: StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(statusCode: StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(statusCode: StatusCodes.Status404NotFound)]
+        [HttpPut]
+        public async Task<IActionResult> Update(string email, string password, [FromBody] UserUpdateViewModel model)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState.Values.SelectMany(e => e.Errors));
+
+            var result = await _signInManager.PasswordSignInAsync(email, password, false, true);
+
+            if (result.Succeeded)
+            {
+                var user = await _userManager.FindByEmailAsync(email);
+                if (user != null)
+                {
+                    user.Name = model.Name;
+                    user.UserName = model.NewEmail;
+                    user.Email = model.NewEmail;
+                    user.NormalizedUserName = model.NewEmail.ToUpper();
+                    user.LastUpdateDate = DateTime.Now;
+                    _userRepository.Update(user);
+
+                    return Ok("Your data has been updated.");
+                }
+                
+                return NotFound("Please check if you wrote something wrong and try again!");
+            }
+
+            return BadRequest("Username or password is invalid");
+        }
         private async Task<string> GenerateJwt(string email)
         {
             var user = await _userManager.FindByEmailAsync(email);

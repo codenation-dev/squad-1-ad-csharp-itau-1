@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ItaLog.Api.ViewModels
+namespace ItaLog.Api.ViewModels.Users
 {
     public class UserViewModel
     {

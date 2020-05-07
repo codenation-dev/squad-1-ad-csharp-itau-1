@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace ItaLog.Api.ViewModels.Account
+namespace ItaLog.Api.ViewModels.Users
 {
     public class UserRegistrationViewModel
     {
@@ -17,7 +17,7 @@ namespace ItaLog.Api.ViewModels.Account
         [DataType(DataType.Password)]
         public string Password { get; set; }
 
-        //[Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
-        //public string ConfirmPassword { get; set; }
+        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        public string ConfirmPassword { get; set; }
     }
 }

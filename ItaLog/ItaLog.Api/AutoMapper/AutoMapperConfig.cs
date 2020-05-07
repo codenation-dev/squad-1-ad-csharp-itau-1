@@ -3,6 +3,7 @@ using ItaLog.Api.ViewModels;
 using ItaLog.Api.ViewModels.Environment;
 using ItaLog.Api.ViewModels.Level;
 using ItaLog.Api.ViewModels.Log;
+using ItaLog.Api.ViewModels.Users;
 using ItaLog.Domain.Models;
 using System.Collections.Generic;
 using System.Linq;

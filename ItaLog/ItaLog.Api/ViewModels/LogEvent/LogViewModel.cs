@@ -1,5 +1,6 @@
 ﻿using ItaLog.Api.ViewModels.Environment;
 using ItaLog.Api.ViewModels.Level;
+using ItaLog.Api.ViewModels.Users;
 using System.Collections.Generic;
 
 namespace ItaLog.Api.ViewModels.Log
