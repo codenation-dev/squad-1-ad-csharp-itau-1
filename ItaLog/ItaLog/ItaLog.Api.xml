@@ -4,6 +4,15 @@
         <name>ItaLog.Api</name>
     </assembly>
     <members>
+        <member name="M:ItaLog.Api.Controllers.DownloadController.GetLogs(ItaLog.Domain.Models.PageFilter,ItaLog.Domain.Models.LogFilter,System.String)">
+            <summary>
+            Returns csv of logs
+            </summary>
+            <param name="orderBy">Options: 'eventscount' or 'level'</param>
+            <response code="200">Returned if the request is successful</response>
+            <response code="400">Server cannot or will not process the request due to something that was perceived as a client error</response>      
+            <response code="401">Returned if the authentication credentials are incorrect or missing.</response>      
+        </member>
         <member name="M:ItaLog.Api.Controllers.EnvironmentController.GetEnvironments(ItaLog.Domain.Models.PageFilter)">
             <summary>
             Returns a page of environment 
@@ -177,7 +186,7 @@
             <response code="401">Returned if the authentication credentials are incorrect or missing.</response>      
             <response code="404">Returned if the e-mail for user is not found</response>      
         </member>
-        <member name="M:ItaLog.Api.Controllers.UsersController.Register(ItaLog.Api.ViewModels.Account.UserRegistrationViewModel)">
+        <member name="M:ItaLog.Api.Controllers.UsersController.Register(ItaLog.Api.ViewModels.Users.UserRegistrationViewModel)">
             <summary>
             User register
             </summary>
@@ -186,7 +195,7 @@
             <response code="400">Server cannot or will not process the request due to something that was perceived as a client error</response>      
             <response code="401">Returned if the authentication credentials are incorrect or missing.</response>              
         </member>
-        <member name="M:ItaLog.Api.Controllers.UsersController.Login(ItaLog.Api.ViewModels.Account.UserLoginViewModel)">
+        <member name="M:ItaLog.Api.Controllers.UsersController.Login(ItaLog.Api.ViewModels.Users.UserLoginViewModel)">
             <summary>
             User Login (returns a token)
             </summary>
@@ -195,7 +204,7 @@
             <response code="400">Server cannot or will not process the request due to something that was perceived as a client error</response>      
             <response code="401">Returned if the authentication credentials are incorrect or missing.</response>         
         </member>
-        <member name="M:ItaLog.Api.Controllers.UsersController.ForgotPassword(ItaLog.Api.ViewModels.Account.ForgotPasswordViewModel)">
+        <member name="M:ItaLog.Api.Controllers.UsersController.ForgotPassword(ItaLog.Api.ViewModels.Users.ForgotPasswordViewModel)">
             <summary>
             Forgot password
             </summary>
@@ -205,7 +214,7 @@
             <response code="401">Returned if the authentication credentials are incorrect or missing.</response>      
             <response code="404">Returned if the e-mail for user is not found</response>      
         </member>
-        <member name="M:ItaLog.Api.Controllers.UsersController.ResetPassword(ItaLog.Api.ViewModels.Account.ResetPasswordViewModel)">
+        <member name="M:ItaLog.Api.Controllers.UsersController.ResetPassword(ItaLog.Api.ViewModels.Users.ResetPasswordViewModel)">
             <summary>
             Password reset
             </summary>
@@ -214,6 +223,27 @@
             <response code="400">Server cannot or will not process the request due to something that was perceived as a client error</response>      
             <response code="401">Returned if the authentication credentials are incorrect or missing.</response>      
             <response code="404">Returned if the e-mail for user is not found</response>      
+        </member>
+        <member name="M:ItaLog.Api.Controllers.UsersController.Update(System.String,System.String,ItaLog.Api.ViewModels.Users.UserUpdateViewModel)">
+            <summary>
+            Edit a user
+            </summary>
+            <param name="model">user object</param>
+            <response code="204">Returned if the request is successful</response>
+            <response code="400">Server cannot or will not process the request due to something that was perceived as a client error</response>      
+            <response code="401">Returned if the authentication credentials are incorrect or missing.</response>
+            <response code="404">Returned if the e-mail for user is not found</response>
+        </member>
+        <member name="M:ItaLog.Api.Controllers.UsersController.Delete(System.Int32)">
+            <summary>
+            Delete a user
+            </summary>
+            <param name="id">User identifier</param>
+            <response code="204">Returned if the request is successful</response>
+            <response code="400">Server cannot or will not process the request due to something that was perceived as a client error</response>      
+            <response code="401">Returned if the authentication credentials are incorrect or missing.</response>
+            <response code="403">Returns if the user was not an administrator.</response>
+            <response code="404">Returned if the user is not found.</response>
         </member>
     </members>
 </doc>

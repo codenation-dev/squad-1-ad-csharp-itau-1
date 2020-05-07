@@ -7,7 +7,9 @@ using ItaLog.Domain.Interfaces.Repositories;
 using ItaLog.Domain.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace ItaLog.Api.Controllers
 {
@@ -19,11 +21,13 @@ namespace ItaLog.Api.Controllers
     {
         private readonly ILogRepository _repo;
         private readonly IMapper _mapper;
+        private readonly UserManager<User> _userManager;
 
-        public LogsController(ILogRepository repo, IMapper mapper)
+        public LogsController(ILogRepository repo, IMapper mapper, UserManager<User> userManager)
         {
             _repo = repo;
             _mapper = mapper;
+            _userManager = userManager;
         }
 
         /// <summary>
@@ -77,14 +81,15 @@ namespace ItaLog.Api.Controllers
         /// <response code="400">Server cannot or will not process the request due to something that was perceived as a client error</response>      
         /// <response code="401">Returned if the authentication credentials are incorrect or missing.</response>      
         [HttpPost]
-        [ProducesResponseType(statusCode: StatusCodes.Status201Created, type: typeof(IEntity))]
+        [ProducesResponseType(statusCode: StatusCodes.Status201Created)]
         [ProducesResponseType(statusCode: StatusCodes.Status400BadRequest)]
         [ProducesResponseType(statusCode: StatusCodes.Status401Unauthorized)]
-        public ActionResult Create([FromBody] LogEventViewModel logEvent)
+        public ActionResult<EntityBase> Create([FromBody] LogEventViewModel logEvent)
         {
             int newId = 0;
-
+            int idUser = int.Parse(HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier));
             var log = _mapper.Map<Log>(logEvent);
+            log.ApiUserId = idUser;
 
             try
             {
@@ -96,7 +101,7 @@ namespace ItaLog.Api.Controllers
                 return BadRequest(new ValidationProblemDetails(ModelState));
             }
 
-            return Created(nameof(GetById), new { Id = newId });
+            return Created(nameof(GetById), new EntityBase{ Id = newId });
         }
 
         /// <summary>
