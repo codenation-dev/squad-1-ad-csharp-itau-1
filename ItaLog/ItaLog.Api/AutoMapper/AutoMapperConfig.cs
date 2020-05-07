@@ -37,6 +37,11 @@ namespace ItaLog.Api.AutoMapper
                 {
                     new Event(){ Detail = src.Detail, ErrorDate = src.ErrorDate }
                 }));
+            CreateMap<Log, LogFileViewModel>()
+                .ForMember(dest => dest.EventsCount, opt => opt.MapFrom(src => src.Events.Count()))
+                .ForMember(dest => dest.ErrorDate, opt => opt.MapFrom(src => src.Events.Last().ErrorDate))
+                .ForMember(dest => dest.Level, opt => opt.MapFrom(src => src.Level.Description))
+                .ForMember(dest => dest.Environment, opt => opt.MapFrom(src => src.Environment.Description));
         }
     }
 }
