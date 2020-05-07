@@ -12,6 +12,11 @@ namespace ItaLog.Data.Repositories
             throw new NotImplementedException();
         }
 
+        public bool ExistsEntity(int id)
+        {
+            throw new NotImplementedException();
+        }
+
         public UserRole FindById(int id)
         {
             throw new NotImplementedException();

@@ -53,5 +53,10 @@ namespace ItaLog.Data.Repositories
                     .Levels
                     .ToPage(pageFilter);
         }
+
+        public bool ExistsEntity(int id)
+        {
+            return _context.Levels.Any(x => x.Id == id);
+        }
     }
 }

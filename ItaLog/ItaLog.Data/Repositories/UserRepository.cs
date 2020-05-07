@@ -259,5 +259,10 @@ namespace ItaLog.Data.Repositories
         {
             throw new NotImplementedException();
         }
+
+        public bool ExistsEntity(int id)
+        {
+            return _contexto.Users.Any(x => x.Id == id);
+        }
     }
 }

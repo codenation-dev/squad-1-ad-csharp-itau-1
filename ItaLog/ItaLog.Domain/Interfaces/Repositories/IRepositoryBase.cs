@@ -13,5 +13,7 @@ namespace ItaLog.Domain.Interfaces.Repositories
         public IEnumerable<T> GetAll();
 
         public void Remove(int id);
+
+        public bool ExistsEntity(int id);
     }
 }

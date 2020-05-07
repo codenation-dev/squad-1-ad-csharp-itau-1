@@ -101,14 +101,10 @@ namespace ItaLog.Api.Controllers
             if (level.Id != id)
                 return BadRequest();
 
-            var levelFind = _repo.FindById(id);
-
-            if (levelFind is null)
+            if (!_repo.ExistsEntity(id))
                 return NotFound();
 
-            levelFind.Description = level.Description;
-
-            _repo.Update(levelFind);
+            _repo.Update(_mapper.Map<Level>(level));
 
             return NoContent();
         }

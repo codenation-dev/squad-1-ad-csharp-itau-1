@@ -37,7 +37,7 @@
             Update an environment
             </summary>
             <param name="id"> Environment Id</param>
-            <param name="Env"> Environment object</param>
+            <param name="env"> Environment object</param>
             <response code="204">Returned if the request is successful</response>
             <response code="400">Server cannot or will not process the request due to something that was perceived as a client error</response>      
             <response code="401">Returned if the authentication credentials are incorrect or missing.</response>      

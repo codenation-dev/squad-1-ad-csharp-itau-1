@@ -73,21 +73,21 @@ namespace ItaLog.Api.Controllers
         /// <response code="201">Returned if the request is successful</response>
         /// <response code="400">Server cannot or will not process the request due to something that was perceived as a client error</response>      
         /// <response code="401">Returned if the authentication credentials are incorrect or missing.</response>         
-        [ProducesResponseType(statusCode: StatusCodes.Status201Created, type: typeof(IEntity))]
+        [ProducesResponseType(statusCode: StatusCodes.Status201Created)]
         [ProducesResponseType(statusCode: StatusCodes.Status400BadRequest)]
         [ProducesResponseType(statusCode: StatusCodes.Status401Unauthorized)]
         [HttpPost]
-        public ActionResult Create([FromBody] EnvironmentCreateViewModel Env)
+        public ActionResult<EntityBase> Create([FromBody] EnvironmentCreateViewModel Env)
         {
             var newId = _repo.Add(_mapper.Map<Environment>(Env));
-            return CreatedAtAction(nameof(GetById), new { id = newId }, Env);
+            return CreatedAtAction(nameof(GetById), new EntityBase { Id = newId });
         }
 
         /// <summary>
         /// Update an environment
         /// </summary>
         /// <param name="id"> Environment Id</param>
-        /// <param name="Env"> Environment object</param>
+        /// <param name="env"> Environment object</param>
         /// <response code="204">Returned if the request is successful</response>
         /// <response code="400">Server cannot or will not process the request due to something that was perceived as a client error</response>      
         /// <response code="401">Returned if the authentication credentials are incorrect or missing.</response>      
@@ -97,18 +97,15 @@ namespace ItaLog.Api.Controllers
         [ProducesResponseType(statusCode: StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(statusCode: StatusCodes.Status404NotFound)]
         [HttpPut("{id}")]
-        public ActionResult Update(int id, [FromBody] EnvironmentViewModel Env)
+        public ActionResult Update(int id, [FromBody] EnvironmentViewModel env)
         {
-            if (Env.Id != id)
+            if (env.Id != id)
                 return BadRequest();
 
-            var EnvFind = _repo.FindById(id);
-            EnvFind.Description = Env.Description;
-
-            if (EnvFind is null)
+            if (!_repo.ExistsEntity(id))
                 return NotFound();
 
-            _repo.Update(EnvFind);
+            _repo.Update(_mapper.Map<Environment>(env));
 
             return NoContent();
         }

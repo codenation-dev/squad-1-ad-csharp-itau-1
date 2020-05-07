@@ -23,6 +23,7 @@ namespace ItaLog.Api.AutoMapper
             CreateMap<Level, LevelViewModel>().ReverseMap();
             CreateMap<Level, LevelCreateViewModel>().ReverseMap();
             CreateMap<Environment, EnvironmentViewModel>().ReverseMap();
+            CreateMap<Environment, EnvironmentCreateViewModel>().ReverseMap();
             CreateMap<Event, EventViewModel>().ReverseMap();
             CreateMap<Page<User>, PageViewModel<UserViewModel>>();
             CreateMap<Page<Level>, PageViewModel<LevelViewModel>>();

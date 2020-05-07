@@ -28,8 +28,36 @@ namespace ItaLog.Test.Fakes
                 new Level() {Id = 2, Description = "Teste_2"},
                 new Level() {Id = 3, Description = "Teste_3"}
             };
+
             context.Levels.AddRange(levels);
             context.SaveChanges();
+
+            foreach(var level in levels)
+            {
+                context.Entry<Level>(level).State = EntityState.Detached;
+            }
+
+            return context;
+        }
+
+        public static ItaLogContext AddFakeEnvironments(this ItaLogContext context)
+        {
+            if (context.Environments.Any()) return context;
+
+            var environments = new List<Environment>()
+            {
+                new Environment() {Id = 1, Description = "Teste_Environment_1"},
+                new Environment() {Id = 2, Description = "Teste_Environment_2"},
+                new Environment() {Id = 3, Description = "Teste_Environment_3"}
+            };
+            context.Environments.AddRange(environments);
+            context.SaveChanges();
+
+            foreach (var env in environments)
+            {
+                context.Entry<Environment>(env).State = EntityState.Detached;
+            }
+
 
             return context;
         }

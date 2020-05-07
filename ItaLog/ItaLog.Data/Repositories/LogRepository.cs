@@ -151,5 +151,10 @@ namespace ItaLog.Data.Repositories
                 throw new ForeignKeyNotFoundException(nameof(log.ApiUserId), log.ApiUserId.ToString());
             }
         }
+
+        public bool ExistsEntity(int id)
+        {
+            return _context.Logs.Any(x => x.Id == id);
+        }
     }
 }
