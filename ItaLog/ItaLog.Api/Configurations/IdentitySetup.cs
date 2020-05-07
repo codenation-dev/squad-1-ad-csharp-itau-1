@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using System;
+using System.Security.Claims;
 using System.Text;
 
 namespace ItaLog.Api.Configurations
@@ -17,6 +18,11 @@ namespace ItaLog.Api.Configurations
 
             services.AddIdentity<User, Role>()
                 .AddDefaultTokenProviders();
+
+            services.AddAuthorization(opt =>
+            {
+                opt.AddPolicy("Admin", policy => policy.RequireClaim(ClaimTypes.Role, "Admin"));
+            });
 
             var appSettingsSection = configuration.GetSection("AppSettings");
             services.Configure<TokenSettings>(appSettingsSection);

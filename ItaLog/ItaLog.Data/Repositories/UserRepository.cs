@@ -258,7 +258,9 @@ namespace ItaLog.Data.Repositories
 
         public void Remove(int id)
         {
-            throw new NotImplementedException();
+            var user = _contexto.Users.First(user => user.Id == id);
+            _contexto.Users.Remove(user);
+            _contexto.SaveChanges();
         }
 
         public bool ExistsEntity(int id)

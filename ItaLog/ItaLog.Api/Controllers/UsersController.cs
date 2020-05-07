@@ -14,6 +14,7 @@ using Microsoft.IdentityModel.Tokens;
 using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -279,6 +280,34 @@ namespace ItaLog.Api.Controllers
 
             return BadRequest("Username or password is invalid");
         }
+
+        /// <summary>
+        /// Delete a user
+        /// </summary>
+        /// <param name="id">User identifier</param>
+        /// <response code="204">Returned if the request is successful</response>
+        /// <response code="400">Server cannot or will not process the request due to something that was perceived as a client error</response>      
+        /// <response code="401">Returned if the authentication credentials are incorrect or missing.</response>
+        /// <response code="403">Returns if the user was not an administrator.</response>
+        /// <response code="404">Returned if the user is not found.</response>
+        [ProducesResponseType(statusCode: StatusCodes.Status204NoContent)]
+        [ProducesResponseType(statusCode: StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(statusCode: StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(statusCode: StatusCodes.Status404NotFound)]
+        [HttpDelete]
+        [Authorize(Policy = "Admin")]
+        public IActionResult Delete(int id)
+        {
+            var userFind = _userRepository.FindById(id);
+
+            if (userFind is null)
+                return NotFound();
+
+            _userRepository.Remove(id);
+
+            return NoContent();
+        }
+
         private async Task<string> GenerateJwt(string email)
         {
             var user = await _userManager.FindByEmailAsync(email);
@@ -288,6 +317,7 @@ namespace ItaLog.Api.Controllers
 
             var tokenDescriptor = new SecurityTokenDescriptor
             {
+                Subject = new ClaimsIdentity(GetUserClaims(user)),
                 Issuer = _appSettings.Issuer,
                 Audience = _appSettings.Audience,
                 Expires = DateTime.UtcNow.AddHours(_appSettings.Expiration),
@@ -295,6 +325,23 @@ namespace ItaLog.Api.Controllers
             };
 
             return tokenHandler.WriteToken(tokenHandler.CreateToken(tokenDescriptor));
+        }
+
+        private Claim[] GetUserClaims(User user)
+        {
+            string role = "User";
+
+            if (user.Email == "admin@contato.com")
+            {
+                role = "Admin";
+            }
+
+            return new[]
+            {
+                new Claim(ClaimTypes.Name, user.Name),
+                new Claim(ClaimTypes.Email, user.Email),
+                new Claim(ClaimTypes.Role, role)
+            };
         }
     }
 }
