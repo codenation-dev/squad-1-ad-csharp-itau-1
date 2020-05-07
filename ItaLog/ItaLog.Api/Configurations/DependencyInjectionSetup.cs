@@ -17,6 +17,7 @@ namespace ItaLog.Api.Configurations
 
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddScoped<ILogRepository, LogRepository>();
+            services.AddScoped<ILogPage, LogRepository>();
             services.AddScoped<ILevelRepository, LevelRepository>();
             services.AddScoped<IEnvironmentRepository, EnvironmentRepository>();
             services.AddScoped<IEventRepository, EventRepository>();
