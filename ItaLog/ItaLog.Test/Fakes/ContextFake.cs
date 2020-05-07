@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore.Internal;
 using System.Linq;
 using System.Collections.Generic;
 using System.Text;
+using System;
 
 namespace ItaLog.Test.Fakes
 {
@@ -44,20 +45,87 @@ namespace ItaLog.Test.Fakes
         {
             if (context.Environments.Any()) return context;
 
-            var environments = new List<Environment>()
+            var environments = new List<Domain.Models.Environment>()
             {
-                new Environment() {Id = 1, Description = "Teste_Environment_1"},
-                new Environment() {Id = 2, Description = "Teste_Environment_2"},
-                new Environment() {Id = 3, Description = "Teste_Environment_3"}
+                new Domain.Models.Environment() {Id = 1, Description = "Teste_Environment_1"},
+                new Domain.Models.Environment() {Id = 2, Description = "Teste_Environment_2"},
+                new Domain.Models.Environment() {Id = 3, Description = "Teste_Environment_3"}
             };
             context.Environments.AddRange(environments);
             context.SaveChanges();
 
             foreach (var env in environments)
             {
-                context.Entry<Environment>(env).State = EntityState.Detached;
+                context.Entry<Domain.Models.Environment>(env).State = EntityState.Detached;
             }
 
+            return context;
+        }
+
+        public static ItaLogContext AddFakeLogs(this ItaLogContext context)
+        {
+            if (context.Logs.Any()) return context;
+
+            var logs = new List<Log>()
+            {
+             new Log { Id = 1, Title = "599 Network connect timeout error", Origin = "216.3.128.12", Archived = false, LevelId = 3, EnvironmentId = 1, ApiUserId = 3 },
+             new Log { Id = 2, Title = "413 Request Entity Too Large", Origin = "158.113.248.85", Archived = false, LevelId = 3, EnvironmentId = 2, ApiUserId = 1 },
+             new Log { Id = 3, Title = "512 Disconnected Operation", Origin = "227.39.42.158", Archived = false, LevelId = 1, EnvironmentId = 2, ApiUserId = 4 }             
+            };
+
+            context.Logs.AddRange(logs);
+            context.SaveChanges();
+
+            foreach (var log in logs)
+            {
+                context.Entry<Log>(log).State = EntityState.Detached;
+            }
+
+            return context;
+        }
+
+        public static ItaLogContext AddFakeUsers(this ItaLogContext context)
+        {
+            if (context.Users.Any()) return context;
+
+            var users = new List<User>()
+            {
+                new User
+                {
+                Id = 1,
+                UserToken = Guid.NewGuid(),
+                Name = "Admin",
+                UserName = "admin@contato.com",
+                NormalizedUserName = "ADMIN@CONTATO.COM",
+                Email = "admin@contato.com",
+                EmailConfirmed = true,
+                Password = "AQAAAAEAACcQAAAAENiU++GjfU7q1nAIgwulJmL319Hj8DHBCiiag198T1yUIOSQusFnjpQDjdYZuxjCPw==",
+                CreateDate = DateTime.Now,
+                LastUpdateDate = DateTime.Now
+                },
+
+                new User
+                {
+                Id = 2,
+                UserToken = Guid.NewGuid(),
+                Name = "Itau",
+                UserName = "itau@contato.com",
+                NormalizedUserName = "ITAU@CONTATO.COM",
+                Email = "itau@contato.com",
+                EmailConfirmed = true,
+                Password = "AQAAAAEAACcQAAAAENiU++GjfU7q1nAIgwulJmL319Hj8DHBCiiag198T1yUIOSQusFnjpQDjdYZuxjCPw==",
+                CreateDate = DateTime.Now,
+                LastUpdateDate = DateTime.Now
+                }
+            };
+
+            context.Users.AddRange(users);
+            context.SaveChanges();
+
+            foreach (var user in users)
+            {
+                context.Entry<User>(user).State = EntityState.Detached;
+            }
 
             return context;
         }

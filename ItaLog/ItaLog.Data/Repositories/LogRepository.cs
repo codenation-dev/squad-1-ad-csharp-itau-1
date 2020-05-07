@@ -98,6 +98,9 @@ namespace ItaLog.Data.Repositories
             string origin = logFilter == null ? null : logFilter.Origin;
             string title = logFilter == null ? null : logFilter.Title;
 
+            if (string.IsNullOrWhiteSpace(sortingProperty))
+                sortingProperty = "eventscount";
+
             IQueryable<Log> query = _context
                     .Logs
                     .Where(log => log.Archived == false
