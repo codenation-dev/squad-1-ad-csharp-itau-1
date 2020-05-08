@@ -12,7 +12,7 @@ namespace ItaLog.Test.DataTests.Repositories
     public class LogRepositoryTests
     {
         [Fact]
-        public void Add_ShouldWork()
+        public void AddLog_ShouldWork()
         {
             var log = new Log()
             {
@@ -23,10 +23,11 @@ namespace ItaLog.Test.DataTests.Repositories
                     EnvironmentId = 1, 
                     ApiUserId = 1
             };
-            var context = ContextFake.GetContext("Add_ShouldWork")
-                .AddFakeEnvironments()
-                .AddFakeLevels()
-                .AddFakeUsers();
+            var contextFake = new ContextFake();
+            var context = contextFake.GetContext("AddLog_ShouldWork");
+            context = contextFake.AddFakeEnvironments(context);
+            context = contextFake.AddFakeLevels(context);
+            context = contextFake.AddFakeUsers(context);
 
             var repo = new LogRepository(context);
             repo.Add(log);
@@ -44,9 +45,13 @@ namespace ItaLog.Test.DataTests.Repositories
         [Fact]
         public void Update_ShouldWork()
         {
-            var context = ContextFake
-                .GetContext("Update_ShouldWork")
-                .AddFakeLogs();
+            var contextFake = new ContextFake();
+            var context = contextFake.GetContext("Update_ShouldWork");
+            context = contextFake.AddFakeEnvironments(context);
+            context = contextFake.AddFakeLevels(context);
+            context = contextFake.AddFakeUsers(context);
+            context = contextFake.AddFakeLogs(context);
+
 
             var logUpdate = context.Logs.First();
             logUpdate.Title = "TitleUpdate";
@@ -62,9 +67,14 @@ namespace ItaLog.Test.DataTests.Repositories
         [Fact]
         public void FindById_ShouldWork()
         {
-            var context = ContextFake
-                .GetContext("FindById_ShouldWork")
-                .AddFakeLogs();
+            var contextFake = new ContextFake();
+            var context = contextFake.GetContext("FindById_ShouldWork");
+            context = contextFake.AddFakeEnvironments(context);
+            context = contextFake.AddFakeLevels(context);
+            context = contextFake.AddFakeUsers(context);
+            context = contextFake.AddFakeLogs(context);
+
+
             var logFind = context.Logs.First();
 
             var repo = new LogRepository(context);
@@ -77,9 +87,12 @@ namespace ItaLog.Test.DataTests.Repositories
         [Fact]
         public void Remove_ShouldWork()
         {
-            var context = ContextFake
-                .GetContext("Remove_ShouldWork")
-                .AddFakeLogs();
+            var contextFake = new ContextFake();
+            var context = contextFake.GetContext("Remove_ShouldWork");
+            context = contextFake.AddFakeEnvironments(context);
+            context = contextFake.AddFakeLevels(context);
+            context = contextFake.AddFakeUsers(context);
+            context = contextFake.AddFakeLogs(context);
 
             var logDelete = context.Logs.First();
 
@@ -93,9 +106,13 @@ namespace ItaLog.Test.DataTests.Repositories
         [Fact]
         public void GetAll_ShouldWork()
         {
-            var context = ContextFake
-                .GetContext("GetAll_ShouldWork")
-                .AddFakeLogs();
+            var contextFake = new ContextFake();
+            var context = contextFake.GetContext("GetAll_ShouldWork");
+            context = contextFake.AddFakeEnvironments(context);
+            context = contextFake.AddFakeLevels(context);
+            context = contextFake.AddFakeUsers(context);
+            context = contextFake.AddFakeLogs(context);
+
             var logsFind = context.Logs.ToList();
 
             var repo = new LogRepository(context);
@@ -108,8 +125,12 @@ namespace ItaLog.Test.DataTests.Repositories
         [Fact]
         public void GetPage_ShouldWork()
         {
-            var context = ContextFake
-                .GetContext("GetPage_ShouldWork");
+            var contextFake = new ContextFake();
+            var context = contextFake.GetContext("GetPage_ShouldWork");
+            context = contextFake.AddFakeEnvironments(context);
+            context = contextFake.AddFakeLevels(context);
+            context = contextFake.AddFakeUsers(context);
+            
 
             var logs = new List<Log>()
             {

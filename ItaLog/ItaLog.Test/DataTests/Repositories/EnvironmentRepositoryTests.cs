@@ -18,7 +18,7 @@ namespace ItaLog.Test.DataTests.Repositories
             {
                 Description = "Critical"
             };
-            var context = ContextFake.GetContext("Add_ShouldWork");
+            var context = new ContextFake().GetContext("Add_ShouldWork");
             var repo = new EnvironmentRepository(context);
             repo.Add(environment);
 
@@ -30,9 +30,9 @@ namespace ItaLog.Test.DataTests.Repositories
         [Fact]
         public void Update_ShouldWork()
         {
-            var context = ContextFake
-                .GetContext("Update_ShouldWork")
-                .AddFakeEnvironments();
+            var contextFake = new ContextFake();
+            var context = contextFake.GetContext("Update_ShouldWork");
+            context = contextFake.AddFakeEnvironments(context);          
 
             var environmentUpdate = context.Environments.Skip(1).First();
             environmentUpdate.Description = "DescriptionUpdate";
@@ -48,9 +48,10 @@ namespace ItaLog.Test.DataTests.Repositories
         [Fact]
         public void FindById_ShouldWork()
         {
-            var context = ContextFake
-                .GetContext("FindById_ShouldWork")
-                .AddFakeEnvironments();
+            var contextFake = new ContextFake();
+            var context = contextFake.GetContext("FindById_ShouldWork");
+            context = contextFake.AddFakeEnvironments(context);
+
             var environmentFind = context.Environments.Skip(1).First();
 
             var repo = new EnvironmentRepository(context);
@@ -63,9 +64,9 @@ namespace ItaLog.Test.DataTests.Repositories
         [Fact]
         public void Remove_ShouldWork()
         {
-            var context = ContextFake
-                .GetContext("Remove_ShouldWork")
-                .AddFakeEnvironments();
+            var contextFake = new ContextFake();
+            var context = contextFake.GetContext("Remove_ShouldWork");
+            context = contextFake.AddFakeEnvironments(context);
 
             var environmentDelete = context.Environments.Skip(1).First();
 
@@ -79,9 +80,10 @@ namespace ItaLog.Test.DataTests.Repositories
         [Fact]
         public void GetAll_ShouldWork()
         {
-            var context = ContextFake
-                .GetContext("GetAll_ShouldWork")
-                .AddFakeEnvironments();
+            var contextFake = new ContextFake();
+            var context = contextFake.GetContext("GetAll_ShouldWork");
+            context = contextFake.AddFakeEnvironments(context);
+
             var environmentsFind = context.Environments.ToList();
 
             var repo = new EnvironmentRepository(context);
@@ -94,8 +96,9 @@ namespace ItaLog.Test.DataTests.Repositories
         [Fact]
         public void GetPage_ShouldWork()
         {
-            var context = ContextFake
-                .GetContext("GetPage_ShouldWork");
+            var contextFake = new ContextFake();
+            var context = contextFake.GetContext("GetPage_ShouldWork");
+            
 
             var environments = new List<Environment>()
             {

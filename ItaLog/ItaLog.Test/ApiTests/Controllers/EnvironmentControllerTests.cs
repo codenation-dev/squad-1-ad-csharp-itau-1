@@ -27,9 +27,10 @@ namespace ItaLog.Test.ApiTests.Controllers
         [Fact]
         public void GetEnvironments_ShouldWork()
         {
-            var context = ContextFake
-                .GetContext("GetEnvironments_ShouldWork")
-                .AddFakeEnvironments();
+            var contextFake = new ContextFake();
+            var context = contextFake.GetContext("GetEnvironments_ShouldWork");
+            context = contextFake.AddFakeEnvironments(context);
+
             var repo = new EnvironmentRepository(context);
 
             var controller = new EnvironmentController(repo, _mapper);
@@ -45,9 +46,10 @@ namespace ItaLog.Test.ApiTests.Controllers
         [Fact]
         public void GetById_ShouldWork()
         {
-            var context = ContextFake
-                .GetContext("GetById_ShouldWork")
-                .AddFakeEnvironments();
+            var contextFake = new ContextFake();
+            var context = contextFake.GetContext("GetById_ShouldWork");
+            context = contextFake.AddFakeEnvironments(context);
+
             var repo = new EnvironmentRepository(context);
 
             var controller = new EnvironmentController(repo, _mapper);
@@ -62,9 +64,10 @@ namespace ItaLog.Test.ApiTests.Controllers
         [Fact]
         public void GetById_Notfound()
         {
-            var context = ContextFake
-                .GetContext("GetById_NotfoundIdEnvironment")
-                .AddFakeEnvironments();
+            var contextFake = new ContextFake();
+            var context = contextFake.GetContext("GetById_Notfound");
+            context = contextFake.AddFakeEnvironments(context);
+
             var repo = new EnvironmentRepository(context);
 
             var controller = new EnvironmentController(repo, _mapper);
@@ -78,9 +81,10 @@ namespace ItaLog.Test.ApiTests.Controllers
         [Fact]
         public void Create_ShouldWork()
         {
-            var context = ContextFake
-                .GetContext("Create_ShouldWork")
-                .AddFakeEnvironments();
+            var contextFake = new ContextFake();
+            var context = contextFake.GetContext("Create_ShouldWork");
+            context = contextFake.AddFakeEnvironments(context);
+
             var repo = new EnvironmentRepository(context);
 
             var controller = new EnvironmentController(repo, _mapper);
@@ -101,9 +105,10 @@ namespace ItaLog.Test.ApiTests.Controllers
         [Fact]
         public void Update_ShouldWork()
         {
-            var context = ContextFake
-                .GetContext("Update_ShouldWork")
-                .AddFakeEnvironments();
+            var contextFake = new ContextFake();
+            var context = contextFake.GetContext("Update_ShouldWork");
+            context = contextFake.AddFakeEnvironments(context);
+
             var repo = new EnvironmentRepository(context);
 
             var controller = new EnvironmentController(repo, _mapper);
@@ -123,9 +128,10 @@ namespace ItaLog.Test.ApiTests.Controllers
         [Fact]
         public void Update_NotFoundIdEnvironment()
         {
-            var context = ContextFake
-                .GetContext("Update_NotFoundIdEnvironment")
-                .AddFakeEnvironments();
+            var contextFake = new ContextFake();
+            var context = contextFake.GetContext("Update_NotFoundIdEnvironment");
+            context = contextFake.AddFakeEnvironments(context);
+
             var repo = new EnvironmentRepository(context);
 
             var controller = new EnvironmentController(repo, _mapper);
@@ -142,9 +148,10 @@ namespace ItaLog.Test.ApiTests.Controllers
         [Fact]
         public void Update_BadRequestIdNotEqual()
         {
-            var context = ContextFake
-                .GetContext("Update_NotFoundIdNotEqual")
-                .AddFakeEnvironments();
+            var contextFake = new ContextFake();
+            var context = contextFake.GetContext("Update_BadRequestIdNotEqual");
+            context = contextFake.AddFakeEnvironments(context);
+
             var repo = new EnvironmentRepository(context);
 
             var controller = new EnvironmentController(repo, _mapper);
@@ -161,9 +168,9 @@ namespace ItaLog.Test.ApiTests.Controllers
         [Fact]
         public void Delete_ShouldWork()
         {
-            var context = ContextFake
-                .GetContext("Delete_ShouldWork")
-                .AddFakeEnvironments();
+            var contextFake = new ContextFake();
+            var context = contextFake.GetContext("Delete_ShouldWork");
+            context = contextFake.AddFakeEnvironments(context);
             var repo = new EnvironmentRepository(context);
 
             var controller = new EnvironmentController(repo, _mapper);
@@ -179,9 +186,10 @@ namespace ItaLog.Test.ApiTests.Controllers
         [Fact]
         public void Delete_NotFoundIdEnvironment()
         {
-            var context = ContextFake
-                .GetContext("Delete_NotFoundIdEnvironment")
-                .AddFakeEnvironments();
+            var contextFake = new ContextFake();
+            var context = contextFake.GetContext("Delete_NotFoundIdEnvironment");
+            context = contextFake.AddFakeEnvironments(context);
+
             var repo = new EnvironmentRepository(context);
 
             var controller = new EnvironmentController(repo, _mapper);

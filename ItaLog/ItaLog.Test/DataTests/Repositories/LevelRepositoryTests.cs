@@ -18,7 +18,7 @@ namespace ItaLog.Test.DataTests.Repositories
             {
                 Description = "Critical"
             };
-            var context = ContextFake.GetContext("Add_ShouldWork");
+            var context = new ContextFake().GetContext("Add_ShouldWork");                       
             var repo = new LevelRepository(context);
             repo.Add(level);
 
@@ -30,9 +30,9 @@ namespace ItaLog.Test.DataTests.Repositories
         [Fact]
         public void Update_ShouldWork()
         {
-            var context = ContextFake
-                .GetContext("Update_ShouldWork")
-                .AddFakeLevels();
+            var contextFake = new ContextFake();
+            var context = contextFake.GetContext("Update_ShouldWork");
+            context = contextFake.AddFakeLevels(context);
 
             var levelUpdate = context.Levels.Skip(1).First();
             levelUpdate.Description = "DescriptionUpdate";
@@ -48,9 +48,10 @@ namespace ItaLog.Test.DataTests.Repositories
         [Fact]
         public void FindById_ShouldWork()
         {
-            var context = ContextFake
-                .GetContext("FindById_ShouldWork")
-                .AddFakeLevels();
+            var contextFake = new ContextFake();
+            var context = contextFake.GetContext("FindById_ShouldWork");
+            context = contextFake.AddFakeLevels(context);
+
             var levelFind = context.Levels.Skip(1).First();
 
             var repo = new LevelRepository(context);
@@ -63,9 +64,9 @@ namespace ItaLog.Test.DataTests.Repositories
         [Fact]
         public void Remove_ShouldWork()
         {
-            var context = ContextFake
-                .GetContext("Remove_ShouldWork")
-                .AddFakeLevels();
+            var contextFake = new ContextFake();
+            var context = contextFake.GetContext("Remove_ShouldWork");
+            context = contextFake.AddFakeLevels(context);
 
             var levelDelete = context.Levels.Skip(1).First();
 
@@ -79,9 +80,10 @@ namespace ItaLog.Test.DataTests.Repositories
         [Fact]
         public void GetAll_ShouldWork()
         {
-            var context = ContextFake
-                .GetContext("GetAll_ShouldWork")
-                .AddFakeLevels();
+            var contextFake = new ContextFake();
+            var context = contextFake.GetContext("GetAll_ShouldWork");
+            context = contextFake.AddFakeLevels(context);
+
             var levelsFind = context.Levels.ToList();
 
             var repo = new LevelRepository(context);
@@ -94,8 +96,9 @@ namespace ItaLog.Test.DataTests.Repositories
         [Fact]
         public void GetPage_ShouldWork()
         {
-            var context = ContextFake
-                .GetContext("GetPage_ShouldWork");
+            var contextFake = new ContextFake();
+            var context = contextFake.GetContext("GetPage_ShouldWork");
+            
 
             var levels = new List<Level>()
             {

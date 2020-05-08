@@ -27,9 +27,10 @@ namespace ItaLog.Test.ApiTests.Controllers
         [Fact]
         public void GetLevels_ShouldWork()
         {
-            var context = ContextFake
-                .GetContext("GetLevels_ShouldWork")
-                .AddFakeLevels();
+            var contextFake = new ContextFake();
+            var context = contextFake.GetContext("GetLevels_ShouldWork");
+            context = contextFake.AddFakeLevels(context);
+
             var repo = new LevelRepository(context);
 
             var controller = new LevelController(repo, _mapper);
@@ -45,9 +46,10 @@ namespace ItaLog.Test.ApiTests.Controllers
         [Fact]
         public void GetById_ShouldWork()
         {
-            var context = ContextFake
-                .GetContext("GetById_ShouldWork")
-                .AddFakeLevels();
+            var contextFake = new ContextFake();
+            var context = contextFake.GetContext("GetById_ShouldWork");
+            context = contextFake.AddFakeLevels(context);
+
             var repo = new LevelRepository(context);
 
             var controller = new LevelController(repo, _mapper);
@@ -62,9 +64,10 @@ namespace ItaLog.Test.ApiTests.Controllers
         [Fact]
         public void GetById_Notfound()
         {
-            var context = ContextFake
-                .GetContext("GetById_NotfoundIdLevel")
-                .AddFakeLevels();
+            var contextFake = new ContextFake();
+            var context = contextFake.GetContext("GetById_Notfound");
+            context = contextFake.AddFakeLevels(context);
+
             var repo = new LevelRepository(context);
 
             var controller = new LevelController(repo, _mapper);
@@ -78,9 +81,10 @@ namespace ItaLog.Test.ApiTests.Controllers
         [Fact]
         public void Create_ShouldWork()
         {
-            var context = ContextFake
-                .GetContext("Create_ShouldWork")
-                .AddFakeLevels();
+            var contextFake = new ContextFake();
+            var context = contextFake.GetContext("Create_ShouldWork");
+            context = contextFake.AddFakeLevels(context);
+
             var repo = new LevelRepository(context);
 
             var controller = new LevelController(repo, _mapper);
@@ -101,9 +105,10 @@ namespace ItaLog.Test.ApiTests.Controllers
         [Fact]
         public void Update_ShouldWork()
         {
-            var context = ContextFake
-                .GetContext("Update_ShouldWork")
-                .AddFakeLevels();
+            var contextFake = new ContextFake();
+            var context = contextFake.GetContext("Update_ShouldWork");
+            context = contextFake.AddFakeLevels(context);
+
             var repo = new LevelRepository(context);
 
             var controller = new LevelController(repo, _mapper);
@@ -123,9 +128,10 @@ namespace ItaLog.Test.ApiTests.Controllers
         [Fact]
         public void Update_NotFoundIdLevel()
         {
-            var context = ContextFake
-                .GetContext("Update_NotFoundIdLevel")
-                .AddFakeLevels();
+            var contextFake = new ContextFake();
+            var context = contextFake.GetContext("Update_NotFoundIdLevel");
+            context = contextFake.AddFakeLevels(context);
+
             var repo = new LevelRepository(context);
 
             var controller = new LevelController(repo, _mapper);
@@ -142,9 +148,10 @@ namespace ItaLog.Test.ApiTests.Controllers
         [Fact]
         public void Update_BadRequestIdNotEqual()
         {
-            var context = ContextFake
-                .GetContext("Update_NotFoundIdNotEqual")
-                .AddFakeLevels();
+            var contextFake = new ContextFake();
+            var context = contextFake.GetContext("Update_BadRequestIdNotEqual");
+            context = contextFake.AddFakeLevels(context);
+
             var repo = new LevelRepository(context);
 
             var controller = new LevelController(repo, _mapper);
@@ -161,9 +168,10 @@ namespace ItaLog.Test.ApiTests.Controllers
         [Fact]
         public void Delete_ShouldWork()
         {
-            var context = ContextFake
-                .GetContext("Delete_ShouldWork")
-                .AddFakeLevels();
+            var contextFake = new ContextFake();
+            var context = contextFake.GetContext("Delete_ShouldWork");
+            context = contextFake.AddFakeLevels(context);
+
             var repo = new LevelRepository(context);
 
             var controller = new LevelController(repo, _mapper);
@@ -179,9 +187,10 @@ namespace ItaLog.Test.ApiTests.Controllers
         [Fact]
         public void Delete_NotFoundIdLevel()
         {
-            var context = ContextFake
-                .GetContext("Delete_NotFoundIdLevel")
-                .AddFakeLevels();
+            var contextFake = new ContextFake();
+            var context = contextFake.GetContext("Delete_NotFoundIdLevel");
+            context = contextFake.AddFakeLevels(context);
+
             var repo = new LevelRepository(context);
 
             var controller = new LevelController(repo, _mapper);

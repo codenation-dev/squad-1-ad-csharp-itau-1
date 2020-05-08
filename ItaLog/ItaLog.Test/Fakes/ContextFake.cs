@@ -9,9 +9,9 @@ using System;
 
 namespace ItaLog.Test.Fakes
 {
-    public static class ContextFake
+    public class ContextFake
     {
-        public static ItaLogContext GetContext(string dataBaseName)
+        public ItaLogContext GetContext(string dataBaseName)
         {
             var options = new DbContextOptionsBuilder<ItaLogContext>()
                 .UseInMemoryDatabase(dataBaseName)
@@ -19,7 +19,7 @@ namespace ItaLog.Test.Fakes
             return new ItaLogContext(options);
         }
 
-        public static ItaLogContext AddFakeLevels(this ItaLogContext context)
+        public  ItaLogContext AddFakeLevels(ItaLogContext context)
         {
             if (context.Levels.Any()) return context;
 
@@ -41,7 +41,7 @@ namespace ItaLog.Test.Fakes
             return context;
         }
 
-        public static ItaLogContext AddFakeEnvironments(this ItaLogContext context)
+        public  ItaLogContext AddFakeEnvironments(ItaLogContext context)
         {
             if (context.Environments.Any()) return context;
 
@@ -62,7 +62,7 @@ namespace ItaLog.Test.Fakes
             return context;
         }
 
-        public static ItaLogContext AddFakeLogs(this ItaLogContext context)
+        public ItaLogContext AddFakeLogs(ItaLogContext context)
         {
             if (context.Logs.Any()) return context;
 
@@ -84,7 +84,29 @@ namespace ItaLog.Test.Fakes
             return context;
         }
 
-        public static ItaLogContext AddFakeUsers(this ItaLogContext context)
+        public ItaLogContext AddFakeEvents(ItaLogContext context)
+        {
+            if (context.Events.Any()) return context;
+
+            var events = new List<Event>()
+            {
+              new Event { Id = 1, Detail = "Client exceeded the maximum timeout value of 60 seconds", ErrorDate = DateTime.Parse("10-03-2019"), LogId = 1 },
+              new Event { Id = 2, Detail = "Maximum upload size of 25MB was exceeded", ErrorDate = DateTime.Parse("12-08-2019"), LogId = 2 },
+              new Event { Id = 3, Detail = "Maximum upload size of 25MB was exceededs", ErrorDate = DateTime.Parse("22-11-2019"), LogId = 2 }
+        };
+
+            context.Events.AddRange(events);
+            context.SaveChanges();
+
+            foreach (var event_ in events)
+            {
+                context.Entry<Event>(event_).State = EntityState.Detached;
+            }
+
+            return context;
+        }
+
+        public ItaLogContext AddFakeUsers(ItaLogContext context)
         {
             if (context.Users.Any()) return context;
 
