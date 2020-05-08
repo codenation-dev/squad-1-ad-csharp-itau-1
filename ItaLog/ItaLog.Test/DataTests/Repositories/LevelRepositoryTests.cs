@@ -31,8 +31,9 @@ namespace ItaLog.Test.DataTests.Repositories
         public void Update_ShouldWork()
         {
             var contextFake = new ContextFake();
-            var context = contextFake.GetContext("Update_ShouldWork");
-            context = contextFake.AddFakeLevels(context);
+            var context = contextFake
+                .GetContext("Update_ShouldWork")
+                .AddFakeLevels();
 
             var levelUpdate = context.Levels.Skip(1).First();
             levelUpdate.Description = "DescriptionUpdate";
@@ -49,8 +50,9 @@ namespace ItaLog.Test.DataTests.Repositories
         public void FindById_ShouldWork()
         {
             var contextFake = new ContextFake();
-            var context = contextFake.GetContext("FindById_ShouldWork");
-            context = contextFake.AddFakeLevels(context);
+            var context = contextFake
+                .GetContext("FindById_ShouldWork")
+                .AddFakeLevels();
 
             var levelFind = context.Levels.Skip(1).First();
 
@@ -65,8 +67,9 @@ namespace ItaLog.Test.DataTests.Repositories
         public void Remove_ShouldWork()
         {
             var contextFake = new ContextFake();
-            var context = contextFake.GetContext("Remove_ShouldWork");
-            context = contextFake.AddFakeLevels(context);
+            var context = contextFake
+                .GetContext("Remove_ShouldWork")
+                .AddFakeLevels();
 
             var levelDelete = context.Levels.Skip(1).First();
 
@@ -81,8 +84,9 @@ namespace ItaLog.Test.DataTests.Repositories
         public void GetAll_ShouldWork()
         {
             var contextFake = new ContextFake();
-            var context = contextFake.GetContext("GetAll_ShouldWork");
-            context = contextFake.AddFakeLevels(context);
+            var context = contextFake
+                .GetContext("GetAll_ShouldWork")
+                .AddFakeLevels();
 
             var levelsFind = context.Levels.ToList();
 
@@ -98,7 +102,6 @@ namespace ItaLog.Test.DataTests.Repositories
         {
             var contextFake = new ContextFake();
             var context = contextFake.GetContext("GetPage_ShouldWork");
-            
 
             var levels = new List<Level>()
             {

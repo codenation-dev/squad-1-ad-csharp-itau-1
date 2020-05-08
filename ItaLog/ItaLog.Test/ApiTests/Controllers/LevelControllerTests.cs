@@ -28,8 +28,8 @@ namespace ItaLog.Test.ApiTests.Controllers
         public void GetLevels_ShouldWork()
         {
             var contextFake = new ContextFake();
-            var context = contextFake.GetContext("GetLevels_ShouldWork");
-            context = contextFake.AddFakeLevels(context);
+            var context = contextFake.GetContext("GetLevels_ShouldWork")
+                .AddFakeLevels();
 
             var repo = new LevelRepository(context);
 
@@ -47,8 +47,8 @@ namespace ItaLog.Test.ApiTests.Controllers
         public void GetById_ShouldWork()
         {
             var contextFake = new ContextFake();
-            var context = contextFake.GetContext("GetById_ShouldWork");
-            context = contextFake.AddFakeLevels(context);
+            var context = contextFake.GetContext("GetById_ShouldWork")
+                .AddFakeLevels();
 
             var repo = new LevelRepository(context);
 
@@ -65,8 +65,8 @@ namespace ItaLog.Test.ApiTests.Controllers
         public void GetById_Notfound()
         {
             var contextFake = new ContextFake();
-            var context = contextFake.GetContext("GetById_Notfound");
-            context = contextFake.AddFakeLevels(context);
+            var context = contextFake.GetContext("GetById_Notfound")
+                .AddFakeLevels();
 
             var repo = new LevelRepository(context);
 
@@ -82,8 +82,8 @@ namespace ItaLog.Test.ApiTests.Controllers
         public void Create_ShouldWork()
         {
             var contextFake = new ContextFake();
-            var context = contextFake.GetContext("Create_ShouldWork");
-            context = contextFake.AddFakeLevels(context);
+            var context = contextFake.GetContext("Create_ShouldWork")
+                .AddFakeLevels();
 
             var repo = new LevelRepository(context);
 
@@ -106,8 +106,8 @@ namespace ItaLog.Test.ApiTests.Controllers
         public void Update_ShouldWork()
         {
             var contextFake = new ContextFake();
-            var context = contextFake.GetContext("Update_ShouldWork");
-            context = contextFake.AddFakeLevels(context);
+            var context = contextFake.GetContext("Update_ShouldWork")
+                .AddFakeLevels();
 
             var repo = new LevelRepository(context);
 
@@ -129,8 +129,8 @@ namespace ItaLog.Test.ApiTests.Controllers
         public void Update_NotFoundIdLevel()
         {
             var contextFake = new ContextFake();
-            var context = contextFake.GetContext("Update_NotFoundIdLevel");
-            context = contextFake.AddFakeLevels(context);
+            var context = contextFake.GetContext("Update_NotFoundIdLevel")
+                .AddFakeLevels();
 
             var repo = new LevelRepository(context);
 
@@ -149,8 +149,8 @@ namespace ItaLog.Test.ApiTests.Controllers
         public void Update_BadRequestIdNotEqual()
         {
             var contextFake = new ContextFake();
-            var context = contextFake.GetContext("Update_BadRequestIdNotEqual");
-            context = contextFake.AddFakeLevels(context);
+            var context = contextFake.GetContext("Update_BadRequestIdNotEqual")
+                .AddFakeLevels();
 
             var repo = new LevelRepository(context);
 
@@ -169,8 +169,8 @@ namespace ItaLog.Test.ApiTests.Controllers
         public void Delete_ShouldWork()
         {
             var contextFake = new ContextFake();
-            var context = contextFake.GetContext("Delete_ShouldWork");
-            context = contextFake.AddFakeLevels(context);
+            var context = contextFake.GetContext("Delete_ShouldWork")
+                .AddFakeLevels();
 
             var repo = new LevelRepository(context);
 
@@ -188,8 +188,8 @@ namespace ItaLog.Test.ApiTests.Controllers
         public void Delete_NotFoundIdLevel()
         {
             var contextFake = new ContextFake();
-            var context = contextFake.GetContext("Delete_NotFoundIdLevel");
-            context = contextFake.AddFakeLevels(context);
+            var context = contextFake.GetContext("Delete_NotFoundIdLevel")
+                .AddFakeLevels();
 
             var repo = new LevelRepository(context);
 

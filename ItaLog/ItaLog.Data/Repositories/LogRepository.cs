@@ -56,7 +56,7 @@ namespace ItaLog.Data.Repositories
                 .Include(x => x.Level)
                 .Include(x => x.Events)
                 .Include(x => x.Environment)
-                .Single();
+                .SingleOrDefault();
         }
 
         public IEnumerable<Log> GetAll()

@@ -18,8 +18,11 @@ namespace ItaLog.Test.Fakes
                 .Options;
             return new ItaLogContext(options);
         }
+    }
 
-        public  ItaLogContext AddFakeLevels(ItaLogContext context)
+    public static class ContextFakeExtensions
+    { 
+        public static  ItaLogContext AddFakeLevels(this ItaLogContext context)
         {
             if (context.Levels.Any()) return context;
 
@@ -41,7 +44,7 @@ namespace ItaLog.Test.Fakes
             return context;
         }
 
-        public  ItaLogContext AddFakeEnvironments(ItaLogContext context)
+        public static ItaLogContext AddFakeEnvironments(this ItaLogContext context)
         {
             if (context.Environments.Any()) return context;
 
@@ -62,15 +65,15 @@ namespace ItaLog.Test.Fakes
             return context;
         }
 
-        public ItaLogContext AddFakeLogs(ItaLogContext context)
+        public static ItaLogContext AddFakeLogs(this ItaLogContext context)
         {
             if (context.Logs.Any()) return context;
 
             var logs = new List<Log>()
             {
-             new Log { Id = 1, Title = "599 Network connect timeout error", Origin = "216.3.128.12", Archived = false, LevelId = 3, EnvironmentId = 1, ApiUserId = 3 },
+             new Log { Id = 1, Title = "599 Network connect timeout error", Origin = "216.3.128.12", Archived = false, LevelId = 3, EnvironmentId = 1, ApiUserId = 1 },
              new Log { Id = 2, Title = "413 Request Entity Too Large", Origin = "158.113.248.85", Archived = false, LevelId = 3, EnvironmentId = 2, ApiUserId = 1 },
-             new Log { Id = 3, Title = "512 Disconnected Operation", Origin = "227.39.42.158", Archived = false, LevelId = 1, EnvironmentId = 2, ApiUserId = 4 }             
+             new Log { Id = 3, Title = "512 Disconnected Operation", Origin = "227.39.42.158", Archived = false, LevelId = 1, EnvironmentId = 2, ApiUserId = 2 }             
             };
 
             context.Logs.AddRange(logs);
@@ -84,7 +87,7 @@ namespace ItaLog.Test.Fakes
             return context;
         }
 
-        public ItaLogContext AddFakeEvents(ItaLogContext context)
+        public static ItaLogContext AddFakeEvents(this ItaLogContext context)
         {
             if (context.Events.Any()) return context;
 
@@ -92,7 +95,8 @@ namespace ItaLog.Test.Fakes
             {
               new Event { Id = 1, Detail = "Client exceeded the maximum timeout value of 60 seconds", ErrorDate = DateTime.Parse("10-03-2019"), LogId = 1 },
               new Event { Id = 2, Detail = "Maximum upload size of 25MB was exceeded", ErrorDate = DateTime.Parse("12-08-2019"), LogId = 2 },
-              new Event { Id = 3, Detail = "Maximum upload size of 25MB was exceededs", ErrorDate = DateTime.Parse("22-11-2019"), LogId = 2 }
+              new Event { Id = 3, Detail = "Maximum upload size of 25MB was exceededs", ErrorDate = DateTime.Parse("22-11-2019"), LogId = 2 },
+              new Event { Id = 4, Detail = "Maximum upload size of 25MB was exceededs", ErrorDate = DateTime.Parse("22-11-2019"), LogId = 3 }
         };
 
             context.Events.AddRange(events);
@@ -106,7 +110,7 @@ namespace ItaLog.Test.Fakes
             return context;
         }
 
-        public ItaLogContext AddFakeUsers(ItaLogContext context)
+        public static ItaLogContext AddFakeUsers(this ItaLogContext context)
         {
             if (context.Users.Any()) return context;
 

@@ -10,6 +10,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace ItaLog.Api.Controllers
 {
@@ -21,13 +23,11 @@ namespace ItaLog.Api.Controllers
     {
         private readonly ILogRepository _repo;
         private readonly IMapper _mapper;
-        private readonly UserManager<User> _userManager;
 
-        public LogsController(ILogRepository repo, IMapper mapper, UserManager<User> userManager)
+        public LogsController(ILogRepository repo, IMapper mapper)
         {
             _repo = repo;
             _mapper = mapper;
-            _userManager = userManager;
         }
 
         /// <summary>
