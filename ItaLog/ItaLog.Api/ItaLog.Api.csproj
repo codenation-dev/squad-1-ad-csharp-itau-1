@@ -6,8 +6,9 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>C:\projetos\squad-1-ad-csharp-itau-1\ItaLog\ItaLog\ItaLog.Api.xml</DocumentationFile>
+    <DocumentationFile>C:\Users\afons\codenation\squad-1-ad-csharp-itau-1\ItaLog\ItaLog.Api\ItaLog.Api.xml</DocumentationFile>
     <NoWarn>1701;1702;1591;1573</NoWarn>
+    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
   </PropertyGroup>
 
   <ItemGroup>
