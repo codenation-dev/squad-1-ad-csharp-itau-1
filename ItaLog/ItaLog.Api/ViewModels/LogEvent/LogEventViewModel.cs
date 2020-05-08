@@ -21,6 +21,9 @@ namespace ItaLog.Api.ViewModels.Log
         public int EnvironmentId { get; set; }
 
         [Required]
+        public int ApiUserId { get; set; }
+
+        [Required]
         public int LevelId { get; set; }
 
     }
