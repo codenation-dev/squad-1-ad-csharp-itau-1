@@ -9,29 +9,48 @@ using ItaLog.Domain.Models;
 using ItaLog.Test.Fakes;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
+using Moq;
 using System;
 using System.Linq;
+using System.Security.Claims;
 using Xunit;
 
 namespace ItaLog.Test.ApiTests.Controllers
 {
     public class LogsControllerTests
     {
+        private readonly ContextFake _contextFake;
         private readonly IMapper _mapper;
+        private readonly UserManager<User> _userManager;
         public LogsControllerTests()
         {
+            _contextFake = new ContextFake("LogsController");
+
             var configuration = new MapperConfiguration(cfg =>
             {
                 cfg.AddProfile(new AutoMapperConfig());
             });
             _mapper = configuration.CreateMapper();
+            var moqUserManager = new Mock<UserManager<User>>(
+                    new Mock<IUserStore<User>>().Object,
+                    new Mock<IOptions<IdentityOptions>>().Object,
+                    new Mock<IPasswordHasher<User>>().Object,
+                    new IUserValidator<User>[0],
+                    new IPasswordValidator<User>[0],
+                    new Mock<ILookupNormalizer>().Object,
+                    new Mock<IdentityErrorDescriber>().Object,
+                    new Mock<IServiceProvider>().Object,
+                    new Mock<ILogger<UserManager<User>>>().Object);
+            moqUserManager.Setup(m => m.GetUserId(null)).Returns("1");
+            _userManager = moqUserManager.Object;
         }
 
         [Fact]
         public void GetLogs_ShouldWork()
         {
-            var contextFake = new ContextFake();
-            var context = contextFake.GetContext("GetLogs_ShouldWork")
+            var context = _contextFake.GetContext("GetLogs_ShouldWork")
                 .AddFakeEnvironments()
                 .AddFakeLevels()
                 .AddFakeUsers()
@@ -40,7 +59,7 @@ namespace ItaLog.Test.ApiTests.Controllers
 
             var repo = new LogRepository(context);
 
-            var controller = new LogsController(repo, _mapper);
+            var controller = new LogsController(repo, _mapper, _userManager);
             var pageFilter = new PageFilter();
             var logFilter = new LogFilter();
 
@@ -56,8 +75,7 @@ namespace ItaLog.Test.ApiTests.Controllers
         [Fact]
         public void GetById_ShouldWork()
         {
-            var contextFake = new ContextFake();
-            var context = contextFake.GetContext("GetById_ShouldWork")
+            var context = _contextFake.GetContext("GetById_ShouldWork")
                 .AddFakeEnvironments()
                 .AddFakeLevels()
                 .AddFakeUsers()
@@ -66,7 +84,7 @@ namespace ItaLog.Test.ApiTests.Controllers
 
             var repo = new LogRepository(context);
             
-            var controller = new LogsController(repo, _mapper);
+            var controller = new LogsController(repo, _mapper, _userManager);
 
             var result = controller.GetById(1);
 
@@ -78,8 +96,7 @@ namespace ItaLog.Test.ApiTests.Controllers
         [Fact]
         public void GetById_Notfound()
         {
-            var contextFake = new ContextFake();
-            var context = contextFake.GetContext("GetById_Notfound")
+            var context = _contextFake.GetContext("GetById_Notfound")
                 .AddFakeEnvironments()
                 .AddFakeLevels()
                 .AddFakeUsers()
@@ -88,7 +105,7 @@ namespace ItaLog.Test.ApiTests.Controllers
 
             var repo = new LogRepository(context);
 
-            var controller = new LogsController(repo, _mapper);
+            var controller = new LogsController(repo, _mapper, _userManager);
 
             var result = controller.GetById(int.MaxValue);
 
@@ -99,8 +116,7 @@ namespace ItaLog.Test.ApiTests.Controllers
         [Fact]
         public void Create_ShouldWork()
         {
-            var contextFake = new ContextFake();
-            var context = contextFake.GetContext("Create_ShouldWork")
+            var context = _contextFake.GetContext("Create_ShouldWork")
                 .AddFakeEnvironments()
                 .AddFakeLevels()
                 .AddFakeUsers()
@@ -109,7 +125,7 @@ namespace ItaLog.Test.ApiTests.Controllers
 
             var repo = new LogRepository(context);
 
-            var controller = new LogsController(repo, _mapper);
+            var controller = new LogsController(repo, _mapper, _userManager);
             var newLog = new LogEventViewModel()
             {
                 Title = "599 Network connect timeout error",
@@ -122,7 +138,7 @@ namespace ItaLog.Test.ApiTests.Controllers
 
             var result = controller.Create(newLog);
             Assert.IsType<ActionResult<EntityBase>>(result);
-            var actionResult = Assert.IsType<CreatedAtActionResult>(result);
+            var actionResult = Assert.IsType<CreatedResult>(result.Result);
             var valueResult = Assert.IsType<EntityBase>(actionResult.Value);
 
             var actual = context.Logs.SingleOrDefault(x => x.Id == valueResult.Id);
@@ -132,8 +148,7 @@ namespace ItaLog.Test.ApiTests.Controllers
         [Fact]
         public void Archive_ShouldWork()
         {
-            var contextFake = new ContextFake();
-            var context = contextFake.GetContext("Archive_ShouldWork")
+            var context = _contextFake.GetContext("Archive_ShouldWork")
                 .AddFakeEnvironments()
                 .AddFakeLevels()
                 .AddFakeUsers()
@@ -143,7 +158,7 @@ namespace ItaLog.Test.ApiTests.Controllers
             var repo = new LogRepository(context);
 
             var log = context.Logs.FirstOrDefault();                       
-            var controller = new LogsController(repo, _mapper);
+            var controller = new LogsController(repo, _mapper, _userManager);
 
             var result = controller.Archive(1);
             var actionResult = Assert.IsType<NoContentResult>(result);
@@ -157,8 +172,7 @@ namespace ItaLog.Test.ApiTests.Controllers
         [Fact]
         public void Delete_ShouldWork()
         {
-            var contextFake = new ContextFake();
-            var context = contextFake
+            var context = _contextFake
                 .GetContext("Delete_ShouldWork")
                 .AddFakeEnvironments()
                 .AddFakeLevels()
@@ -168,7 +182,7 @@ namespace ItaLog.Test.ApiTests.Controllers
 
             var repo = new LogRepository(context);
 
-            var controller = new LogsController(repo, _mapper);
+            var controller = new LogsController(repo, _mapper, _userManager);
             var deleteLog = context.Logs.FirstOrDefault();
 
             var result = controller.Delete(deleteLog.Id);
@@ -181,8 +195,7 @@ namespace ItaLog.Test.ApiTests.Controllers
         [Fact]
         public void Delete_NotFoundIdLog()
         {
-            var contextFake = new ContextFake();
-            var context = contextFake.GetContext("Delete_NotFoundIdLog")
+            var context = _contextFake.GetContext("Delete_NotFoundIdLog")
                 .AddFakeEnvironments()
                 .AddFakeLevels()
                 .AddFakeUsers()
@@ -191,7 +204,7 @@ namespace ItaLog.Test.ApiTests.Controllers
 
             var repo = new LogRepository(context);
 
-            var controller = new LogsController(repo, _mapper);
+            var controller = new LogsController(repo, _mapper, _userManager);
 
             var result = controller.Delete(int.MaxValue);
             Assert.IsType<NotFoundResult>(result);

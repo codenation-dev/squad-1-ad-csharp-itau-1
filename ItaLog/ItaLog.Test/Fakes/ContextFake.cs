@@ -11,10 +11,17 @@ namespace ItaLog.Test.Fakes
 {
     public class ContextFake
     {
+        private readonly string _prefixDataBase;
+
+        public ContextFake(string prefixDataBase)
+        {
+            _prefixDataBase = prefixDataBase;
+        }
+
         public ItaLogContext GetContext(string dataBaseName)
         {
             var options = new DbContextOptionsBuilder<ItaLogContext>()
-                .UseInMemoryDatabase(dataBaseName)
+                .UseInMemoryDatabase(_prefixDataBase + "_"+dataBaseName)
                 .Options;
             return new ItaLogContext(options);
         }

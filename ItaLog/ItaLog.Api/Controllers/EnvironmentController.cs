@@ -80,7 +80,7 @@ namespace ItaLog.Api.Controllers
         public ActionResult<EntityBase> Create([FromBody] EnvironmentCreateViewModel Env)
         {
             var newId = _repo.Add(_mapper.Map<Environment>(Env));
-            return CreatedAtAction(nameof(GetById), new EntityBase { Id = newId });
+            return Created(nameof(GetById), new EntityBase { Id = newId });
         }
 
         /// <summary>

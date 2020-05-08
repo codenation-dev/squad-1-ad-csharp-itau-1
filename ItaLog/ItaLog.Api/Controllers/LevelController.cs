@@ -80,7 +80,7 @@ namespace ItaLog.Api.Controllers
         public ActionResult<EntityBase> Create([FromBody] LevelCreateViewModel level)
         {
             var newId = _repo.Add(_mapper.Map<Level>(level));
-            return CreatedAtAction(nameof(GetById), new EntityBase { Id = newId });
+            return Created(nameof(GetById), new EntityBase { Id = newId });
         }
 
         /// <summary>

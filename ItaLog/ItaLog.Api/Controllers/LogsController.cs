@@ -23,11 +23,13 @@ namespace ItaLog.Api.Controllers
     {
         private readonly ILogRepository _repo;
         private readonly IMapper _mapper;
+        private readonly UserManager<User> _userManager;
 
-        public LogsController(ILogRepository repo, IMapper mapper)
+        public LogsController(ILogRepository repo, IMapper mapper, UserManager<User> userManager)
         {
             _repo = repo;
             _mapper = mapper;
+            _userManager = userManager;
         }
 
         /// <summary>
@@ -87,7 +89,7 @@ namespace ItaLog.Api.Controllers
         public ActionResult<EntityBase> Create([FromBody] LogEventViewModel logEvent)
         {
             int newId = 0;
-            int idUser = int.Parse(HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier));
+            int idUser = int.Parse(_userManager.GetUserId(HttpContext?.User));
 
             var log = _mapper.Map<Log>(logEvent);
             log.ApiUserId = idUser;
