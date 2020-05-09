@@ -16,12 +16,20 @@ namespace ItaLog.Api.Configurations
         {
             if (services == null) throw new ArgumentNullException(nameof(services));
 
-            services.AddIdentity<User, Role>()
+            services.AddIdentity<User, Role>(options =>
+            {
+                options.Password.RequireDigit = true;
+                options.Password.RequiredLength = 8;
+                options.Password.RequiredUniqueChars = 1;
+                options.Password.RequireLowercase = true;
+                options.Password.RequireUppercase = true;
+                options.Password.RequireNonAlphanumeric = true;
+            })
                 .AddDefaultTokenProviders();
 
-            services.AddAuthorization(opt =>
+            services.AddAuthorization(options =>
             {
-                opt.AddPolicy("Admin", policy => policy.RequireClaim(ClaimTypes.Role, "Admin"));
+                options.AddPolicy("Admin", policy => policy.RequireClaim(ClaimTypes.Role, "Admin"));
             });
 
             var appSettingsSection = configuration.GetSection("AppSettings");
