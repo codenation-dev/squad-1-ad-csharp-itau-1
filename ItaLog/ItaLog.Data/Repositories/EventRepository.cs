@@ -22,7 +22,12 @@ namespace ItaLog.Data.Repositories
 
             return eventLog.Id;
         }
-        
+
+        public bool ExistsEntity(int id)
+        {
+            return _context.Events.Any(x => x.Id == id);
+        }
+
         public Event FindById(int id)
         {
             return _context.Events.FirstOrDefault(eventLog => eventLog.Id == id);
