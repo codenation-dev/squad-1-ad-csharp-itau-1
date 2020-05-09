@@ -174,6 +174,22 @@ namespace ItaLog.Api.Controllers
             return BadRequest("Username or password is invalid");
         }
 
+
+        /// <summary>
+        /// User Logout
+        /// </summary>
+        /// <response code="204">Returned if the request is successful</response>
+        /// <response code="400">Server cannot or will not process the request due to something that was perceived as a client error</response>
+        [ProducesResponseType(statusCode: StatusCodes.Status204NoContent)]
+        [ProducesResponseType(statusCode: StatusCodes.Status400BadRequest)]
+        [HttpPost]
+        [AllowAnonymous]
+        public async Task<IActionResult> Logout()
+        {
+            await _signInManager.SignOutAsync();
+            return Ok("User logged out.");
+        }
+
         /// <summary>
         /// Forgot password
         /// </summary>
@@ -207,7 +223,7 @@ namespace ItaLog.Api.Controllers
         }
 
         /// <summary>
-        /// Password reset
+        /// Reset password
         /// </summary>
         /// <param name="model">User data</param>
         /// <response code="204">Returned if the request is successful</response>

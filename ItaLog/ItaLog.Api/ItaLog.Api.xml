@@ -204,6 +204,13 @@
             <response code="400">Server cannot or will not process the request due to something that was perceived as a client error</response>      
             <response code="401">Returned if the authentication credentials are incorrect or missing.</response>         
         </member>
+        <member name="M:ItaLog.Api.Controllers.UsersController.Logout">
+            <summary>
+            User Logout
+            </summary>
+            <response code="204">Returned if the request is successful</response>
+            <response code="400">Server cannot or will not process the request due to something that was perceived as a client error</response>
+        </member>
         <member name="M:ItaLog.Api.Controllers.UsersController.ForgotPassword(ItaLog.Api.ViewModels.Users.ForgotPasswordViewModel)">
             <summary>
             Forgot password
@@ -216,7 +223,7 @@
         </member>
         <member name="M:ItaLog.Api.Controllers.UsersController.ResetPassword(ItaLog.Api.ViewModels.Users.ResetPasswordViewModel)">
             <summary>
-            Password reset
+            Reset password
             </summary>
             <param name="model">User data</param>
             <response code="204">Returned if the request is successful</response>
