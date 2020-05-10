@@ -31,7 +31,7 @@ namespace ItaLog.Test.DataTests.Repositories
 
             var result = context.Levels.FirstOrDefault();
             Assert.NotNull(result);
-            Assert.Equal(level.Description, result.Description);
+            Assert.Equal(level, result, new LevelComparer());
         }
 
         [Fact]
@@ -49,7 +49,7 @@ namespace ItaLog.Test.DataTests.Repositories
 
             var result = context.Levels.SingleOrDefault(x => x.Id == levelUpdate.Id);
             Assert.NotNull(result);
-            Assert.Equal(levelUpdate.Description, result.Description);
+            Assert.Equal(levelUpdate, result, new LevelComparer());
         }
 
         [Fact]
@@ -65,7 +65,7 @@ namespace ItaLog.Test.DataTests.Repositories
             var result = repo.FindById(levelFind.Id);
 
             Assert.NotNull(result);
-            Assert.Equal(levelFind.Description, result.Description);
+            Assert.Equal(levelFind, result, new LevelComparer());
         }
 
         [Fact]

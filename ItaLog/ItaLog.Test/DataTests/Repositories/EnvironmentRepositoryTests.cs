@@ -32,7 +32,7 @@ namespace ItaLog.Test.DataTests.Repositories
 
             var result = context.Environments.FirstOrDefault();
             Assert.NotNull(result);
-            Assert.Equal(environment.Description, result.Description);
+            Assert.Equal(environment, result, new EnvironmentComparer());
         }
 
         [Fact]
@@ -49,7 +49,7 @@ namespace ItaLog.Test.DataTests.Repositories
 
             var result = context.Environments.SingleOrDefault(x => x.Id == environmentUpdate.Id);
             Assert.NotNull(result);
-            Assert.Equal(environmentUpdate.Description, result.Description);
+            Assert.Equal(environmentUpdate, result, new EnvironmentComparer());
         }
 
         [Fact]
@@ -64,7 +64,7 @@ namespace ItaLog.Test.DataTests.Repositories
             var result = repo.FindById(environmentFind.Id);
 
             Assert.NotNull(result);
-            Assert.Equal(environmentFind.Description, result.Description);
+            Assert.Equal(environmentFind, result, new EnvironmentComparer());
         }
 
         [Fact]

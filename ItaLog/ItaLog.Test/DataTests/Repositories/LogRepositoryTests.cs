@@ -38,14 +38,10 @@ namespace ItaLog.Test.DataTests.Repositories
             var repo = new LogRepository(context);
             repo.Add(log);
 
-            var result = context.Levels.FirstOrDefault();
+            var result = context.Logs.FirstOrDefault();
             Assert.NotNull(result);
-            Assert.Equal(log.Title, log.Title);
-            Assert.Equal(log.Origin, log.Origin);
-            Assert.Equal(log.Archived, log.Archived);
-            Assert.Equal(log.LevelId, log.LevelId);
-            Assert.Equal(log.EnvironmentId, log.EnvironmentId);
-            Assert.Equal(log.ApiUserId, log.ApiUserId);
+            Assert.Equal(log, result, new LogComparer());
+            
         }
 
         [Fact]
@@ -66,7 +62,7 @@ namespace ItaLog.Test.DataTests.Repositories
 
             var result = context.Logs.SingleOrDefault(x => x.Id == logUpdate.Id);
             Assert.NotNull(result);
-            Assert.Equal(logUpdate.Title, result.Title);
+            Assert.Equal(logUpdate, result, new LogComparer());
         }
 
         [Fact]
@@ -85,7 +81,7 @@ namespace ItaLog.Test.DataTests.Repositories
             var result = repo.FindById(logFind.Id);
 
             Assert.NotNull(result);
-            Assert.Equal(logFind.Title, result.Title);
+            Assert.Equal(logFind, result, new LogComparer());
         }
 
         [Fact]
