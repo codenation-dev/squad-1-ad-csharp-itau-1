@@ -28,7 +28,7 @@ namespace ItaLog.Data.Repositories
         public int Add(Log log)
         {
             ExistsForeignKey(log);
-            var logBd = FiendByGrouping(log);
+            var logBd = FindByGrouping(log);
 
             if (logBd == null)
             {
@@ -56,7 +56,7 @@ namespace ItaLog.Data.Repositories
                 .Include(x => x.Level)
                 .Include(x => x.Events)
                 .Include(x => x.Environment)
-                .Single();
+                .SingleOrDefault();
         }
 
         public IEnumerable<Log> GetAll()
@@ -78,7 +78,7 @@ namespace ItaLog.Data.Repositories
         }
 
 
-        private Log FiendByGrouping(Log log)
+        private Log FindByGrouping(Log log)
         {
             return _context
                     .Logs
@@ -97,6 +97,9 @@ namespace ItaLog.Data.Repositories
             int? levelId = logFilter == null ? null : logFilter.LevelId;
             string origin = logFilter == null ? null : logFilter.Origin;
             string title = logFilter == null ? null : logFilter.Title;
+
+            if (string.IsNullOrWhiteSpace(sortingProperty))
+                sortingProperty = "eventscount";
 
             IQueryable<Log> query = _context
                     .Logs
@@ -150,6 +153,11 @@ namespace ItaLog.Data.Repositories
             {
                 throw new ForeignKeyNotFoundException(nameof(log.ApiUserId), log.ApiUserId.ToString());
             }
+        }
+
+        public bool ExistsEntity(int id)
+        {
+            return _context.Logs.Any(x => x.Id == id);
         }
     }
 }

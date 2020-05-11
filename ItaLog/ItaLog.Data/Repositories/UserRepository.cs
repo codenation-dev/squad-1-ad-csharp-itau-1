@@ -250,14 +250,22 @@ namespace ItaLog.Data.Repositories
             throw new NotImplementedException();
         }
 
-        public void Update(User entity)
+        public void Update(User user)
         {
-            throw new NotImplementedException();
+            _contexto.Users.Update(user);
+            _contexto.SaveChanges();
         }
 
         public void Remove(int id)
         {
-            throw new NotImplementedException();
+            var user = _contexto.Users.First(user => user.Id == id);
+            _contexto.Users.Remove(user);
+            _contexto.SaveChanges();
+        }
+
+        public bool ExistsEntity(int id)
+        {
+            return _contexto.Users.Any(x => x.Id == id);
         }
     }
 }
