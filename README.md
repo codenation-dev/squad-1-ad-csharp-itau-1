@@ -45,7 +45,7 @@ Vamos tratar aqui:
 
 #### Camada de Data
 
-#### Criando migrations
+* Criando migrations
 
 Execute `dotnet ef migrations add "nome-da-migration" --project ./ItaLog/ItaLog.Data/ --startup-project ./ItaLog/ItaLog.API/` para gerar uma nova *migration* do banco de dados.
 
@@ -77,7 +77,7 @@ Execute `dotnet build ./ItaLog/ItaLog.sln` para contruir os executaveis do proje
 
 Por fim uma camada para separar os testes será utilizada.
 
-#### Testes unitários
+* Testes unitários
 Execute `dotnet test ./ItaLog/ItaLog.sln` para iniciar os testes unitários via [xUnit](https://xunit.net/).
 
 ## Tecnologias utilizadas
