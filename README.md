@@ -42,10 +42,10 @@ Trabalho desenvolvido por:
 Execute `dotnet watch run --project ./ItaLog/ItaLog.Api/` para iniciar o servidor. Navegue em `http://localhost:5000/`. O aplicativo será recarregado automaticamente se você alterar qualquer um dos arquivos de origem.
 
 ### Criando migrations
-Execute `dotnet ef migrations add "nome-da-migration" --project ./ItaLog/ItaLog..Data/ --startup-project ./ItaLog/ItaLog.API/` para gerar uma nova *migration* do banco de dados.
+Execute `dotnet ef migrations add "nome-da-migration" --project ./ItaLog/ItaLog.Data/ --startup-project ./ItaLog/ItaLog.API/` para gerar uma nova *migration* do banco de dados.
 
 ### Atualizando o banco de dados
-Execute `dotnet ef database update --project ./ItaLog/ItaLog..Data/ --startup-project ./ItaLog/ItaLog..API/` atulizando o banco de banco de dados com as migrations do projeto.
+Execute `dotnet ef database update --project ./ItaLog/ItaLog.Data/ --startup-project ./ItaLog/ItaLog.API/` atulizando o banco de banco de dados com as migrations do projeto.
 
 ### Build
 Execute `dotnet build ./ItaLog/ItaLog.sln` para contruir os executaveis do projeto.
