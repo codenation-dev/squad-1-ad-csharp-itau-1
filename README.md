@@ -77,7 +77,7 @@ Execute `dotnet build ./ItaLog/ItaLog.sln` para contruir os executaveis do proje
 
 Por fim uma camada para separar os testes será utilizada.
 
-##### Teste unitários
+#### Testes unitários
 Execute `dotnet test ./ItaLog/ItaLog.sln` para iniciar os testes unitários via [xUnit](https://xunit.net/).
 
 ## Tecnologias utilizadas
